@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/guregu/kami"
+	"log"
+	"net/http"
 
 	"github.com/dom-bot/itchy-guacamole/api/handlers"
 )
 
 func main() {
-	handlers.SetRoutes()
-	kami.Serve()
+	router := handlers.SetRoutes()
+	log.Fatal(http.ListenAndServe(":8000", router))
 }

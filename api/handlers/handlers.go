@@ -7,8 +7,7 @@ import (
 	"time"
 
 	"github.com/dom-bot/itchy-guacamole/deck"
-
-	"golang.org/x/net/context"
+	"github.com/julienschmidt/httprouter"
 )
 
 var rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -23,7 +22,7 @@ type deckResponse struct {
 	Events               []deck.Card `json:"events"`
 }
 
-func makeDeck(ctx context.Context, w http.ResponseWriter, r *http.Request) {
+func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	enc := json.NewEncoder(w)
 	_ = enc.Encode(deck.NewRandomDeck())
 

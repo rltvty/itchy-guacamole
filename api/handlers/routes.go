@@ -2,11 +2,17 @@ package handlers
 
 import (
 	"net/http"
+	"os"
 
-	"github.com/guregu/kami"
+	"github.com/julienschmidt/httprouter"
 )
 
-func SetRoutes() {
-	kami.Post("/deck", makeDeck)
-	kami.Get("/", http.FileServer(http.Dir("app/public")))
+func SetRoutes() *httprouter.Router {
+	router := httprouter.New()
+	router.POST("/deck", makeDeck)
+
+	dir, _ := os.Getwd()
+
+	router.ServeFiles("/static/*filepath", http.Dir(dir+"/app/public"))
+	return router
 }
