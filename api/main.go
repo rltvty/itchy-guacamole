@@ -38,6 +38,16 @@ type Card struct {
 	VictoryPoints int    `json:"victory_points"`
 }
 
+type deckResponse struct {
+	Cards                []Card   `json:"cards"`
+	ColoniesAndPlatinums bool     `json:"colonies_and_platinums"`
+	Shelters             bool     `json:"shelters"`
+	Potions              bool     `json:"potions"`
+	Spoils               bool     `json:"spoils"`
+	Ruins                bool     `json:"ruins"`
+	Events               []string `json:"events"`
+}
+
 func makeDeck(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 	cards, _ := ctx.Value(cardsKey).(map[string]Card)
 
@@ -51,8 +61,12 @@ func makeDeck(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	resp := deckResponse{
+		Cards: deck,
+	}
+
 	enc := json.NewEncoder(w)
-	_ = enc.Encode(deck)
+	_ = enc.Encode(resp)
 
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
