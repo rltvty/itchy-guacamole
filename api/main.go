@@ -39,12 +39,16 @@ type Card struct {
 }
 
 func makeDeck(ctx context.Context, w http.ResponseWriter, r *http.Request) {
-	cards, _ := ctx.Value(cardsKey).([]Card)
+	cards, _ := ctx.Value(cardsKey).(map[string]Card)
 
 	deck := make([]Card, 0, 10)
 
-	for i := range rnd.Perm(len(cards))[0:10] {
-		deck = append(deck, cards[i])
+	for _, card := range cards {
+		deck = append(deck, card)
+
+		if len(deck) == 10 {
+			break
+		}
 	}
 
 	enc := json.NewEncoder(w)
@@ -61,7 +65,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	var cards []Card
+	var cards map[string]Card
 	err := json.Unmarshal(file, &cards)
 	if err != nil {
 		fmt.Printf("JSON Decode error: %v\n", err)
