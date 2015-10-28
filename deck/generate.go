@@ -21,7 +21,6 @@ func init() {
 		os.Exit(1)
 	}
 
-	var cards map[string]Card
 	err := json.Unmarshal(file, &cards)
 	if err != nil {
 		fmt.Printf("JSON Decode error: %v\n", err)
