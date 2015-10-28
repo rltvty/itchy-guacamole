@@ -799,7 +799,7 @@
     "plus_buys": 0
   },
   "Spice Merchant": {
-    "description": "You may trash a Treasure from your hand. If you do, choose one:\\\\n+2 Cards and +1 Action; or +$2 and +1 Buy.",
+    "description": "You may trash a Treasure from your hand. If you do, choose one: +2 Cards and +1 Action; or +$2 and +1 Buy.",
     "plus_actions": 0,
     "expansion": "Hinterlands",
     "plus_treasure": 0,
@@ -918,7 +918,7 @@
     "plus_buys": 0
   },
   "Hamlet": {
-    "description": "You may discard a card; If you do, +1 Action. \\\\nYou may discard a card; If you do, +1 Buy.",
+    "description": "You may discard a card; If you do, +1 Action.  You may discard a card; If you do, +1 Buy.",
     "plus_actions": 1,
     "expansion": "Cornucopia",
     "plus_treasure": 0,
@@ -1020,7 +1020,7 @@
     "plus_buys": 0
   },
   "Menagerie": {
-    "description": "Reveal your hand. If there are no duplicate cards in it, +3 Cards.\\\\nOtherwise, +1 Card.",
+    "description": "Reveal your hand. If there are no duplicate cards in it, +3 Cards. Otherwise, +1 Card.",
     "plus_actions": 1,
     "expansion": "Cornucopia",
     "plus_treasure": 0,
@@ -1071,7 +1071,7 @@
     "plus_buys": 0
   },
   "Young Witch": {
-    "description": "Discard 2 cards. Each other player may reveal a Bane card from his hand.\\\\nIf he doesn't, he gains a Curse. Setup: Add an extra Kingdom card pile costing 2 or 3 to the Supply. Cards from that pile are Bane cards.",
+    "description": "Discard 2 cards. Each other player may reveal a Bane card from his hand. If he doesn't, he gains a Curse. Setup: Add an extra Kingdom card pile costing 2 or 3 to the Supply. Cards from that pile are Bane cards.",
     "plus_actions": 0,
     "expansion": "Cornucopia",
     "plus_treasure": 0,
@@ -2737,7 +2737,7 @@
     "plus_buys": 0
   },
   "Beggar": {
-    "description": "Gain 3 Coppers, putting them into your hand.\\\\n___\\\\nWhen another player plays an Attack card, you may discard this. If you do, gain two Silvers, putting one on top of your deck.",
+    "description": "Gain 3 Coppers, putting them into your hand. ___ When another player plays an Attack card, you may discard this. If you do, gain two Silvers, putting one on top of your deck.",
     "plus_actions": 0,
     "expansion": "Dark Ages",
     "plus_treasure": 0,
@@ -2754,7 +2754,7 @@
     "plus_buys": 0
   },
   "Catacombs": {
-    "description": "Look at the top 3 cards of your deck. Choose one: Put them into your hand; or discard them and +3 Cards.\\\\n___\\\\nWhen you trash this, gain a cheaper card.",
+    "description": "Look at the top 3 cards of your deck. Choose one: Put them into your hand; or discard them and +3 Cards. ___ When you trash this, gain a cheaper card.",
     "plus_actions": 0,
     "expansion": "Dark Ages",
     "plus_treasure": 0,
@@ -2771,7 +2771,7 @@
     "plus_buys": 0
   },
   "Count": {
-    "description": "Choose one: Discard 2 cards; put a card from your hand on top of your deck; or gain a Copper.\\\\nChoose one: +$3; trash your hand; or gain a Duchy.",
+    "description": "Choose one: Discard 2 cards; put a card from your hand on top of your deck; or gain a Copper. Choose one: +$3; trash your hand; or gain a Duchy.",
     "plus_actions": 0,
     "expansion": "Dark Ages",
     "plus_treasure": 0,
@@ -2805,7 +2805,7 @@
     "plus_buys": 1
   },
   "Cultist": {
-    "description": "Each other player gains a Ruins. You may play a Cultist from your hand.\\\\n___\\\\nWhen you trash this, +3 Cards.",
+    "description": "Each other player gains a Ruins. You may play a Cultist from your hand. ___ When you trash this, +3 Cards.",
     "plus_actions": 0,
     "expansion": "Dark Ages",
     "plus_treasure": 0,
@@ -2822,7 +2822,7 @@
     "plus_buys": 0
   },
   "Death Cart": {
-    "description": "You may trash an Action card from your hand. If you don’t, trash this.\\\\n___\\\\nWhen you gain this, gain two Ruins.",
+    "description": "You may trash an Action card from your hand. If you don’t, trash this. ___ When you gain this, gain two Ruins.",
     "plus_actions": 0,
     "expansion": "Dark Ages",
     "plus_treasure": 5,
@@ -2839,7 +2839,7 @@
     "plus_buys": 0
   },
   "Feodum": {
-    "description": "Worth 1 VP for every 3 Silvers in your deck.\\\\n___\\\\nWhen you trash this, gain 3 Silvers.",
+    "description": "Worth 1 VP for every 3 Silvers in your deck. ___ When you trash this, gain 3 Silvers.",
     "plus_actions": 0,
     "expansion": "Dark Ages",
     "plus_treasure": 0,
@@ -2907,7 +2907,7 @@
     "plus_buys": 0
   },
   "Hermit": {
-    "description": "Look through your discard pile. You may trash a card that is not a Treasure, from your discard pile or your hand. Gain a card costing up to $3.\\\\n___\\\\nWhen you discard this from play, if you didn’t buy any cards this turn, trash this and gain a Madman (from the Madman pile).",
+    "description": "Look through your discard pile. You may trash a card that is not a Treasure, from your discard pile or your hand. Gain a card costing up to $3. ___ When you discard this from play, if you didn’t buy any cards this turn, trash this and gain a Madman (from the Madman pile).",
     "plus_actions": 0,
     "expansion": "Dark Ages",
     "plus_treasure": 0,
@@ -2992,7 +2992,7 @@
     "plus_buys": 0
   },
   "Madman": {
-    "description": "Return this to the Madman pile. If you do, +1 Card per card in your hand.\\\\n(This is not in the Supply.)",
+    "description": "Return this to the Madman pile. If you do, +1 Card per card in your hand. (This is not in the Supply.)",
     "plus_actions": 2,
     "expansion": "Dark Ages",
     "plus_treasure": 0,
@@ -3043,7 +3043,7 @@
     "plus_buys": 1
   },
   "Mercenary": {
-    "description": "You may trash 2 cards from your hand. If you do, +2 Cards, + $2, and each other player discards down to 3 cards in hand.\\\\n(This is not in the Supply.)",
+    "description": "You may trash 2 cards from your hand. If you do, +2 Cards, + $2, and each other player discards down to 3 cards in hand. (This is not in the Supply.)",
     "plus_actions": 0,
     "expansion": "Dark Ages",
     "plus_treasure": 0,
@@ -3128,7 +3128,7 @@
     "plus_buys": 0
   },
   "Rats": {
-    "description": "Gain a Rats. Trash a card from your hand other than a Rats (or reveal a hand of all Rats).\\\\n___\\\\nWhen this is trashed, +1 Card.",
+    "description": "Gain a Rats. Trash a card from your hand other than a Rats (or reveal a hand of all Rats). ___ When this is trashed, +1 Card.",
     "plus_actions": 1,
     "expansion": "Dark Ages",
     "plus_treasure": 0,
@@ -3230,7 +3230,7 @@
     "plus_buys": 0
   },
   "Squire": {
-    "description": "Choose one: +2 Actions; or +2 Buys; or gain a Silver.\\\\n___\\\\nWhen you trash this, gain an Attack card.",
+    "description": "Choose one: +2 Actions; or +2 Buys; or gain a Silver. ___ When you trash this, gain an Attack card.",
     "plus_actions": 0,
     "expansion": "Dark Ages",
     "plus_treasure": 1,
@@ -3264,7 +3264,7 @@
     "plus_buys": 1
   },
   "Urchin": {
-    "description": "Each other player discards down to 4 cards in hand.\\\\n___\\\\nWhen you play another Attack card with this in play, you may trash this. If you do, gain a Mercenary from the Mercenary pile.",
+    "description": "Each other player discards down to 4 cards in hand. ___ When you play another Attack card with this in play, you may trash this. If you do, gain a Mercenary from the Mercenary pile.",
     "plus_actions": 1,
     "expansion": "Dark Ages",
     "plus_treasure": 0,
