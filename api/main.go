@@ -24,6 +24,7 @@ type Card struct {
 	CostPotions   int    `json:"cost_potions"`
 	CostTreasure  int    `json:"cost_treasure"`
 	Description   string `json:"description"`
+	Event         bool   `json:"event"`
 	Expansion     string `json:"expansion"`
 	ID            int    `json:"id"`
 	IsAttack      bool   `json:"is_attack"`
@@ -76,7 +77,13 @@ func makeDeck(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 			potions = true
 		}
 
-		deck = append(deck, card)
+		if card.Event {
+			if len(events) < 2 {
+				events = append(events, card)
+			}
+		} else {
+			deck = append(deck, card)
+		}
 
 		if len(deck) == deckSize {
 			break
