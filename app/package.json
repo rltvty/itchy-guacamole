@@ -1,0 +1,31 @@
+{
+  "name": "dom-bot",
+  "version": "0.0.1",
+  "description": "Dom-Bot Frontend",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "classnames": "^2.1.5",
+    "css-loader": "^0.19.0",
+    "express": "^4.4.5",
+    "json-loader": "^0.5.3",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "react-router": "^1.0.0-rc3",
+    "jsx-loader": "^0.13.2",
+    "history": "^1.13.0",
+    "sass-loader": "^3.0.0",
+    "style-loader": "^0.12.4",
+    "superagent": "^1.4.0",
+    "webpack": "^1.12.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dom-bot/itchy-guacamole/"
+  },
+  "author": "AaronLaBrie",
+  "bugs": {
+    "url": "https://github.com/dom-bot/itchy-guacamole/issues"
+  },
+  "homepage": "https://github.com/dom-bot/itchy-guacamole/"
+}
