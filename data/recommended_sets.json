@@ -5,8 +5,39 @@
     "cards" : ["Armory", "Band of Misfits", "Catacombs", "Cultist", "Forager", "Knights", "Market Square", "Procession", "Hunting Grounds"]
   },
   {
+    "name" : "Playing Chess With Death",
+    "sets" : ["Dark Ages"],
+    "cards" : ["Bandit Camp", "Graverobber", "Junk Dealer", "Mystic", "Pillage", "Rats", "Sage", "Scavenger", "Storeroom", "Vagrant"]
+  },
+  {
     "name" : "",
-    "sets" : [""],
+    "sets" : [],
+    "cards" : []
+  },
+  {
+    "name" : "",
+    "sets" : [],
+    "cards" : []
+  },
+  {
+    "name" : "",
+    "sets" : [],
+    "cards" : []
+  },
+  {
+    "name" : "",
+    "sets" : [],
+    "cards" : []
+  },
+  {
+    "name" : "",
+    "sets" : [],
+    "cards" : []
+  },
+  {
+    "name" : "",
+    "sets" : [],
     "cards" : []
   }
+
 ]
