@@ -7,6 +7,6 @@ import (
 )
 
 func SetRoutes() {
-	kami.Post("/deck", MakeDeck)
+	kami.Post("/deck", makeDeck)
 	kami.Get("/", http.FileServer(http.Dir("app/public")))
 }
