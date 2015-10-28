@@ -2,10 +2,12 @@
 var React = require('react')
 
 module.exports = React.createClass({
-  displayName: 'Creator',
+  displayName: 'Card',
   render: function() {
     return(
-      <h1>Deck Creator</h1>
+      <div>
+        <p>{this.props.children.name}</p>
+      </div>
     );
   }
 })
