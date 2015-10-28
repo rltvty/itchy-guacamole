@@ -1,4 +1,4 @@
-package card
+package deck
 
 // Card describes a dominion card
 type Card struct {
@@ -20,7 +20,3 @@ type Card struct {
 	Treasure      int    `json:"treasure"`
 	VictoryPoints int    `json:"victory_points"`
 }
-
-const (
-	Key = iota
-)
