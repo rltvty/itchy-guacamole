@@ -10,6 +10,7 @@ type Card struct {
 	ID            int    `json:"id"`
 	IsAttack      bool   `json:"is_attack"`
 	IsReaction    bool   `json:"is_reaction"`
+	IsDuration    bool   `json:"is_duration"`
 	Name          string `json:"name"`
 	PlusActions   int    `json:"plus_actions"`
 	PlusBuys      int    `json:"plus_buys"`
