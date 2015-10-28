@@ -1207,6 +1207,7 @@
     "plus_buys": 0
   },
   "Caravan": {
+    "is_duration": true,
     "description": "At the start of your next turn, +1 Card.",
     "plus_actions": 1,
     "expansion": "Seaside",
@@ -1275,6 +1276,7 @@
     "plus_buys": 0
   },
   "Fishing Village": {
+    "is_duration": true,
     "description": "At the start of your next turn: +1 Action, +1 Coin.",
     "plus_actions": 2,
     "expansion": "Seaside",
@@ -1309,6 +1311,7 @@
     "plus_buys": 0
   },
   "Haven": {
+    "is_duration": true,
     "description": "Set aside a card from your hand face down. At the start of your next turn, put it into your hand.",
     "plus_actions": 1,
     "expansion": "Seaside",
@@ -1343,6 +1346,7 @@
     "plus_buys": 0
   },
   "Lighthouse": {
+    "is_duration": true,
     "description": "Now and at the start of your next turn: +1 Coin. While this is in play, when another player plays an Attack card, it doesn't affect you.",
     "plus_actions": 1,
     "expansion": "Seaside",
@@ -1377,6 +1381,7 @@
     "plus_buys": 0
   },
   "Merchant Ship": {
+    "is_duration": true,
     "description": "Now and at the start of your next turn: +2 Coins.",
     "plus_actions": 0,
     "expansion": "Seaside",
@@ -1428,6 +1433,7 @@
     "plus_buys": 0
   },
   "Outpost": {
+    "is_duration": true,
     "description": "You only draw 3 cards (instead of 5) in this turn's Clean-up phase. Take an extra turn after this one. This can't cause you to take more than two consecutive  turns.",
     "plus_actions": 0,
     "expansion": "Seaside",
@@ -1530,6 +1536,7 @@
     "plus_buys": 0
   },
   "Tactician": {
+    "is_duration": true,
     "description": "Discard your hand. If you discarded any cards this way, then at the start of your  next turn, +5 Cards, +1 Buy, and +1 Action.",
     "plus_actions": 0,
     "expansion": "Seaside",
@@ -1598,6 +1605,7 @@
     "plus_buys": 0
   },
   "Wharf": {
+    "is_duration": true,
     "description": "Now and at the start of your next turn: +2 Cards, +1 Buy.",
     "plus_actions": 0,
     "expansion": "Seaside",
@@ -3315,6 +3323,7 @@
     "plus_buys": 0
   },
   "Swamp Hag": {
+    "is_duration": true,
     "description": "Until your next turn, when any other player buys a card, he gains a curse",
     "plus_actions": 1,
     "expansion": "Adventures",
@@ -3347,6 +3356,7 @@
     "plus_buys": 0
   },
   "Haunted Woods": {
+    "is_duration": true,
     "description": "",
     "plus_actions": 0,
     "expansion": "Adventures",
@@ -3427,6 +3437,7 @@
     "plus_buys": 0
   },
   "Dungeon": {
+    "is_duration": true,
     "description": "",
     "plus_actions": 1,
     "expansion": "Adventures",
@@ -3491,6 +3502,7 @@
     "plus_buys": 0
   },
   "Amulet": {
+    "is_duration": true,
     "description": "",
     "plus_actions": 0,
     "expansion": "Adventures",
@@ -3879,6 +3891,7 @@
     "plus_buys": 0
   },
   "Hireling": {
+    "is_duration": true,
     "name": "Hireling",
     "description": "",
     "cost_treasure": 6,
@@ -3895,6 +3908,7 @@
     "expansion": "Adventures"
   },
   "Caravan Guard": {
+    "is_duration": true,
     "name": "Caravan Guard",
     "description": "",
     "cost_treasure": 3,
@@ -3975,6 +3989,7 @@
     "expansion": "Adventures"
   },
   "Bridge Troll": {
+    "is_duration": true,
     "name": "Bridge Troll",
     "description": "",
     "cost_treasure": 5,
@@ -4055,6 +4070,7 @@
     "expansion": "Adventures"
   },
   "Gear": {
+    "is_duration": true,
     "name": "Hireling",
     "description": "",
     "cost_treasure": 6,
