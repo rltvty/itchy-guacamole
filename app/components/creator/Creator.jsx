@@ -16,7 +16,7 @@ module.exports = React.createClass({
   },
 
   suggestDeck: function() {
-    $.post('/deck', {}, function(data) {
+    $.post('/deck', "{}", function(data) {
       data = JSON.parse(data);
       this.setState({ deck: data });
     }.bind(this)).fail(function(err) {
