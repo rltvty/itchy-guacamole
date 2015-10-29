@@ -21,11 +21,22 @@ module.exports = React.createClass({
     });
   },
 
+  getExpansionNames: function() {
+    var result = [];
+    $.each(this.props.deck.cards, function(i, e) {
+        if ($.inArray(e.expansion, result) == -1) result.push(e.expansion);
+    });
+
+    return result.sort().join(" ");
+  },
+
   render: function() {
     var cards = this.getCards();
+    var expansions = this.getExpansionNames();
 
     return(
       <div id='deck'>
+        <p>{expansions}</p>
         {cards}
       </div>
     );

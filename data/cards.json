@@ -3461,7 +3461,7 @@
     "cost_treasure": 4,
     "cost_potions": 0,
     "is_reaction": false,
-    "name": "",
+    "name": "Transmogrify",
     "is_attack": false,
     "trashes": 1,
     "treasure": 0,

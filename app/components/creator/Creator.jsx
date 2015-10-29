@@ -12,26 +12,29 @@ module.exports = React.createClass({
   },
 
   getInitialState: function() {
-    return { deck: {} };
+    return { deck: { cards: []} };
   },
 
   suggestDeck: function() {
     $.post('/deck', "{}", function(data) {
       data = JSON.parse(data);
-      data.cards.sort(function(a, b) {
-        if(a.cost_treasure > b.cost_treasure){
-          return 1;
-        } else if (a.cost_treasure < b.cost_treasure) {
-          return -1;
-        } else {
-          return 0;
-        }
-      })
+      data.cards.sort(this.sortByCost);
       this.setState({ deck: data });
-    }.bind(this)).fail(function(err) {
+    }.bind(this))
+    .fail(function(err) {
       console.error(err);
-      this.setState({ deck: {} });
+      this.replaceState(this.getInitialState());
     })
+  },
+
+  sortByCost: function(a, b) {
+    if(a.cost_treasure > b.cost_treasure){
+      return 1;
+    } else if (a.cost_treasure < b.cost_treasure) {
+      return -1;
+    } else {
+      return 0;
+    }
   },
 
   render: function() {

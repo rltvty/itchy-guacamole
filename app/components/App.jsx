@@ -22,12 +22,15 @@ var App = React.createClass({
   render() {
     return (
       <div>
-        <div className='nav'>
-          <div id='logo'></div>
-          <ul id='nav'>
-            <li><Link to="/">Creator</Link></li>
-            <li><Link to="/history">History</Link></li>
-          </ul>
+        <div id='nav'>
+          <div id='nav-inner'>
+            <img src='/static/images/shield.png'></img>
+            <h1>Dom Bot</h1>
+            <ul id='menu'>
+              <li><Link to="/">Creator</Link></li>
+              <li><Link to="/history">History</Link></li>
+            </ul>
+          </div>
         </div>
         {this.props.children}
       </div>
