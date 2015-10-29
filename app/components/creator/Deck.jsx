@@ -1,6 +1,7 @@
 'use strict'
-var React = require('react')
-var Card = require('./Card')
+var React = require('react');
+var Card = require('./Card');
+var Meta = require('./Meta');
 
 module.exports = React.createClass({
   displayName: 'Deck',
@@ -32,23 +33,15 @@ module.exports = React.createClass({
     }
   },
 
-  getExpansionNames: function() {
-    var result = [];
-    $.each(this.props.deck.cards, function(i, e) {
-        if ($.inArray(e.expansion, result) == -1) result.push(e.expansion);
-    });
-
-    return result.sort().join(" ");
-  },
-
   render: function() {
     var cards = this.getCards();
-    var expansions = this.getExpansionNames();
-
+    
     return(
       <div id='deck'>
-        <p>{expansions}</p>
-        {cards}
+        <Meta deck={this.props.deck}/>
+        <div id='cards'>
+          {cards}
+        </div>
       </div>
     );
   }

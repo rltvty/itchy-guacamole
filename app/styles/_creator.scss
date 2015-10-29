@@ -6,6 +6,17 @@
 #deck {
   text-align: center;
 
+  #meta {
+    overflow: auto;
+    text-align: left;
+
+    div {
+      float: left;
+      margin: 25px 10%;
+      width: 30%;
+    }
+  }
+
   p {
     margin-bottom: 0;
   }

@@ -9,7 +9,7 @@ module.exports = React.createClass({
   displayName: 'Creator',
 
   componentDidMount: function() {
-    document.title = "Dom Bot | Creator";
+    this.suggestDeck();
   },
 
   getInitialState: function() {
@@ -44,9 +44,7 @@ module.exports = React.createClass({
 
     return(
       <div>
-        <button id='suggest' className='btn btn-primary btn-lg' onClick={this.suggestDeck} disabled={this.state.loading}>Suggest Deck</button>
-        <Deck deck={this.state.deck}/>
-        { this.state.loading ? <Loading /> : null }
+        { this.state.loading ? <Loading /> : <Deck deck={this.state.deck}/> }
         { this.state.error ? <Error /> : null }
       </div>
     );
