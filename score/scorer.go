@@ -12,10 +12,11 @@ var rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 // Weights are used to tweak the influence of different scoring techniques
 type Weights struct {
-	Trashing   uint
-	Random     uint
-	Chaining   uint
+	Trashing   uint `json:"trashing"`
+	Random     uint `json:"random"`
+	Chaining   uint `json:"chaining"`
 	CostSpread uint `json:"random"`
+	SetCount   uint `json:"set_count"`
 }
 
 // Evaluate returns a value describing how awesome a game would be using a deck
@@ -24,8 +25,28 @@ func Evaluate(c Weights, d deck.Deck) (score uint) {
 	score += (1 + c.Random) * evaluateRandom(d)
 	score += (1 + c.Chaining) * evaluateChaining(d)
 	score += (1 + c.CostSpread) * evaluateCostSpread(d)
+	score += (1 + c.SetCount) * evaluateSetCount(d)
 
 	return score
+}
+
+func evaluateSetCount(d deck.Deck) uint {
+	sets := map[string]bool
+	for _, card := range d.Cards {
+		sets[card.Exapansion] = true
+	}
+
+	// Totally arbitrary!
+	switch len(sets) {
+	case 1:
+		return 70
+	case 2:
+		return 100
+	case 3:
+		return 50
+	default:
+		return 0
+	}
 }
 
 func evaluateTrashing(d deck.Deck) uint {
