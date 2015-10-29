@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/dom-bot/itchy-guacamole/deck"
+	"github.com/dom-bot/itchy-guacamole/score"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -26,13 +27,37 @@ type deckResponse struct {
 }
 
 func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	var (
+		weights  score.Weights
+		maxScore uint
+		d        = deck.NewRandomDeck()
+	)
+
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(&weights)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Error decoding JSON body: %s", err), http.StatusBadRequest)
+		return
+	}
+
+	maxScore = score.Evaluate(weights, d)
+
+	for i := 0; i < 1000; i++ {
+		candidateDeck := deck.NewRandomDeck()
+		candidateScore := score.Evaluate(weights, candidateDeck)
+		if candidateScore > maxScore {
+			d = candidateDeck
+			maxScore = candidateScore
+		}
+	}
+
 	enc := json.NewEncoder(w)
-	_ = enc.Encode(deck.NewRandomDeck())
+	_ = enc.Encode(d)
 
 	w.Header().Set("Content-Type", "application/json")
 }
 
-func IndexRoute(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func indexRoute(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	contents, err := ioutil.ReadFile("app/public/index.html")
 	if err != nil {
 		log.Println(err)
