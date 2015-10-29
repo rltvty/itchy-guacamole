@@ -10,7 +10,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func IndexRoute(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func indexRoute(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		contents, err := ioutil.ReadFile("app/public/index.html")
 		if err != nil {
 	    log.Println(err)
@@ -26,7 +26,7 @@ func SetRoutes() *httprouter.Router {
 	dir, _ := os.Getwd()
 
 	router.ServeFiles("/static/*filepath", http.Dir(dir+"/app/public"))
-	router.GET("/history", IndexRoute)
-	router.GET("/", IndexRoute)
+	router.GET("/history", indexRoute)
+	router.GET("/", indexRoute)
 	return router
 }

@@ -58,3 +58,22 @@ html {
     }
   }
 }
+
+#suggest {
+  display: block;
+  margin: 25px auto 0;
+}
+
+#deck {
+  text-align: center;
+
+  .card {
+    width: 18%;
+    margin: 30px 1%;
+    display: inline-block;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}
