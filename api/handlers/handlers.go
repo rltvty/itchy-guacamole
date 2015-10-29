@@ -54,7 +54,7 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 	maxScore = score.Evaluate(weights, d)
 
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 100; i++ {
 		candidateDeck := deck.NewRandomDeck()
 		candidateScore := score.Evaluate(weights, candidateDeck)
 		if candidateScore > maxScore {
