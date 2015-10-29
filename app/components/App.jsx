@@ -27,12 +27,9 @@ var App = React.createClass({
 
 // Actual routing hierarchy
 ReactDOM.render((
-  /*
   <Router history={createBrowserHistory()}>
     <Route path="/static" component={App}>
       <IndexRoute component={Creator} />
     </Route>
   </Router>
-  */
-  <App />
 ), document.getElementById('content'));
