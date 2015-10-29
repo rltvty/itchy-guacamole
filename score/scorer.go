@@ -12,11 +12,12 @@ var rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 // Weights are used to tweak the influence of different scoring techniques
 type Weights struct {
-	Trashing   uint `json:"trashing"`
-	Random     uint `json:"random"`
-	Chaining   uint `json:"chaining"`
-	CostSpread uint `json:"random"`
-	SetCount   uint `json:"set_count"`
+	Trashing      uint `json:"trashing"`
+	Random        uint `json:"random"`
+	Chaining      uint `json:"chaining"`
+	CostSpread    uint `json:"random"`
+	SetCount      uint `json:"set_count"`
+	MechanicCount uint `json:"mechanic_count"`
 }
 
 // Evaluate returns a value describing how awesome a game would be using a deck
@@ -26,8 +27,58 @@ func Evaluate(c Weights, d deck.Deck) (score uint) {
 	score += (1 + c.Chaining) * evaluateChaining(d)
 	score += (1 + c.CostSpread) * evaluateCostSpread(d)
 	score += (1 + c.SetCount) * evaluateSetCount(d)
+	score += (1 + c.MechanicCount) * evaluateMechanicCount(d)
 
 	return score
+}
+
+func evaluateMechanicCount(d deck.Deck) uint {
+	count := 0
+
+	if d.Potions() {
+		count++
+	}
+	if d.CoinTokens() {
+		count++
+	}
+	if d.VictoryTokens() {
+		count++
+	}
+	if d.TavernMats() {
+		count++
+	}
+	if d.TradeRouteMats() {
+		count++
+	}
+	if d.NativeVillageMats() {
+		count++
+	}
+	if d.Spoils() {
+		count++
+	}
+	if d.Ruins() {
+		count++
+	}
+	if d.MinusOneCardTokens() {
+		count++
+	}
+	if d.MinusOneCoinTokens() {
+		count++
+	}
+	if d.JourneyTokens() {
+		count++
+	}
+
+	switch count {
+	case 0:
+		return 100
+	case 1:
+		return 100
+	case 2:
+		return 50
+	default:
+		return 0
+	}
 }
 
 func evaluateSetCount(d deck.Deck) uint {
@@ -118,7 +169,7 @@ func evaluateCostSpread(d deck.Deck) uint {
 		distribution[11]++
 	}
 
-	if d.Potions {
+	if d.Potions() {
 		distribution[4]++
 	}
 
