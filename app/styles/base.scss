@@ -1,3 +1,6 @@
+@import "_nav";
+@import "_deck";
+
 html {
   box-sizing: border-box;
 }
@@ -5,75 +8,11 @@ html {
   box-sizing: inherit;
 }
 
-#logo {
-  position: relative;
+#loading {
+  margin: 50px auto 50px;
   text-align: center;
-  height: 80px;
-  width: 100px;
-  margin: 10px auto;
-
-  background: {
-    image: url('/static/images/shield.png');
-    repeat: no-repeat;
-    position: center;
-    size: contain;
-  }
-
-  &::before {
-    content: "DOM";
-    left: -80px;
-    top: 14px;
-    font-family: sans-serif;
-    position: absolute;
-    font-size: 35px;
-  }
-
-  &::after {
-    content: "BOT";
-    right: -70px;
-    top: 14px;
-    font-family: sans-serif;
-    position: absolute;
-    font-size: 35px;
-  }
 }
 
-#nav {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-  text-align: center;
-
-  li {
-    display: inline-block;
-    margin: 0 10px;
-
-    a {
-      text-decoration: none;
-      color: black;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-#suggest {
-  display: block;
-  margin: 25px auto 0;
-}
-
-#deck {
-  text-align: center;
-
-  .card {
-    width: 18%;
-    margin: 30px 1%;
-    display: inline-block;
-
-    img {
-      max-width: 100%;
-    }
-  }
+#error {
+  margin: 30px 0;
 }

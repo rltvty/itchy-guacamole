@@ -1,0 +1,22 @@
+#suggest {
+  display: block;
+  margin: 25px auto 10px;
+}
+
+#deck {
+  text-align: center;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .card {
+    width: 18%;
+    margin: 10px 1%;
+    display: inline-block;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}
