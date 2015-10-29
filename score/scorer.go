@@ -31,9 +31,9 @@ func Evaluate(c Weights, d deck.Deck) (score uint) {
 }
 
 func evaluateSetCount(d deck.Deck) uint {
-	sets := map[string]bool
+	sets := make(map[string]bool)
 	for _, card := range d.Cards {
-		sets[card.Exapansion] = true
+		sets[card.Expansion] = true
 	}
 
 	// Totally arbitrary!

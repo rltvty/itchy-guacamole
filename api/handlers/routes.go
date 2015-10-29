@@ -8,13 +8,16 @@ import (
 )
 
 func SetRoutes() *httprouter.Router {
+	user := []byte("user")
+	pass := []byte("password")
+
 	router := httprouter.New()
-	router.POST("/deck", makeDeck)
+	router.POST("/deck", basicAuth(makeDeck, user, pass))
 
 	dir, _ := os.Getwd()
 
 	router.ServeFiles("/static/*filepath", http.Dir(dir+"/app/public"))
-	router.GET("/history", indexRoute)
-	router.GET("/", indexRoute)
+	router.GET("/history", basicAuth(indexRoute, user, pass))
+	router.GET("/", basicAuth(indexRoute, user, pass))
 	return router
 }
