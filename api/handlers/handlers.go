@@ -28,8 +28,8 @@ type deckHardware struct {
 }
 
 type deckResponse struct {
-	Cards                []Card       `json:"cards"`
-	Events               []Card       `json:"events"`
+	Cards                []deck.Card  `json:"cards"`
+	Events               []deck.Card  `json:"events"`
 	ColoniesAndPlatinums bool         `json:"colonies_and_platinums"`
 	Shelters             bool         `json:"shelters"`
 	Potions              bool         `json:"potions"`
@@ -67,7 +67,7 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		Cards:                d.Cards,
 		Events:               d.Events,
 		ColoniesAndPlatinums: d.ColoniesAndPlatinums,
-		Shelters:             d.Shelters(),
+		Shelters:             d.Shelters,
 		Potions:              d.Potions(),
 		Spoils:               d.Spoils(),
 		Ruins:                d.Ruins(),
