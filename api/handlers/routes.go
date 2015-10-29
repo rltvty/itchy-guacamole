@@ -13,9 +13,9 @@ import (
 func IndexRoute(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		contents, err := ioutil.ReadFile("app/public/index.html")
 		if err != nil {
-	    log.Fatal(err)
+	    log.Println(err)
 		}
-		
+
     fmt.Fprint(w, string(contents))
 }
 
