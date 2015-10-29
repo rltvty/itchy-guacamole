@@ -2,6 +2,9 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
 	"math/rand"
 	"net/http"
 	"time"
@@ -27,4 +30,13 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	_ = enc.Encode(deck.NewRandomDeck())
 
 	w.Header().Set("Content-Type", "application/json")
+}
+
+func IndexRoute(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	contents, err := ioutil.ReadFile("app/public/index.html")
+	if err != nil {
+		log.Println(err)
+	}
+
+	fmt.Fprint(w, string(contents))
 }
