@@ -18,6 +18,15 @@ module.exports = React.createClass({
   suggestDeck: function() {
     $.post('/deck', "{}", function(data) {
       data = JSON.parse(data);
+      data.cards.sort(function(a, b) {
+        if(a.cost_treasure > b.cost_treasure){
+          return 1;
+        } else if (a.cost_treasure < b.cost_treasure) {
+          return -1;
+        } else {
+          return 0;
+        }
+      })
       this.setState({ deck: data });
     }.bind(this)).fail(function(err) {
       console.error(err);
