@@ -24,11 +24,11 @@ var App = React.createClass({
       <div>
         <div id='nav'>
           <div id='nav-inner'>
-            <img src='/static/images/shield.png'></img>
+            <img src='/static/images/shield.png' alt='Dom Bot Shield' title='Dom Bot Shield'></img>
             <h1>Dom Bot</h1>
             <ul id='menu'>
-              <li><Link to="/">Creator</Link></li>
-              <li><Link to="/history">History</Link></li>
+              <li><Link to="/" title='Creator'>Creator</Link></li>
+              <li><Link to="/history" title='History'>History</Link></li>
             </ul>
           </div>
         </div>

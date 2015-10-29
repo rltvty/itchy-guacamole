@@ -7,6 +7,7 @@ module.exports = React.createClass({
 
   getCards: function() {
     if(this.props.deck.cards && this.props.deck.cards.length > 0) {
+      this.props.deck.cards.sort(this.sortByCost);
       return this.renderCards();
     }
   },
@@ -19,6 +20,16 @@ module.exports = React.createClass({
         </Card>
       );
     });
+  },
+
+  sortByCost: function(a, b) {
+    if(a.cost_treasure > b.cost_treasure){
+      return 1;
+    } else if (a.cost_treasure < b.cost_treasure) {
+      return -1;
+    } else {
+      return 0;
+    }
   },
 
   getExpansionNames: function() {
