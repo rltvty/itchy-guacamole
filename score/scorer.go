@@ -22,5 +22,5 @@ func Evaluate(c Weights, d deck.Deck) (score uint) {
 }
 
 func evaluateRandom(d deck.Deck) uint {
-	return uint(rnd.Uint32())
+	return uint(rnd.Uint32()) % 100
 }
