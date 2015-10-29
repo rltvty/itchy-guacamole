@@ -24,6 +24,17 @@ module.exports = React.createClass({
     return result.sort();
   },
 
+  getResourceNames: function() {
+    var result = [];
+    if(this.props.deck.potions) { result.push("Potions"); }
+    if(this.props.deck.ruins) { result.push("Ruins"); }
+    if(this.props.deck.shelters) { result.push("Shelters"); }
+    if(this.props.deck.spoils) { result.push("Spoils"); }
+    if(this.props.deck.colonies_and_platinums) { result.push("Colonies/Platinums"); }
+
+    return result.sort();
+  },
+
   render: function() {
 
     var expansions = this.getExpansionNames().map(function(expansion, index) {
@@ -42,20 +53,38 @@ module.exports = React.createClass({
       );
     });
 
+    var resources = this.getResourceNames().map(function(resource, index) {
+      return (
+        <li key={index}>
+          {resource}
+        </li>
+      );
+    });
+
     return(
       <div id='meta'>
+
         <div id='expansions'>
           <h3>Sets</h3>
           <ul>
             {expansions}
           </ul>
         </div>
+
+        <div id='resources'>
+          <h3>Resources</h3>
+          <ul>
+            {resources}
+          </ul>
+        </div>
+
         <div id='hardware'>
           <h3>Hardware</h3>
           <ul>
             {hardware}
           </ul>
         </div>
+
       </div>
     );
   }

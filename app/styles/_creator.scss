@@ -8,12 +8,13 @@
 
   #meta {
     overflow: auto;
-    text-align: left;
+    text-align: center;
 
     div {
-      float: left;
-      margin: 25px 10%;
-      width: 30%;
+      display: inline-block;
+      vertical-align: top;
+      margin: 10px 50px;
+      text-align: left;
     }
   }
 
