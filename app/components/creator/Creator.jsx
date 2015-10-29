@@ -1,27 +1,35 @@
 'use strict'
-var React = require('react')
-var Deck = require('./Deck')
+var React = require('react');
+var Deck = require('./Deck');
+
+var classNames = require('classnames');
 
 module.exports = React.createClass({
   displayName: 'Creator',
 
+  componentDidMount: function() {
+    document.title = "Dom Bot | Creator";
+  },
+
   getInitialState: function() {
-    return {deck: []}
+    return { deck: {} };
   },
 
   suggestDeck: function() {
-    this.setState({
-      deck: [{name: "King's Court"}, {name: "Feast"}]
+    $.post('/deck', "{}", function(data) {
+      data = JSON.parse(data);
+      this.setState({ deck: data });
+    }.bind(this)).fail(function(err) {
+      console.error(err);
+      this.setState({ deck: {} });
     })
   },
 
   render: function() {
+
     return(
       <div>
-        <h1>
-          Deck Creator
-          <button onClick={this.suggestDeck}>Suggest Deck</button>
-        </h1>
+        <button id='suggest' className='btn btn-primary btn-lg' onClick={this.suggestDeck}>Suggest Deck</button>
         <Deck deck={this.state.deck}/>
       </div>
     );

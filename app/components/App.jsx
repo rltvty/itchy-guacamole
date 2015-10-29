@@ -12,6 +12,7 @@ var createBrowserHistory = require('history/lib/createBrowserHistory');
 
 /* Components to link to */
 var Creator = require('./creator/Creator');
+var History = require('./history/History');
 
 /* Styles */
 var styles = require('../styles/base.scss');
@@ -20,7 +21,16 @@ var styles = require('../styles/base.scss');
 var App = React.createClass({
   render() {
     return (
-      <Creator />
+      <div>
+        <div className='nav'>
+          <div id='logo'></div>
+          <ul id='nav'>
+            <li><Link to="/">Creator</Link></li>
+            <li><Link to="/history">History</Link></li>
+          </ul>
+        </div>
+        {this.props.children}
+      </div>
     );
   }
 });
@@ -28,8 +38,9 @@ var App = React.createClass({
 // Actual routing hierarchy
 ReactDOM.render((
   <Router history={createBrowserHistory()}>
-    <Route path="/static" component={App}>
+    <Route path="/" component={App}>
       <IndexRoute component={Creator} />
+      <Route path="history" component={History} />
     </Route>
   </Router>
 ), document.getElementById('content'));

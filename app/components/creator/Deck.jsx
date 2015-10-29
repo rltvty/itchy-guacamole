@@ -6,15 +6,13 @@ module.exports = React.createClass({
   displayName: 'Deck',
 
   getCards: function() {
-    if(this.props.deck.length > 0) {
+    if(this.props.deck.cards && this.props.deck.cards.length > 0) {
       return this.renderCards();
-    } else {
-      return this.noCards();
     }
   },
 
   renderCards: function() {
-    return this.props.deck.map(function(card, index) {
+    return this.props.deck.cards.map(function(card, index) {
       return (
         <Card key={index}>
           {card}
@@ -23,17 +21,11 @@ module.exports = React.createClass({
     });
   },
 
-  noCards: function() {
-    return (
-      <p>Hit the suggest button to get a deck</p>
-    );
-  },
-
   render: function() {
     var cards = this.getCards();
 
     return(
-      <div>
+      <div id='deck'>
         {cards}
       </div>
     );
