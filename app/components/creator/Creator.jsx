@@ -5,6 +5,10 @@ var Deck = require('./Deck')
 module.exports = React.createClass({
   displayName: 'Creator',
 
+  componentDidMount: function() {
+    document.title = "Dom Bot | Creator";
+  },
+
   getInitialState: function() {
     return {deck: []}
   },
