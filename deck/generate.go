@@ -37,8 +37,6 @@ func NewRandomDeck() Deck {
 		adventureCards  = 0
 		darkAgesCards   = 0
 		prosperityCards = 0
-		potions         = false
-		ruins           = false
 	)
 
 	for _, card := range cards {
@@ -50,9 +48,6 @@ func NewRandomDeck() Deck {
 		}
 		if card.Expansion == "Adventure" {
 			adventureCards++
-		}
-		if card.CostPotions > 0 {
-			potions = true
 		}
 
 		if card.Event {
@@ -73,7 +68,5 @@ func NewRandomDeck() Deck {
 		Events:               deckEvents,
 		ColoniesAndPlatinums: rnd.Intn(deckSize) < prosperityCards,
 		Shelters:             rnd.Intn(deckSize) < darkAgesCards,
-		Potions:              potions,
-		Ruins:                ruins,
 	}
 }

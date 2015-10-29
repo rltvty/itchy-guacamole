@@ -1,4 +1,19 @@
 {
+  "Baker": {
+    "coin_tokens": true
+  },
+  "Butcher": {
+    "coin_tokens": true
+  },
+  "Candlestick Maker": {
+    "coin_tokens": true
+  },
+  "Merchant Guild": {
+    "coin_tokens": true
+  },
+  "Plaza": {
+    "coin_tokens": true
+  },
   "Bank": {
     "description": "When you play this, it's worth 1 Coin per Treasure card you have in play (counting this).",
     "plus_actions": 0,
@@ -17,6 +32,7 @@
     "plus_buys": 0
   },
   "Bishop": {
+    "victory_tokens": true,
     "description": "+1VP. Trash a card from your hand. +VP equal to half its cost in coins, rounded down. Each other player may trash a card from his hand.",
     "plus_actions": 0,
     "expansion": "Prosperity",
@@ -119,6 +135,7 @@
     "plus_buys": 0
   },
   "Goons": {
+    "victory_tokens": true,
     "description": "Each other player discards down to 3 cards in hand. --While this is in play, when you buy a card, +1VP.",
     "plus_actions": 0,
     "expansion": "Prosperity",
@@ -221,6 +238,7 @@
     "plus_buys": 0
   },
   "Monument": {
+    "victory_tokens": true,
     "description": "+1VP",
     "plus_actions": 0,
     "expansion": "Prosperity",
@@ -340,6 +358,8 @@
     "plus_buys": 0
   },
   "Trade Route": {
+    "trade_route_mat": true,
+    "coin_tokens": true,
     "description": "+1 Coin per token on the Trade Route mat. Trash a card from your hand. Setup: Put a token on each Victory card Supply pile. When a card is gained from that pile, Move the token to the Trade Route mat.",
     "plus_actions": 0,
     "expansion": "Prosperity",
@@ -1242,6 +1262,7 @@
     "plus_buys": 0
   },
   "Embargo": {
+    "coin_tokens": true,
     "description": "Trash this card. Put an Embargo token on top of a Supply pile. (When you buy a card with an Embargo token on it, gain a Curse)",
     "plus_actions": 0,
     "expansion": "Seaside",
@@ -1399,6 +1420,7 @@
     "plus_buys": 0
   },
   "Native Village": {
+    "native_village_mat": true,
     "description": "Choose one: Set aside the top card of your deck face down on your Native Village mat; or put all the cards from your mat into your hand. You may look at the cards on your may at any time; return them to your deck at the end of the game.",
     "plus_actions": 2,
     "expansion": "Seaside",
@@ -1468,6 +1490,7 @@
     "plus_buys": 0
   },
   "Pirate Ship": {
+    "coin_tokens": true,
     "description": "Choose one: Each other player reveals the top 2 cards of his deck, trashes a revealed Treasure that you choose, discards the rest, and if anyone trashed a Treasure you take a Coin token; or +1 Coin per Coin token you've taken with Pirate Ships this game.",
     "plus_actions": 0,
     "expansion": "Seaside",
@@ -2711,6 +2734,7 @@
     "plus_buys": 0
   },
   "Bandit Camp": {
+    "spoils": true,
     "description": "Gain a Spoils.",
     "plus_actions": 2,
     "expansion": "Dark Ages",
@@ -2813,6 +2837,7 @@
     "plus_buys": 1
   },
   "Cultist": {
+    "ruins": true,
     "description": "Each other player gains a Ruins. You may play a Cultist from your hand. ___ When you trash this, +3 Cards.",
     "plus_actions": 0,
     "expansion": "Dark Ages",
@@ -2830,6 +2855,7 @@
     "plus_buys": 0
   },
   "Death Cart": {
+    "ruins": true,
     "description": "You may trash an Action card from your hand. If you don’t, trash this. ___ When you gain this, gain two Ruins.",
     "plus_actions": 0,
     "expansion": "Dark Ages",
@@ -3017,6 +3043,8 @@
     "plus_buys": 0
   },
   "Marauder": {
+    "spoils": true,
+    "ruins": true,
     "description": "Gain a Spoils. Each other player gains a Ruins.",
     "plus_actions": 0,
     "expansion": "Dark Ages",
@@ -3085,6 +3113,7 @@
     "plus_buys": 0
   },
   "Pillage": {
+    "spoils": true,
     "description": "Trash this. Each other player with 5 or more cards in hand reveals his hand and discards a card that you choose. Gain 2 Spoils.",
     "plus_actions": 0,
     "expansion": "Dark Ages",
@@ -3373,6 +3402,7 @@
     "plus_buys": 0
   },
   "Relic": {
+    "minus_one_card_token": true,
     "description": "",
     "plus_actions": 0,
     "expansion": "Adventures",
@@ -3405,6 +3435,7 @@
     "plus_buys": 0
   },
   "Guide": {
+    "tavern_mat": true,
     "description": "",
     "plus_actions": 1,
     "expansion": "Adventures",
@@ -3454,6 +3485,7 @@
     "plus_buys": 0
   },
   "Transmogrify": {
+    "tavern_mat": true,
     "description": "",
     "plus_actions": 1,
     "expansion": "Adventures",
@@ -3973,6 +4005,7 @@
     "expansion": "Adventures"
   },
   "Duplicate": {
+    "tavern_mat": true,
     "name": "Duplicate",
     "description": "",
     "cost_treasure": 4,
@@ -3989,6 +4022,7 @@
     "expansion": "Adventures"
   },
   "Bridge Troll": {
+    "minus_one_coin_token": true,
     "is_duration": true,
     "name": "Bridge Troll",
     "description": "",
@@ -4006,6 +4040,7 @@
     "expansion": "Adventures"
   },
   "Giant": {
+    "journey_token": true,
     "name": "Giant",
     "description": "",
     "cost_treasure": 5,
@@ -4022,6 +4057,7 @@
     "expansion": "Adventures"
   },
   "Miser": {
+    "tavern_mat": true,
     "name": "Miser",
     "description": "",
     "cost_treasure": 4,
@@ -4103,6 +4139,7 @@
     "expansion": "Adventures"
   },
   "Distant Lands": {
+    "tavern_mat": true,
     "name": "Distant Lands",
     "description": "",
     "cost_treasure": 5,
@@ -4119,6 +4156,7 @@
     "expansion": "Adventures"
   },
   "Wine Merchant": {
+    "tavern_mat": true,
     "name": "Wine Merchant",
     "description": "",
     "cost_treasure": 6,
@@ -4135,6 +4173,7 @@
     "expansion": "Adventures"
   },
   "Ranger": {
+    "journey_token": true,
     "name": "Ranger",
     "description": "",
     "cost_treasure": 4,
