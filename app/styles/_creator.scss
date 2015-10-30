@@ -10,6 +10,10 @@
     overflow: auto;
     text-align: center;
 
+    li {
+      text-transform: capitalize;
+    }
+
     div {
       display: inline-block;
       vertical-align: top;
