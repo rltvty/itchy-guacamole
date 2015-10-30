@@ -157,7 +157,7 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	if req.VetoProbability == nil || (req.VetoProbability == veto.Probability{}) {
+	if req.VetoProbability == nil || (req.VetoProbability == &veto.Probability{}) {
 		fmt.Println("Using default probs")
 		// Defaults
 		vetoProbability = veto.Probability{
