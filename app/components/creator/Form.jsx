@@ -20,7 +20,6 @@ module.exports = React.createClass({
   handleChange: function() {
     var selectedSets = this.refs.setsGroup.getCheckedValues();
     this.setState({selectedSets: selectedSets});
-    console.log(this.state)
   },
 
   getSets: function() {
