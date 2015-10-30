@@ -25,7 +25,6 @@ module.exports = React.createClass({
 
   buildDeck: function() {
     this.setState({loading: true});
-    console.log(this.getParams())
     var selectedSets = JSON.stringify(this.getParams());
     $.post('/deck', selectedSets, function(data) {
       data = JSON.parse(data);
