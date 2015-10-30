@@ -7,12 +7,14 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// SetRoutes sets the routes
 func SetRoutes() *httprouter.Router {
 	user := []byte("user")
 	pass := []byte("password")
 
 	router := httprouter.New()
 	router.POST("/deck", basicAuth(makeDeck, user, pass))
+	router.GET("/deck/:id", basicAuth(getDeck, user, pass))
 
 	dir, _ := os.Getwd()
 
