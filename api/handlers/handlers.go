@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -28,6 +29,7 @@ type deckHardware struct {
 }
 
 type deckResponse struct {
+	ID                   string       `json:"id"`
 	Cards                []deck.Card  `json:"cards"`
 	Events               []deck.Card  `json:"events"`
 	ColoniesAndPlatinums bool         `json:"colonies_and_platinums"`
@@ -36,6 +38,51 @@ type deckResponse struct {
 	Spoils               bool         `json:"spoils"`
 	Ruins                bool         `json:"ruins"`
 	Hardware             deckHardware `json:"hardware"`
+}
+
+func getDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	idBase64 := ps.ByName("id")
+	if idBase64 == "" {
+		http.Error(w, "missing 'id'", http.StatusBadRequest)
+		return
+	}
+
+	id, err := base64.URLEncoding.DecodeString(idBase64)
+	if idBase64 == "" {
+		http.Error(w, fmt.Sprintf("unable to decode ID: %s", err), http.StatusBadRequest)
+		return
+	}
+
+	d, err := deck.NewDeckFromID(id)
+	if idBase64 == "" {
+		http.Error(w, fmt.Sprintf("unable to deserialize ID: %s", err), http.StatusBadRequest)
+		return
+	}
+
+	resp := deckResponse{
+		ID:                   base64.URLEncoding.EncodeToString(d.ID()),
+		Cards:                d.Cards,
+		Events:               d.Events,
+		ColoniesAndPlatinums: d.ColoniesAndPlatinums,
+		Shelters:             d.Shelters,
+		Potions:              d.Potions(),
+		Spoils:               d.Spoils(),
+		Ruins:                d.Ruins(),
+		Hardware: deckHardware{
+			CoinTokens:         d.CoinTokens(),
+			VictoryTokens:      d.VictoryTokens(),
+			MinusOneCardTokens: d.MinusOneCardTokens(),
+			MinusOneCoinTokens: d.MinusOneCoinTokens(),
+			JourneyTokens:      d.JourneyTokens(),
+			TavernMats:         d.TavernMats(),
+			TradeRouteMats:     d.TradeRouteMats(),
+			NativeVillageMats:  d.NativeVillageMats(),
+		},
+	}
+	enc := json.NewEncoder(w)
+	_ = enc.Encode(resp)
+
+	w.Header().Set("Content-Type", "application/json")
 }
 
 func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -64,6 +111,7 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	}
 
 	resp := deckResponse{
+		ID:                   base64.URLEncoding.EncodeToString(d.ID()),
 		Cards:                d.Cards,
 		Events:               d.Events,
 		ColoniesAndPlatinums: d.ColoniesAndPlatinums,

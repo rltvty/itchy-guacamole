@@ -1,5 +1,7 @@
 package deck
 
+import "fmt"
+
 // Card describes a dominion card
 type Card struct {
 	CostPotions       int    `json:"cost_potions"`
@@ -7,7 +9,7 @@ type Card struct {
 	Description       string `json:"description"`
 	Event             bool   `json:"event"`
 	Expansion         string `json:"expansion"`
-	ID                int    `json:"id"`
+	ID                uint   `json:"id"`
 	IsAttack          bool   `json:"is_attack"`
 	IsReaction        bool   `json:"is_reaction"`
 	IsDuration        bool   `json:"is_duration"`
@@ -29,4 +31,17 @@ type Card struct {
 	MinusOneCardToken bool   `json:"minus_one_card_token"`
 	MinusOneCoinToken bool   `json:"minus_one_coin_token"`
 	JourneyToken      bool   `json:"journey_token"`
+}
+
+func (c Card) String() string {
+	return fmt.Sprintf("{%d:%s}", c.ID, c.Name)
+}
+
+func cardByID(id uint) (c Card, ok bool) {
+	for _, card := range cards {
+		if card.ID == id {
+			return card, true
+		}
+	}
+	return c, false
 }
