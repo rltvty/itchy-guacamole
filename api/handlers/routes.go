@@ -16,7 +16,7 @@ func SetRoutes() *httprouter.Router {
 	router.POST("/deck", basicAuth(makeDeck, user, pass))
 	router.GET("/deck/:id", basicAuth(getDeck, user, pass))
 	router.GET("/sets", basicAuth(getSets, user, pass))
-	router.GET("/deck/slack", makeSlackDeck)
+	router.GET("/slack/deck", makeSlackDeck)
 
 	dir, _ := os.Getwd()
 
