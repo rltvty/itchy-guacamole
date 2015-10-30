@@ -49,7 +49,7 @@
 
 	/** @jsx React.DOM */'use strict'
 	var Creator = __webpack_require__(/*! ./creator/Creator */ 1);
-	var styles = __webpack_require__(/*! ../styles/base.scss */ 8);
+	var styles = __webpack_require__(/*! ../styles/base.scss */ 9);
 	
 	var App = React.createClass({displayName: "App",
 	
@@ -85,15 +85,18 @@
 
 	/** @jsx React.DOM */'use strict'
 	var Form = __webpack_require__(/*! ./Form */ 2);
-	var Deck = __webpack_require__(/*! ./Deck */ 3);
-	var Loading = __webpack_require__(/*! ../Loading */ 6);
-	var Error = __webpack_require__(/*! ../Error */ 7);
+	var Deck = __webpack_require__(/*! ./Deck */ 4);
+	var Loading = __webpack_require__(/*! ../Loading */ 7);
+	var Error = __webpack_require__(/*! ../Error */ 8);
 	
 	module.exports = React.createClass({
 	  displayName: 'Creator',
 	
 	  componentDidMount: function() {
-	    this.buildDeck();
+	    console.log()
+	
+	    var id = this.getQueryParam("id");
+	    this.buildDeck(id);
 	  },
 	
 	  getInitialState: function() {
@@ -108,24 +111,48 @@
 	    return { sets: this.refs.form.state.selectedSets };
 	  },
 	
-	  buildDeck: function() {
-	    this.setState({loading: true});
-	    var selectedSets = JSON.stringify(this.getParams());
-	    $.post('/deck', selectedSets, function(data) {
-	      data = JSON.parse(data);
-	      this.setState({
-	        deck: data,
-	        loading: false,
-	        error: false
-	      });
+	  getQueryParam: function(field) {
+	    var href = window.location.href;
+	    var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+	    var string = reg.exec(href);
+	    return string ? string[1] : null;
+	  },
+	
+	  setLoading: function() {
+	    this.setState({error: false, loading: true});
+	  },
+	
+	  handleError: function(err) {
+	    console.error(err);
+	    this.setState({error: true, loading: false});
+	  },
+	
+	  buildDeck: function(id) {
+	    this.setLoading();
+	    if(id) {
+	      this.getDeckByID(id);
+	    } else {
+	      this.getNewDeck();
+	    }
+	  },
+	
+	  getDeckByID: function(id) {
+	    $.getJSON('/deck/' + id).success(function(data) {
+	      this.setState({deck: data, loading: false});
 	    }.bind(this))
-	    .fail(function(err) {
-	      console.error(err);
-	      this.setState({
-	        deck: { cards: [] },
-	        loading: false,
-	        error: true
-	      });
+	    .error(function(err) {
+	      this.handleError(err);
+	    }.bind(this));
+	  },
+	
+	  getNewDeck: function() {
+	    var params = JSON.stringify(this.getParams());
+	    $.post('/deck', params).success(function(data) {
+	      data = JSON.parse(data);
+	      this.setState({deck: data, loading: false});
+	    }.bind(this))
+	    .error(function(err) {
+	      this.handleError(err);
 	    }.bind(this));
 	  },
 	
@@ -149,7 +176,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */'use strict'
-	var CheckboxGroup = __webpack_require__(/*! ./CheckboxGroup */ 12);
+	var CheckboxGroup = __webpack_require__(/*! ./CheckboxGroup */ 3);
 	
 	module.exports = React.createClass({
 	  displayName: 'Form',
@@ -200,14 +227,101 @@
 
 /***/ },
 /* 3 */
+/*!**********************************************!*\
+  !*** ./components/creator/CheckboxGroup.jsx ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	/** @jsx React.DOM *//**
+	* @jsx React.DOM
+	*/
+	'use strict'
+	module.exports = React.createClass({
+	  displayName: 'CheckboxGroup',
+	  getInitialState: function() {
+	    return {defaultValue: this.props.defaultValue || []};
+	  },
+	
+	  componentDidMount: function() {
+	    this.setCheckboxNames();
+	    this.setCheckedBoxes();
+	  },
+	
+	  componentDidUpdate: function() {
+	    this.setCheckboxNames();
+	    this.setCheckedBoxes();
+	  },
+	
+	  render: function() {
+	    let $__0=     this.props,name=$__0.name,value=$__0.value,defaultValue=$__0.defaultValue,otherProps=(function(source, exclusion) {var rest = {};var hasOwn = Object.prototype.hasOwnProperty;if (source == null) {throw new TypeError();}for (var key in source) {if (hasOwn.call(source, key) && !hasOwn.call(exclusion, key)) {rest[key] = source[key];}}return rest;})($__0,{name:1,value:1,defaultValue:1});
+	    return (
+	      React.createElement("div", React.__spread({},  otherProps), 
+	        this.props.children
+	      )
+	    );
+	  },
+	
+	  setCheckboxNames: function() {
+	    // stay DRY and don't put the same `name` on all checkboxes manually. Put it on
+	    // the tag and it'll be done here
+	    let $checkboxes = this.getCheckboxes();
+	    for (let i = 0, length = $checkboxes.length; i < length; i++) {
+	      $checkboxes[i].setAttribute('name', this.props.name);
+	    }
+	  },
+	
+	  getCheckboxes: function() {
+	    return ReactDOM.findDOMNode(this).querySelectorAll('input[type="checkbox"]');
+	  },
+	
+	  setCheckedBoxes: function() {
+	    let $checkboxes = this.getCheckboxes();
+	    // if `value` is passed from parent, always use that value. This is similar
+	    // to React's controlled component. If `defaultValue` is used instead,
+	    // subsequent updates to defaultValue are ignored. Note: when `defaultValue`
+	    // and `value` are both passed, the latter takes precedence, just like in
+	    // a controlled component
+	    let destinationValue = this.props.value != null
+	      ? this.props.value
+	      : this.state.defaultValue;
+	
+	    for (let i = 0, length = $checkboxes.length; i < length; i++) {
+	      let $checkbox = $checkboxes[i];
+	
+	      // intentionally use implicit conversion for those who accidentally used,
+	      // say, `valueToChange` of 1 (integer) to compare it with `value` of "1"
+	      // (auto conversion to valid html value from React)
+	      if (destinationValue.indexOf($checkbox.value) >= 0) {
+	        $checkbox.checked = true;
+	      }
+	    }
+	  },
+	
+	  getCheckedValues: function() {
+	    let $checkboxes = this.getCheckboxes();
+	
+	    let checked = [];
+	    for (let i = 0, length = $checkboxes.length; i < length; i++) {
+	      if ($checkboxes[i].checked) {
+	        checked.push($checkboxes[i].value);
+	      }
+	    }
+	
+	    return checked;
+	  }
+	});
+
+
+/***/ },
+/* 4 */
 /*!*************************************!*\
   !*** ./components/creator/Deck.jsx ***!
   \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */'use strict'
-	var Card = __webpack_require__(/*! ./Card */ 4);
-	var Meta = __webpack_require__(/*! ./Meta */ 5);
+	var Card = __webpack_require__(/*! ./Card */ 5);
+	var Meta = __webpack_require__(/*! ./Meta */ 6);
 	
 	module.exports = React.createClass({
 	  displayName: 'Deck',
@@ -244,6 +358,7 @@
 	
 	    return(
 	      React.createElement("div", {id: "deck"}, 
+	        React.createElement("a", {href: "/?id=" + this.props.deck.id, target: "_blank"}, "Share this deck"), 
 	        React.createElement(Meta, {deck: this.props.deck}), 
 	        React.createElement("div", {id: "cards"}, 
 	          cards
@@ -255,7 +370,7 @@
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /*!*************************************!*\
   !*** ./components/creator/Card.jsx ***!
   \*************************************/
@@ -281,7 +396,7 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /*!*************************************!*\
   !*** ./components/creator/Meta.jsx ***!
   \*************************************/
@@ -381,7 +496,7 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /*!********************************!*\
   !*** ./components/Loading.jsx ***!
   \********************************/
@@ -403,7 +518,7 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /*!******************************!*\
   !*** ./components/Error.jsx ***!
   \******************************/
@@ -425,7 +540,7 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /*!**************************!*\
   !*** ./styles/base.scss ***!
   \**************************/
@@ -434,10 +549,10 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./../~/sass-loader!./base.scss */ 9);
+	var content = __webpack_require__(/*! !./../~/css-loader!./../~/sass-loader!./base.scss */ 10);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 11)(content, {});
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 12)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -454,13 +569,13 @@
 	}
 
 /***/ },
-/* 9 */
+/* 10 */
 /*!*********************************************************!*\
   !*** ./~/css-loader!./~/sass-loader!./styles/base.scss ***!
   \*********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 10)();
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 11)();
 	// imports
 	
 	
@@ -471,7 +586,7 @@
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /*!**************************************!*\
   !*** ./~/css-loader/lib/css-base.js ***!
   \**************************************/
@@ -530,7 +645,7 @@
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /*!*************************************!*\
   !*** ./~/style-loader/addStyles.js ***!
   \*************************************/
@@ -755,93 +870,6 @@
 		if(oldSrc)
 			URL.revokeObjectURL(oldSrc);
 	}
-
-
-/***/ },
-/* 12 */
-/*!**********************************************!*\
-  !*** ./components/creator/CheckboxGroup.jsx ***!
-  \**********************************************/
-/***/ function(module, exports) {
-
-	/** @jsx React.DOM *//**
-	* @jsx React.DOM
-	*/
-	'use strict'
-	module.exports = React.createClass({
-	  displayName: 'CheckboxGroup',
-	  getInitialState: function() {
-	    return {defaultValue: this.props.defaultValue || []};
-	  },
-	
-	  componentDidMount: function() {
-	    this.setCheckboxNames();
-	    this.setCheckedBoxes();
-	  },
-	
-	  componentDidUpdate: function() {
-	    this.setCheckboxNames();
-	    this.setCheckedBoxes();
-	  },
-	
-	  render: function() {
-	    let $__0=     this.props,name=$__0.name,value=$__0.value,defaultValue=$__0.defaultValue,otherProps=(function(source, exclusion) {var rest = {};var hasOwn = Object.prototype.hasOwnProperty;if (source == null) {throw new TypeError();}for (var key in source) {if (hasOwn.call(source, key) && !hasOwn.call(exclusion, key)) {rest[key] = source[key];}}return rest;})($__0,{name:1,value:1,defaultValue:1});
-	    return (
-	      React.createElement("div", React.__spread({},  otherProps), 
-	        this.props.children
-	      )
-	    );
-	  },
-	
-	  setCheckboxNames: function() {
-	    // stay DRY and don't put the same `name` on all checkboxes manually. Put it on
-	    // the tag and it'll be done here
-	    let $checkboxes = this.getCheckboxes();
-	    for (let i = 0, length = $checkboxes.length; i < length; i++) {
-	      $checkboxes[i].setAttribute('name', this.props.name);
-	    }
-	  },
-	
-	  getCheckboxes: function() {
-	    return ReactDOM.findDOMNode(this).querySelectorAll('input[type="checkbox"]');
-	  },
-	
-	  setCheckedBoxes: function() {
-	    let $checkboxes = this.getCheckboxes();
-	    // if `value` is passed from parent, always use that value. This is similar
-	    // to React's controlled component. If `defaultValue` is used instead,
-	    // subsequent updates to defaultValue are ignored. Note: when `defaultValue`
-	    // and `value` are both passed, the latter takes precedence, just like in
-	    // a controlled component
-	    let destinationValue = this.props.value != null
-	      ? this.props.value
-	      : this.state.defaultValue;
-	
-	    for (let i = 0, length = $checkboxes.length; i < length; i++) {
-	      let $checkbox = $checkboxes[i];
-	
-	      // intentionally use implicit conversion for those who accidentally used,
-	      // say, `valueToChange` of 1 (integer) to compare it with `value` of "1"
-	      // (auto conversion to valid html value from React)
-	      if (destinationValue.indexOf($checkbox.value) >= 0) {
-	        $checkbox.checked = true;
-	      }
-	    }
-	  },
-	
-	  getCheckedValues: function() {
-	    let $checkboxes = this.getCheckboxes();
-	
-	    let checked = [];
-	    for (let i = 0, length = $checkboxes.length; i < length; i++) {
-	      if ($checkboxes[i].checked) {
-	        checked.push($checkboxes[i].value);
-	      }
-	    }
-	
-	    return checked;
-	  }
-	});
 
 
 /***/ }
