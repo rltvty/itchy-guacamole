@@ -15,6 +15,7 @@ func SetRoutes() *httprouter.Router {
 	router := httprouter.New()
 	router.POST("/deck", basicAuth(makeDeck, user, pass))
 	router.GET("/deck/:id", basicAuth(getDeck, user, pass))
+	router.GET("/sets", basicAuth(getSets, user, pass))
 
 	dir, _ := os.Getwd()
 

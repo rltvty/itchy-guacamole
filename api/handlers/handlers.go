@@ -65,6 +65,23 @@ func init() {
 	fmt.Printf("Using Sets: %+v\n", availableSets)
 }
 
+func getSets(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	sets := make([]string, 0, 10)
+
+	setString := os.Getenv("SETS")
+	if setString == "" {
+		sets = append(sets, string(deck.Dominion))
+
+	} else {
+		sets = strings.Split(setString, `,`)
+	}
+
+	enc := json.NewEncoder(w)
+	_ = enc.Encode(sets)
+
+	w.Header().Set("Content-Type", "application/json")
+}
+
 func getDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	idBase64 := ps.ByName("id")
 	if idBase64 == "" {
