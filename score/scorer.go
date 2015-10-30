@@ -82,9 +82,9 @@ func evaluateMechanicCount(d deck.Deck) uint {
 }
 
 func evaluateSetCount(d deck.Deck) uint {
-	sets := make(map[deck.Expansion]bool)
+	sets := make(map[deck.Set]bool)
 	for _, card := range d.Cards {
-		sets[card.Expansion] = true
+		sets[card.Set] = true
 	}
 
 	// Totally arbitrary!

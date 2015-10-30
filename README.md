@@ -3,12 +3,12 @@ Dom Bot App :tada:
 
 ## Use
 
-The server accepts some ENV variables.  `EXPANSIONS` is a comma-delimited list
-of Dominion expansions to use when generating decks.  See `deck/cards.go` for
+The server accepts some ENV variables.  `SETS` is a comma-delimited list
+of Dominion sets to use when generating decks.  See `deck/cards.go` for
 valid values.  Example:
 
 ```
-EXPANSIONS=Dominion,DarkAges,Adventures go run main.go
+SETS=Dominion,DarkAges,Adventures go run main.go
 ```
 
 You can also specify a `PORT` value to control the port on which the API is
