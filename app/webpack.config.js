@@ -10,11 +10,6 @@ module.exports = {
             { test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$/, loader: "file" },
         ]
     },
-    externals: {
-        //don't bundle the 'react' npm package with our bundle.js
-        //but get it from a global 'React' variable
-        'react': 'React'
-    },
     resolve: {
         extensions: ['', '.js', '.jsx']
     }

@@ -7,9 +7,6 @@ module.exports = React.createClass({
   displayName: 'Creator',
 
   componentDidMount: function() {
-    $('#build-deck').click(function() {
-      this.buildDeck();
-    }.bind(this));
     this.buildDeck();
   },
 
