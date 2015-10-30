@@ -42,7 +42,7 @@ module.exports = React.createClass({
 
   handleError: function(err) {
     console.error(err);
-    this.setState({error: true, loading: false});
+    this.setState({deck: { cards: [] }, error: true, loading: false});
   },
 
   getDeckByID: function(id) {
