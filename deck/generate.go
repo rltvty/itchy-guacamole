@@ -29,7 +29,7 @@ func init() {
 }
 
 // NewRandomDeck returns a randomly selected deck
-func NewRandomDeck(expansions map[Expansion]bool) Deck {
+func NewRandomDeck(sets Sets) Deck {
 	var (
 		deckCards       = make([]Card, 0, 10)
 		deckEvents      = make([]Card, 0, 0)
@@ -42,16 +42,16 @@ func NewRandomDeck(expansions map[Expansion]bool) Deck {
 	for _, i := range rnd.Perm(len(cards)) {
 		card := cards[i]
 
-		if !expansions[card.Expansion] {
+		if !sets.Include(card.Set) {
 			continue
 		}
-		if card.Expansion == DarkAges {
+		if card.Set == DarkAges {
 			darkAgesCards++
 		}
-		if card.Expansion == Prosperity {
+		if card.Set == Prosperity {
 			prosperityCards++
 		}
-		if card.Expansion == Adventures {
+		if card.Set == Adventures {
 			adventureCards++
 		}
 

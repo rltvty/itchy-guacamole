@@ -3,12 +3,12 @@ Dom Bot App :tada:
 
 ## Use
 
-The server accepts some ENV variables.  `EXPANSIONS` is a comma-delimited list
-of Dominion expansions to use when generating decks.  See `deck/cards.go` for
+The server accepts some ENV variables.  `SETS` is a comma-delimited list
+of Dominion sets to use when generating decks.  See `deck/cards.go` for
 valid values.  Example:
 
 ```
-EXPANSIONS=Dominion,DarkAges,Adventures go run main.go
+SETS=dominion,dark_ages,adventures go run main.go
 ```
 
 You can also specify a `PORT` value to control the port on which the API is
@@ -71,7 +71,67 @@ served.
 
 ## API
 
+Create a deck
+
 ```
-curl -u user:password -X POST -d '{"trashing": 10, "random": 9, "chaining": 8, "cost_spread": 7, "set_count": 6, "mechanic_count": 5}' 'localhost:8000/deck'
-curl -u user:password 'localhost:8000/deck/ABEAPQBiAHgAFgBMAIoAGAA0ADYA'
+POST /deck
+{
+  "sets": {
+    "seaside": false, // Sets are included by default
+    "governor": false,
+  },
+  "weights": {
+    "trashing": 0,
+    "random": 2,
+    "chaining": 1,
+    "cost_spread": 3,
+    "set_count": 1,
+    "mechanic_count": 0
+  },
+}
+
+{
+  "id": "foo",
+  "cards": [],
+  "events": [],
+  "colonies_and_platinums": false,
+  "shelters": false,
+  "potions": false,
+  "ruins": false,
+  "hardware": {
+    "coin_tokens": false,
+    "victory_tokens": false,
+    "minus_one_card_tokens": false,
+    "minus_one_coin_tokens": false,
+    "journey_tokens": false,
+    "tavern_mats": false,
+    "trade_route_mats": false,
+    "native_village_mats": false
+  }
+}
+```
+
+Fetch a deck
+
+```
+GET /deck/foo
+{
+  "id": "foo",
+  "cards": [],
+  "events": [],
+  "colonies_and_platinums": false,
+  "shelters": false,
+  "potions": false,
+  "ruins": false,
+  "hardware": {
+    "coin_tokens": false,
+    "victory_tokens": false,
+    "minus_one_card_tokens": false,
+    "minus_one_coin_tokens": false,
+    "journey_tokens": false,
+    "tavern_mats": false,
+    "trade_route_mats": false,
+    "native_village_mats": false
+  }
+}
 ```

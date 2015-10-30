@@ -18,9 +18,14 @@ import (
 )
 
 var (
-	rnd        = rand.New(rand.NewSource(time.Now().UnixNano()))
-	expansions map[deck.Expansion]bool
+	rnd           = rand.New(rand.NewSource(time.Now().UnixNano()))
+	availableSets deck.Sets
 )
+
+type makeDeckRequest struct {
+	Sets    deck.Sets     `json:"sets"`
+	Weights score.Weights `json:"weights"`
+}
 
 type deckHardware struct {
 	CoinTokens         bool `json:"coin_tokens"`
@@ -46,19 +51,18 @@ type deckResponse struct {
 }
 
 func init() {
-	expansionString := os.Getenv("EXPANSIONS")
-	if expansionString == "" {
-		expansions = map[deck.Expansion]bool{deck.Dominion: true}
+	setString := os.Getenv("SETS")
+	if setString == "" {
+		availableSets.Add(deck.Dominion)
 	} else {
-		exps := strings.Split(expansionString, `,`)
-		expansions = make(map[deck.Expansion]bool, len(exps))
+		exps := strings.Split(setString, `,`)
 
 		for _, exp := range exps {
-			expansions[deck.Expansion(exp)] = true
+			availableSets.Add(deck.Set(exp))
 		}
 	}
 
-	fmt.Printf("Using expansions: %v\n", expansions)
+	fmt.Printf("Using Sets: %+v\n", availableSets)
 }
 
 func getDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -108,23 +112,33 @@ func getDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var (
-		weights  score.Weights
+		sets     = availableSets
+		req      makeDeckRequest
 		maxScore uint
-		d        = deck.NewRandomDeck(expansions)
+		d        deck.Deck
 	)
 
 	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&weights)
+	err := decoder.Decode(&req)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error decoding JSON body: %s", err), http.StatusBadRequest)
 		return
 	}
 
-	maxScore = score.Evaluate(weights, d)
+	if !req.Sets.Empty() {
+		sets.Intersect(req.Sets)
+	}
+	if sets.Empty() {
+		http.Error(w, "Can't generate a deck from no sets", http.StatusBadRequest)
+		return
+	}
+
+	d = deck.NewRandomDeck(sets)
+	maxScore = score.Evaluate(req.Weights, d)
 
 	for i := 0; i < 100; i++ {
-		candidateDeck := deck.NewRandomDeck(expansions)
-		candidateScore := score.Evaluate(weights, candidateDeck)
+		candidateDeck := deck.NewRandomDeck(sets)
+		candidateScore := score.Evaluate(req.Weights, candidateDeck)
 		if candidateScore > maxScore {
 			d = candidateDeck
 			maxScore = candidateScore
