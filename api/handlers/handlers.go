@@ -164,7 +164,7 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 			WhenTooExpensive:     0.9,
 			WhenNoTrashing:       0.9,
 			WhenNoChaining:       0.3,
-			WhenTooManySets:      0.7,
+			WhenTooManySets:      1.0,
 			WhenTooManyMechanics: 0.8,
 			WhenTooManyAttacks:   0.7,
 		}
