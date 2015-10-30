@@ -16,6 +16,7 @@ type Probability struct {
 	WhenNoChaining       float64 `json:"when_no_chaining"`
 	WhenTooManySets      float64 `json:"when_too_many_sets"`
 	WhenTooManyMechanics float64 `json:"when_too_many_mechanics"`
+	WhenTooManyAttacks   float64 `json:"when_too_many_attacks"`
 }
 
 // TooExpensive vetos decks with no low-cost cards
@@ -101,4 +102,17 @@ func TooManyMechanics(p Probability, d deck.Deck) bool {
 	}
 
 	return (count > 2) && rnd.Float64() < p.WhenTooManyMechanics
+}
+
+// TooManyAttacks vetos decks with more than 3 attack cards
+func TooManyAttacks(p Probability, d deck.Deck) bool {
+	count := 0
+
+	for _, card := range d.Cards {
+		if card.IsAttack {
+			count++
+		}
+	}
+
+	return (count > 3) && rnd.Float64() < p.WhenTooManySets
 }

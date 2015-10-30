@@ -157,6 +157,9 @@ GenerateDeck:
 	if veto.TooManyMechanics(req.VetoProbability, candidateDeck) {
 		goto GenerateDeck
 	}
+	if veto.TooManyAttacks(req.VetoProbability, candidateDeck) {
+		goto GenerateDeck
+	}
 	count++
 
 	candidateScore := score.Evaluate(req.Weights, candidateDeck)
