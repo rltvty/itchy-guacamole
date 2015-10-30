@@ -15,7 +15,7 @@ type Weights struct {
 	Trashing      uint `json:"trashing"`
 	Random        uint `json:"random"`
 	Chaining      uint `json:"chaining"`
-	CostSpread    uint `json:"random"`
+	CostSpread    uint `json:"cost_spread"`
 	SetCount      uint `json:"set_count"`
 	MechanicCount uint `json:"mechanic_count"`
 }
