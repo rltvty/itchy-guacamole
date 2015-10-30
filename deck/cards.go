@@ -1,28 +1,5 @@
 package deck
 
-// Set describes different dominion games and promotional cards
-type Set string
-
-const (
-	Dominion           Set = "Dominion"
-	Intrigue           Set = "Intrigue"
-	Seaside            Set = "Seaside"
-	Alchemy            Set = "Alchemy"
-	Prosperity         Set = "Prosperity"
-	Cornucopia         Set = "Cornucopia"
-	Hinterlands        Set = "Hinterlands"
-	DarkAges           Set = "DarkAges"
-	Guilds             Set = "Guilds"
-	Adventures         Set = "Adventures"
-	PromoEnvoy         Set = "Envoy"
-	PromoBlackMarket   Set = "BlackMarket"
-	PromoStash         Set = "Stash"
-	PromoWalledVillage Set = "WalledVillage"
-	PromoGovernor      Set = "Governor"
-	PromoPrince        Set = "Prince"
-	PromoSummon        Set = "Summon"
-)
-
 var cards = []Card{
 	Card{
 		CostPotions:   0,

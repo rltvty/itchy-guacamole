@@ -19,11 +19,11 @@ import (
 
 var (
 	rnd           = rand.New(rand.NewSource(time.Now().UnixNano()))
-	availableSets map[deck.Set]bool
+	availableSets deck.Sets
 )
 
 type makeDeckRequest struct {
-	Sets    []deck.Set    `json:"sets"`
+	Sets    deck.Sets     `json:"sets"`
 	Weights score.Weights `json:"weights"`
 }
 
@@ -53,17 +53,16 @@ type deckResponse struct {
 func init() {
 	setString := os.Getenv("SETS")
 	if setString == "" {
-		availableSets = map[deck.Set]bool{deck.Dominion: true}
+		availableSets.Add(deck.Dominion)
 	} else {
 		exps := strings.Split(setString, `,`)
-		availableSets = make(map[deck.Set]bool, len(exps))
 
 		for _, exp := range exps {
-			availableSets[deck.Set(exp)] = true
+			availableSets.Add(deck.Set(exp))
 		}
 	}
 
-	fmt.Printf("Using Sets: %v\n", availableSets)
+	fmt.Printf("Using Sets: %+v\n", availableSets)
 }
 
 func getDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -113,6 +112,7 @@ func getDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var (
+		sets     = availableSets
 		req      makeDeckRequest
 		maxScore uint
 		d        deck.Deck
@@ -125,13 +125,10 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	sets := make(map[deck.Set]bool, len(availableSets))
-	for _, exp := range req.Sets {
-		if availableSets[exp] {
-			sets[exp] = true
-		}
+	if !req.Sets.Empty() {
+		sets.Intersect(req.Sets)
 	}
-	if len(sets) == 0 {
+	if sets.Empty() {
 		http.Error(w, "Can't generate a deck from no sets", http.StatusBadRequest)
 		return
 	}

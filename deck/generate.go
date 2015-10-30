@@ -29,7 +29,7 @@ func init() {
 }
 
 // NewRandomDeck returns a randomly selected deck
-func NewRandomDeck(sets map[Set]bool) Deck {
+func NewRandomDeck(sets Sets) Deck {
 	var (
 		deckCards       = make([]Card, 0, 10)
 		deckEvents      = make([]Card, 0, 0)
@@ -42,7 +42,7 @@ func NewRandomDeck(sets map[Set]bool) Deck {
 	for _, i := range rnd.Perm(len(cards)) {
 		card := cards[i]
 
-		if !sets[card.Set] {
+		if !sets.Include(card.Set) {
 			continue
 		}
 		if card.Set == DarkAges {
