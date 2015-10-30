@@ -23,8 +23,8 @@ const (
 	PromoSummon        Expansion = "Summon"
 )
 
-var cards = map[string]Card{
-	"Adventurer": Card{
+var cards = []Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "Reveal cards from your deck until you reveal 2 Treasure  cards. Put those Treasure cards into your hand and discard the other revealed cards.",
@@ -41,7 +41,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Advisor": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -58,7 +58,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Alchemist": Card{
+	Card{
 		CostPotions:   1,
 		CostTreasure:  3,
 		Description:   "When you discard this from play, you may put this on top of your deck if you have a Potion in play.",
@@ -75,7 +75,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Alms": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  0,
 		Description:   "",
@@ -93,7 +93,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Altar": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "Trash a card from your hand. Gain a card costing up to $5.",
@@ -110,7 +110,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Ambassador": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Reveal a card from your hand.  Return up to 2 copies of it from your hand to the Supply.  Then each player gains a copy of it.",
@@ -127,7 +127,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Amulet": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -145,7 +145,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Apothecary": Card{
+	Card{
 		CostPotions:   1,
 		CostTreasure:  2,
 		Description:   "Reveal the top 4 cards of your deck.  Put the revealed Coppers and Potions into your hand. Put the other cards back on top of your deck in any order.",
@@ -162,7 +162,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Apprentice": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Trash a card from your hand. +1 Card per Coin it costs.  +2 Cards if there is a Potion in the cost.",
@@ -179,7 +179,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Armory": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Gain a card costing up to $4. Put it on top of your deck.",
@@ -196,7 +196,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Artificer": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -213,7 +213,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Baker": Card{
+	Card{
 		CoinTokens:    true,
 		CostPotions:   0,
 		CostTreasure:  5,
@@ -231,7 +231,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Ball": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -249,7 +249,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Band of Misfits": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Play this as if it were an Action card in the Supply costing less than it that you choose. This is that card until it leaves play.",
@@ -266,7 +266,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Bandit Camp": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Gain a Spoils.",
@@ -284,7 +284,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Bank": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  7,
 		Description:   "When you play this, it's worth 1 Coin per Treasure card you have in play (counting this).",
@@ -301,7 +301,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Baron": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "You may discard an Estate card.  If you do, +4 Coins. Otherwise, gain an Estate card.",
@@ -318,7 +318,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Bazaar": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -335,7 +335,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Beggar": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Gain 3 Coppers, putting them into your hand. ___ When another player plays an Attack card, you may discard this. If you do, gain two Silvers, putting one on top of your deck.",
@@ -352,7 +352,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Bishop": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "+1VP. Trash a card from your hand. +VP equal to half its cost in coins, rounded down. Each other player may trash a card from his hand.",
@@ -370,7 +370,7 @@ var cards = map[string]Card{
 		VictoryPoints: 0,
 		VictoryTokens: true,
 	},
-	"Black Market": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Reveal the top 3 cards of the Black Market deck. You may buy one of them immediately. Put the unbought cards on the bottom of the Black Market deck in any order. (Before the game, make a Black Market deck out of one copy of each Kingdom card not in the supply.)",
@@ -387,7 +387,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Bonfire": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -405,7 +405,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Border Village": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "When you gain this, gain a card costing less than this.",
@@ -422,7 +422,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Borrow": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  0,
 		Description:   "",
@@ -440,7 +440,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Bridge": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "All cards (including cards in players' hands) cost 1 Coin less this turn, but not less than 0.",
@@ -457,7 +457,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Bridge Troll": Card{
+	Card{
 		CostPotions:       0,
 		CostTreasure:      5,
 		Description:       "",
@@ -476,7 +476,7 @@ var cards = map[string]Card{
 		Treasure:          0,
 		VictoryPoints:     0,
 	},
-	"Bureaucrat": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Gain a Silver card; put it on top of your deck. Each other player reveals a Victory card from his hand and puts it on his deck (or reveals a hand with no Victory cards).",
@@ -493,7 +493,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Butcher": Card{
+	Card{
 		CoinTokens:    true,
 		CostPotions:   0,
 		CostTreasure:  5,
@@ -511,7 +511,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Cache": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "When you gain this, gain two Coppers.",
@@ -528,7 +528,7 @@ var cards = map[string]Card{
 		Treasure:      3,
 		VictoryPoints: 0,
 	},
-	"Candlestick Maker": Card{
+	Card{
 		CoinTokens:    true,
 		CostPotions:   0,
 		CostTreasure:  2,
@@ -546,7 +546,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Caravan": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "At the start of your next turn, +1 Card.",
@@ -564,7 +564,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Caravan Guard": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -582,7 +582,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Cartographer": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Look at the top 4 cards of your deck. Discard any number of them. Put the rest back on top in any order.",
@@ -599,7 +599,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Catacombs": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Look at the top 3 cards of your deck. Choose one: Put them into your hand; or discard them and +3 Cards. ___ When you trash this, gain a cheaper card.",
@@ -616,7 +616,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Cellar": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Discard any number of cards. +1 Card per card discarded.",
@@ -633,7 +633,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Chancellor": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "You may immediately put your deck into your discard pile.",
@@ -650,7 +650,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Chapel": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Trash up to 4 cards from your hand.",
@@ -667,7 +667,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"City": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "If there are one or more empty Supply piles, +1 Card. If there are two or more, +1 Coin and +1 Buy.",
@@ -684,7 +684,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Coin of the Realm": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "",
@@ -701,7 +701,7 @@ var cards = map[string]Card{
 		Treasure:      1,
 		VictoryPoints: 0,
 	},
-	"Conspirator": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "If you've played 3 or more Actions this turn (counting this): +1 Card, +1 Action.",
@@ -718,7 +718,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Contraband": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "When you play this, the player to your left names a card. You can't buy that card this turn.",
@@ -735,7 +735,7 @@ var cards = map[string]Card{
 		Treasure:      3,
 		VictoryPoints: 0,
 	},
-	"Coppersmith": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Copper produces an extra 1 Coin this turn.",
@@ -752,7 +752,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Council Room": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Each other player draws a card.",
@@ -769,7 +769,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Count": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Choose one: Discard 2 cards; put a card from your hand on top of your deck; or gain a Copper. Choose one: +$3; trash your hand; or gain a Duchy.",
@@ -786,7 +786,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Counterfeit": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "When you play this, you may play a treasure from your hand twice. If you do, trash that treasure.",
@@ -803,7 +803,7 @@ var cards = map[string]Card{
 		Treasure:      1,
 		VictoryPoints: 0,
 	},
-	"Counting House": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Look through your discard pile, reveal any number of Copper cards from it, and put them into your hand.",
@@ -820,7 +820,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Courtyard": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Put a card from your hand on top of your deck.",
@@ -837,7 +837,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Crossroads": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Reveal your hand. +1 per Victory card revealed. If this is the first time you played a Crossroads this turn, +3 Actions.",
@@ -854,7 +854,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Cultist": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Each other player gains a Ruins. You may play a Cultist from your hand. ___ When you trash this, +3 Cards.",
@@ -872,7 +872,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Cutpurse": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Each other player discards a Copper card (or reveals a hand with no Copper).",
@@ -889,7 +889,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Death Cart": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "You may trash an Action card from your hand. If you don’t, trash this. ___ When you gain this, gain two Ruins.",
@@ -907,7 +907,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Develop": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Trash a card from your hand. Gain a card costing exactly 1 Coin more than it and a card costing exactly 1 Coin less than it, in either order, putting them on top of your deck.",
@@ -924,7 +924,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Distant Lands": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -942,7 +942,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Doctor": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -959,7 +959,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Duchess": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Each player (including you) looks at the top card of his deck, and discards it or puts it back. In games using this, when you gain a Duchy, you may gain a Duchess.",
@@ -976,7 +976,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Duke": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Worth 1VP per Duchy you have.",
@@ -993,7 +993,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Dungeon": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -1011,7 +1011,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Duplicate": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -1029,7 +1029,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Embargo": Card{
+	Card{
 		CoinTokens:    true,
 		CostPotions:   0,
 		CostTreasure:  2,
@@ -1047,7 +1047,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Embassy": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Discard 3 cards. When you gain this, each other player gains a Silver.",
@@ -1064,7 +1064,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Envoy": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Reveal the top 5 cards of your deck. The player to your left chooses one for you to dicard. Draw the rest.",
@@ -1081,7 +1081,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Expand": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  7,
 		Description:   "Trash a card from your hand. Gain a card costing up to 3 Coins more than the trashed card.",
@@ -1098,7 +1098,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Expedition": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -1116,7 +1116,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Explorer": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "You may reveal a Province card from your hand. If you do, gain a Gold card, putting it into your hand. Otherwise, gain a Silver card, putting it into your hand.",
@@ -1133,7 +1133,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Fairgrounds": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "Worth 2 VP for every 5 differnly named cards in your deck (rounded down).",
@@ -1150,7 +1150,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Familiar": Card{
+	Card{
 		CostPotions:   1,
 		CostTreasure:  3,
 		Description:   "Each other player gains a Curse.",
@@ -1167,7 +1167,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Farming Village": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Reveal cards from the top of your deck until you reveal an Action or Treasure card. Put that card into your hand and discard the other cards.",
@@ -1184,7 +1184,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Farmland": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "When you buy this, trash a card from your hand. Gain a card costing exactly $2 more than the trashed card.",
@@ -1201,7 +1201,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 2,
 	},
-	"Feast": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Trash this card. Gain a card costing  up to 5 Coins.",
@@ -1218,7 +1218,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Feodum": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Worth 1 VP for every 3 Silvers in your deck. ___ When you trash this, gain 3 Silvers.",
@@ -1235,7 +1235,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 4,
 	},
-	"Ferry": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -1253,7 +1253,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Festival": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -1270,7 +1270,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Fishing Village": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "At the start of your next turn: +1 Action, +1 Coin.",
@@ -1288,7 +1288,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Fool's Gold": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "If this is the first time you played a Fool's Gold this turn, this is worth 1 Coin, otherwise it's worth 4 Coins. When another player gains a Province, you may trash this from your hand. If you do, gain a Gold, putting it on your deck.",
@@ -1305,7 +1305,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Forager": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Trash a card from your hand. +$1 per differently named Treasure in the trash.",
@@ -1322,7 +1322,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Forge": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  7,
 		Description:   "Trash any number of cards from your hand. Gain a card with cost exactly equal to the total cost in coins of the trashed cards.",
@@ -1339,7 +1339,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Fortress": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "When you trash this, put it into your hand.",
@@ -1356,7 +1356,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Fortune Teller": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Each other player reveals cards from the top of his deck until he reveals a Victory or Curse card. He puts it on top and discards the other revealed cards.",
@@ -1373,7 +1373,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Gardens": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Worth 1VP for every 10 cards in your deck (rounded down).",
@@ -1390,7 +1390,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Gear": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "",
@@ -1408,7 +1408,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Ghost Ship": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Each other player with 4 or more cards in hand puts cards from his hand on top of his deck until he has 3 cards in his hand.",
@@ -1425,7 +1425,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Giant": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -1443,7 +1443,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Golem": Card{
+	Card{
 		CostPotions:   1,
 		CostTreasure:  4,
 		Description:   "Reveal cards from your deck until you reveal 2 Action cards other than Golem cards. Discard the other cards, then play the Action cards in either order.",
@@ -1460,7 +1460,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Goons": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "Each other player discards down to 3 cards in hand. --While this is in play, when you buy a card, +1VP.",
@@ -1478,7 +1478,7 @@ var cards = map[string]Card{
 		VictoryPoints: 0,
 		VictoryTokens: true,
 	},
-	"Governor": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Choose one: you get the version in parentheses. Each player gets +1 (+3) Cards; or each player gains a Silver (Gold); or each player may trash a card from his hand and gain a card costing exactly 1 (2) more.",
@@ -1495,7 +1495,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Grand Market": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "You can't buy this if you have any Copper in play.",
@@ -1512,7 +1512,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Graverobber": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Choose one: Gain a card from the trash costing from $3 to $6, putting it on top of your deck; or trash an Action card from your hand and gain a card costing up to $3 more than it.",
@@ -1529,7 +1529,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Great Hall": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -1546,7 +1546,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 1,
 	},
-	"Guide": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -1564,7 +1564,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Haggler": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "While this is in play, when you buy a card, gain a card costing less than it that is not a Victory card.",
@@ -1581,7 +1581,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Hamlet": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "You may discard a card; If you do, +1 Action.  You may discard a card; If you do, +1 Buy.",
@@ -1598,7 +1598,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Harem": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "",
@@ -1615,7 +1615,7 @@ var cards = map[string]Card{
 		Treasure:      2,
 		VictoryPoints: 2,
 	},
-	"Harvest": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Reveal the top 4 cards of your deck, then discard them. +1 Coin per differently named card revealed.",
@@ -1632,7 +1632,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Haunted Woods": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -1650,7 +1650,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Haven": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Set aside a card from your hand face down. At the start of your next turn, put it into your hand.",
@@ -1668,7 +1668,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Herald": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -1685,7 +1685,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Herbalist": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "When you discard this from play, you may put one of your Treasures from play on top of your deck.",
@@ -1702,7 +1702,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Hermit": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Look through your discard pile. You may trash a card that is not a Treasure, from your discard pile or your hand. Gain a card costing up to $3. ___ When you discard this from play, if you didn’t buy any cards this turn, trash this and gain a Madman (from the Madman pile).",
@@ -1719,7 +1719,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Highway": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "While this is in play, cards cost $1 less, but not less than $0.",
@@ -1736,7 +1736,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Hireling": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "",
@@ -1754,7 +1754,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Hoard": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "While this is in play, when you buy a Victory card, gain a Gold.",
@@ -1771,7 +1771,7 @@ var cards = map[string]Card{
 		Treasure:      2,
 		VictoryPoints: 0,
 	},
-	"Horn of Plenty": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "When you play this, gain a card costing up to 1 Coin per differently named card you have in play, counting this. If it's a Victory card, trash this.",
@@ -1788,7 +1788,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Horse Traders": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Discard 2 cards. When another player plays an Attack card, you may set this aside from your hand. If you do, then at the start of your next turn, +1 Card and return this to your hand.",
@@ -1805,7 +1805,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Hunting Grounds": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "When this is trashed, gain a Duchy or 3 Estates",
@@ -1822,7 +1822,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Hunting Party": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Reveal your hand. Reveal cards from your deck until you reveal a card that isn't a duplicate of one in your hand and discard the rest.",
@@ -1839,7 +1839,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Ill-Gotten Gains": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "When you play this, you may gain a Copper, putting it into your hand. When you gain this, each other player gains a Curse.",
@@ -1856,7 +1856,7 @@ var cards = map[string]Card{
 		Treasure:      1,
 		VictoryPoints: 0,
 	},
-	"Inheritance": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  7,
 		Description:   "",
@@ -1874,7 +1874,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Inn": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Discard 2 cards. When you gain this, look through your discard pile (including this), reveal any number of Action cards from it, and shuffle them into your deck.",
@@ -1891,7 +1891,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Ironmonger": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Reveal the top card of your deck; you may discard it. If it is an Action card, +1 Action; a Treasure card, +$1; a Victory card, +1 Card.",
@@ -1908,7 +1908,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Ironworks": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Gain a card costing up to 4 Coins. If it is an Action card, +1 Action; Treasure card, +1 Coin; or Victory card, +1 Card.",
@@ -1925,7 +1925,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Island": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Set aside this and another card from your hand. Return them to your deck at the end of the game.",
@@ -1942,7 +1942,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 2,
 	},
-	"Jack of All Trades": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Gain a Silver. Look at the top card of your deck; discard it or put it back. Draw until you have 5 cards in hand. You may trash a card from your hand that is not a Treasure.",
@@ -1959,7 +1959,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Jester": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Each other player discards the top card of his deck. If it's a Victory card he gains a Curse. Otherwise he gains a copy of the discarded card or you do, your choice.",
@@ -1976,7 +1976,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Journeyman": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -1993,7 +1993,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Junk Dealer": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Trash a card from your hand.",
@@ -2010,7 +2010,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"King's Court": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  7,
 		Description:   "You may choose an Action card in your hand. Play it three times.",
@@ -2027,7 +2027,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Knights": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "One of each, all shuffled into one Kingdom pile.",
@@ -2044,7 +2044,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Laboratory": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -2061,7 +2061,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Library": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Draw until you have 7 cards in hand. You may set aside any Action cards drawn this way, as you draw them; discard the set aside cards after you finish drawing.",
@@ -2078,7 +2078,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Lighthouse": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Now and at the start of your next turn: +1 Coin. While this is in play, when another player plays an Attack card, it doesn't affect you.",
@@ -2096,7 +2096,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Loan": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "When you play this, reveal cards from your deck until you reveal a Treasure. Discard it or trash it. Discard the other cards.",
@@ -2113,7 +2113,7 @@ var cards = map[string]Card{
 		Treasure:      1,
 		VictoryPoints: 0,
 	},
-	"Lookout": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Look at the top 3 cards of your deck. Trash one of them. Discard one of them. Put the other one on top of your deck.",
@@ -2130,7 +2130,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Lost Arts": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "",
@@ -2148,7 +2148,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Lost City": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -2165,7 +2165,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Madman": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  0,
 		Description:   "Return this to the Madman pile. If you do, +1 Card per card in your hand. (This is not in the Supply.)",
@@ -2182,7 +2182,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Magpie": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -2199,7 +2199,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Mandarin": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Put a card from your hand on top of your deck. When you gain this, put all Treasures you have in play on top of your deck in any order.",
@@ -2216,7 +2216,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Marauder": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Gain a Spoils. Each other player gains a Ruins.",
@@ -2235,7 +2235,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Margrave": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Each other player draws a card, then discards down to 3 cards in hand.",
@@ -2252,7 +2252,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Market": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -2269,7 +2269,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Market Square": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "When one of your cards is trashed, you may discard this from your hand. If you do, gain a Gold.",
@@ -2286,7 +2286,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Masquerade": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Each player passes a card from his hand o the left once. Then you may trash a card from your hand.",
@@ -2303,7 +2303,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Masterpiece": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -2320,7 +2320,7 @@ var cards = map[string]Card{
 		Treasure:      1,
 		VictoryPoints: 0,
 	},
-	"Menagerie": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Reveal your hand. If there are no duplicate cards in it, +3 Cards. Otherwise, +1 Card.",
@@ -2337,7 +2337,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Mercenary": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  0,
 		Description:   "You may trash 2 cards from your hand. If you do, +2 Cards, + $2, and each other player discards down to 3 cards in hand. (This is not in the Supply.)",
@@ -2354,7 +2354,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Merchant Guild": Card{
+	Card{
 		CoinTokens:    true,
 		CostPotions:   0,
 		CostTreasure:  5,
@@ -2372,7 +2372,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Merchant Ship": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Now and at the start of your next turn: +2 Coins.",
@@ -2390,7 +2390,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Messenger": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "",
@@ -2407,7 +2407,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Militia": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Each other player discards down to 3 cards in his hand.",
@@ -2424,7 +2424,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Mine": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Trash a Treasure card from your hand. Gain a Treasure card costing up to 3 more; put it into your hand.",
@@ -2441,7 +2441,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Mining Village": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "You may trash this card immediately. If you do, +2 Coins.",
@@ -2458,7 +2458,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Minion": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Choose one: +2 Coins; or discard your hand, +4 Cards, and each other player with at least 5 cards in hand discards his hand and draws 4 cards.",
@@ -2475,7 +2475,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Mint": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "You may reveal a Treasure card from your hand. Gain a copy of it. When you buy this, trash all Treasures you have in play.",
@@ -2492,7 +2492,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Miser": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -2510,7 +2510,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Mission": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -2528,7 +2528,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Moat": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "When another player plays an Attack card, you may reveal this from your hand. If you do, you are unaffected by that Attack.",
@@ -2545,7 +2545,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Moneylender": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Trash a Copper card from your hand. If you do, +3 Coins.",
@@ -2562,7 +2562,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Monument": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "+1VP",
@@ -2580,7 +2580,7 @@ var cards = map[string]Card{
 		VictoryPoints: 0,
 		VictoryTokens: true,
 	},
-	"Mountebank": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Each other player may discard a Curse. If he doesn't, he gains a Curse and a Copper.",
@@ -2597,7 +2597,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Mystic": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Name a card. Reveal the top card of your deck. If it’s the named card, put it into your hand.",
@@ -2614,7 +2614,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Native Village": Card{
+	Card{
 		CostPotions:      0,
 		CostTreasure:     2,
 		Description:      "Choose one: Set aside the top card of your deck face down on your Native Village mat; or put all the cards from your mat into your hand. You may look at the cards on your may at any time; return them to your deck at the end of the game.",
@@ -2632,7 +2632,7 @@ var cards = map[string]Card{
 		Treasure:         0,
 		VictoryPoints:    0,
 	},
-	"Navigator": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Look at the top 5 cards of your deck. Either discard all of them, or put them back on top of your deck in any order.",
@@ -2649,7 +2649,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Noble Brigand": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "When you buy this or play it, each other player reveals the top 2 cards of his deck, trashes a revealed Silver or Gold you choose, and discards the rest. If he didn't reveal a Treasure, he gains a Copper. You gain the trashed cards.",
@@ -2666,7 +2666,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Nobles": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "Choose one: +3 Cards; or +2 Actions.",
@@ -2683,7 +2683,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 2,
 	},
-	"Nomad Camp": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "When you gain this, put it on top of your deck.",
@@ -2700,7 +2700,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Oasis": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Discard a card.",
@@ -2717,7 +2717,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Oracle": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Each player (including you) reveals the top 2 cards of his deck, and you choose one: either he discards them, or he puts them back on top in an order he chooses. +2 Cards.",
@@ -2734,7 +2734,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Outpost": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "You only draw 3 cards (instead of 5) in this turn's Clean-up phase. Take an extra turn after this one. This can't cause you to take more than two consecutive  turns.",
@@ -2752,7 +2752,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Page": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "",
@@ -2769,7 +2769,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Pathfinding": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  8,
 		Description:   "",
@@ -2787,7 +2787,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Pawn": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Choose two: +1 Card; +1 Action; +1 Buy; +1 Coin. (The choices must be different.)",
@@ -2804,7 +2804,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Pearl Diver": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Look at the bottom card of your deck. You may put it on top.",
@@ -2821,7 +2821,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Peasant": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "",
@@ -2838,7 +2838,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Peddler": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  8,
 		Description:   "During your Buy phase, this costs 2 Coins less per Action card you have in play, but not less than 0.",
@@ -2855,7 +2855,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Philosopher's Stone": Card{
+	Card{
 		CostPotions:   1,
 		CostTreasure:  3,
 		Description:   "When you play this card, count your deck and discard pile. Worth 1 Coin per 5 cards total between them (rounded down).",
@@ -2872,7 +2872,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Pilgrimage": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -2890,7 +2890,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Pillage": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Trash this. Each other player with 5 or more cards in hand reveals his hand and discards a card that you choose. Gain 2 Spoils.",
@@ -2908,7 +2908,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Pirate Ship": Card{
+	Card{
 		CoinTokens:    true,
 		CostPotions:   0,
 		CostTreasure:  4,
@@ -2926,7 +2926,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Plan": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -2944,7 +2944,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Plaza": Card{
+	Card{
 		CoinTokens:    true,
 		CostPotions:   0,
 		CostTreasure:  4,
@@ -2962,7 +2962,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Poor House": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  1,
 		Description:   "Reveal your hand. -$1 per Treasure card in your hand, to a minimum of $0.",
@@ -2979,7 +2979,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Port": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -2996,7 +2996,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Possession": Card{
+	Card{
 		CostPotions:   1,
 		CostTreasure:  6,
 		Description:   "The player to your left takes an extra turn after this one, in which you can see all cards he can and make all decisions for him. Any cards he would gain on that turn, you gain instead; any cards of his that are trashed are set aside and returned to his discard pile at the end of the turn.",
@@ -3013,7 +3013,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Procession": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "You may play an Action card from your hand twice. Trash it. Gain an Action card costing exactly $1 more than it.",
@@ -3030,7 +3030,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Quarry": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "While this card is in play, Action cards cost 2 Coins less, but not less than 0 Coins.",
@@ -3047,7 +3047,7 @@ var cards = map[string]Card{
 		Treasure:      1,
 		VictoryPoints: 0,
 	},
-	"Quest": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  0,
 		Description:   "",
@@ -3065,7 +3065,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Rabble": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Each other player reveals the top 3 cards of his deck, discard the revealed Actions and Treasures, and puts the rest back on top in any order he chooses.",
@@ -3082,7 +3082,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Raid": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -3100,7 +3100,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Ranger": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -3118,7 +3118,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Ratcatcher": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "",
@@ -3135,7 +3135,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Rats": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Gain a Rats. Trash a card from your hand other than a Rats (or reveal a hand of all Rats). ___ When this is trashed, +1 Card.",
@@ -3152,7 +3152,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Raze": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "",
@@ -3169,7 +3169,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Rebuild": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Name a card. Reveal cards from the top of your deck until you reveal a Victory card that is not the named card. Discard the other cards. Trash the Victory card and gain a Victory card costing up to $3 more than it.",
@@ -3186,7 +3186,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Relic": Card{
+	Card{
 		CostPotions:       0,
 		CostTreasure:      5,
 		Description:       "",
@@ -3204,7 +3204,7 @@ var cards = map[string]Card{
 		Treasure:          2,
 		VictoryPoints:     0,
 	},
-	"Remake": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Do this twice: Trash a card from your hand then gain a card costing exactly 1 more than the trashed card.",
@@ -3221,7 +3221,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Remodel": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Trash a card from your hand. Gain a card costing up to 2 Coins more than the trashed card.",
@@ -3238,7 +3238,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Rogue": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "If there are any cards in the trash costing from $3 to $6, gain one of them. Otherwise, each other player reveals the top 2 cards of his deck, trashes one of them costing from $3 to $6, and discards the rest.",
@@ -3255,7 +3255,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Royal Carriage": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -3272,7 +3272,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Royal Seal": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "While this is in play, when you gain a card, you may put it on top of your deck.",
@@ -3289,7 +3289,7 @@ var cards = map[string]Card{
 		Treasure:      2,
 		VictoryPoints: 0,
 	},
-	"Saboteur": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Each other player reveals cards from the top of his deck until revealing one costing 3 Coins or more. He trashes that card and may gain a card costing at most 2 less than it. He discards the other revealed cards.",
@@ -3306,7 +3306,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Sage": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Reveal cards from the top of your deck until you reveal one costing $3 or more. Put that card into your hand and discard the rest.",
@@ -3323,7 +3323,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Salvager": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Trash a card from your  hand. +Coins equal to its cost.",
@@ -3340,7 +3340,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Save": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  1,
 		Description:   "",
@@ -3358,7 +3358,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Scavenger": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "You may put your deck into your discard pile. Look through your discard pile and put one card from it on top of your deck.",
@@ -3375,7 +3375,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Scheme": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "At the start of Clean-up this turn, you may choose an Action card you have in play. If you discard it from play this turn, put it on your deck.",
@@ -3392,7 +3392,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Scout": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Reveal the top 4 cards of your deck. Put the revealed Victory cards into your hand. Put the other cards on top of your deck in any order.",
@@ -3409,7 +3409,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Scouting Party": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "",
@@ -3427,7 +3427,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Scrying Pool": Card{
+	Card{
 		CostPotions:   1,
 		CostTreasure:  2,
 		Description:   "Each player (including you) reveals the top card of his deck and either discards it or puts it back, your choice. Then, reveal cards from your deck until you reveal a card that is not an action. Take all of these revealed cards into your hand.",
@@ -3444,7 +3444,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Sea Hag": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Each other player discards the top card of his deck, then gains a Curse card, putting it on top of his deck.",
@@ -3461,7 +3461,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Seaway": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -3479,7 +3479,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Secret Chamber": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Discard any number of cards. +1 Coin per card discarded. When another player plays an Attack card, you may reveal this card from your hand. If you do, +2 Cards, then put 2 cards from your hand to the top of your deck.",
@@ -3496,7 +3496,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Shanty Town": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Reveal your hand. If you have no Action cards in hand, +2 Cards.",
@@ -3513,7 +3513,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Silk Road": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Worth 1 VP for every 4 Victory cards in your deck (round down).",
@@ -3530,7 +3530,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Smithy": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -3547,7 +3547,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Smugglers": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Gain a copy of a card costing up to 6 Coins that the player to your right gained on his last turn.",
@@ -3564,7 +3564,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Soothsayer": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -3581,7 +3581,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Spice Merchant": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "You may trash a Treasure from your hand. If you do, choose one: +2 Cards and +1 Action; or +$2 and +1 Buy.",
@@ -3615,7 +3615,7 @@ var cards = map[string]Card{
 	// 	Treasure:      3,
 	// 	VictoryPoints: 0,
 	// },
-	"Spy": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Each player (including you) reveals the top card of his deck and either discards it or puts it back, your choice.",
@@ -3632,7 +3632,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Squire": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Choose one: +2 Actions; or +2 Buys; or gain a Silver. ___ When you trash this, gain an Attack card.",
@@ -3649,7 +3649,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Stables": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "You may discard a Treasure. If you do, +3 Cards and +1 Action.",
@@ -3666,7 +3666,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Stash": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "When you shuffle, you may put this anywhere in your deck.",
@@ -3683,7 +3683,7 @@ var cards = map[string]Card{
 		Treasure:      2,
 		VictoryPoints: 0,
 	},
-	"Steward": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Choose one: +2 Cards; or +2 Coins; or trash 2 cards from your hand.",
@@ -3700,7 +3700,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Stonemason": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "",
@@ -3717,7 +3717,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Storeroom": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Discard any number of cards. +1 Card per card discarded. Discard any number of cards. +$1 per card discarded the second time.",
@@ -3734,7 +3734,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Storyteller": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -3751,7 +3751,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Swamp Hag": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Until your next turn, when any other player buys a card, he gains a curse",
@@ -3769,7 +3769,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Swindler": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Each other player trashes the top card of his deck and gains a card with the same cost that you choose.",
@@ -3786,7 +3786,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Tactician": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Discard your hand. If you discarded any cards this way, then at the start of your  next turn, +5 Cards, +1 Buy, and +1 Action.",
@@ -3804,7 +3804,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Talisman": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "While this card is in play, when you buy a card costing 4 Coins or less that is not a Victory card, gain a copy of it.",
@@ -3821,7 +3821,7 @@ var cards = map[string]Card{
 		Treasure:      1,
 		VictoryPoints: 0,
 	},
-	"Taxman": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -3838,7 +3838,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Thief": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Each other player reveals the top 2 cards of his deck. If they revealed any Treasure cards, they trash one of them that you choose. You may gain any or all of these trashed cards. They discard the other revealed cards.",
@@ -3855,7 +3855,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Throne Room": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Choose an Action card in your  hand. Play it twice.",
@@ -3872,7 +3872,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Torturer": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Each other player chooses one: he discards 2 cards; or he gains a Curse card, putting it in his hand.",
@@ -3889,7 +3889,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Tournament": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Each player may reveal a Province from his hand. If you do, discard it and gain a Prize (from the Prize pile) or a Duchy, putting it on top of your deck. If no-one else does, +1 Card +1 Coin.",
@@ -3906,7 +3906,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Trade": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -3924,7 +3924,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Trade Route": Card{
+	Card{
 		CoinTokens:    true,
 		CostPotions:   0,
 		CostTreasure:  3,
@@ -3943,7 +3943,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Trader": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Trash a card from your hand. Gain a number of Silvers equal to its cost in coins. When you would gain a card, you may reveal this from your hand. If you do, instead, gain a Silver.",
@@ -3960,7 +3960,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Trading Post": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Trash 2 cards from your hand. If you do, gain a Silver card; put it into your hand.",
@@ -3977,7 +3977,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Training": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "",
@@ -3995,7 +3995,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Transmogrify": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -4013,7 +4013,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Transmute": Card{
+	Card{
 		CostPotions:   1,
 		CostTreasure:  1,
 		Description:   "Trash a card from your hand. If it is an...Action card, gain a Duchy; Treasure card, gain a Transmute; or Victory card, gain a Gold.",
@@ -4030,7 +4030,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Travelling Fair": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "",
@@ -4048,7 +4048,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Treasure Map": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Trash this and another copy of Treasure Map from your hand. If you do trash two Treasure Maps, gain 4 Gold cards, putting them on top of your deck.",
@@ -4065,7 +4065,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Treasure Trove": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "",
@@ -4082,7 +4082,7 @@ var cards = map[string]Card{
 		Treasure:      2,
 		VictoryPoints: 0,
 	},
-	"Treasury": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "When you discard this from play, if you didn't buy a Victory card this turn, you may put this on top of your deck.",
@@ -4099,7 +4099,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Tribute": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "The player to your left reveals then discards the top 2 cards of his deck. For each differently named card revealed, if it is an…Action card, +2 Actions; Treasure card, +2 Coins; or Victory card, +2 Cards.",
@@ -4116,7 +4116,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Tunnel": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "When you discard this other than during a Clean-up phase, you may reveal it. If you do, gain a Gold.",
@@ -4133,7 +4133,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 2,
 	},
-	"University": Card{
+	Card{
 		CostPotions:   1,
 		CostTreasure:  2,
 		Description:   "You may gain an Action card costing up to 5 Coins.",
@@ -4150,7 +4150,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Upgrade": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Trash a card from your hand. Gain a card costing exactly 1 Coin more than it.",
@@ -4167,7 +4167,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Urchin": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Each other player discards down to 4 cards in hand. ___ When you play another Attack card with this in play, you may trash this. If you do, gain a Mercenary from the Mercenary pile.",
@@ -4184,7 +4184,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Vagrant": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  2,
 		Description:   "Reveal the top card of your deck. If it’s a Victory card, Curse, Ruins, or Shelter, put it into your hand.",
@@ -4201,7 +4201,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Vault": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Discard any number of cards. +1 Coin per card discarded. Each other player may discard 2 cards. If he does, he draws a card.",
@@ -4218,7 +4218,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Venture": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "When you play this, reveal cards from your deck until you reveal a Treasure. Discard the other cards. Play that Treasure.",
@@ -4235,7 +4235,7 @@ var cards = map[string]Card{
 		Treasure:      1,
 		VictoryPoints: 0,
 	},
-	"Village": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -4252,7 +4252,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Vineyard": Card{
+	Card{
 		CostPotions:   1,
 		CostTreasure:  0,
 		Description:   "Worth 1VP for every 3 Action cards in your deck (rounded down).",
@@ -4269,7 +4269,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Walled Village": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "At the start of Clean-up, if you have this and no more than one other Action card in play, you may put this on top of your deck.",
@@ -4286,7 +4286,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Wandering Minstrel": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Reveal the top 3 cards of your deck. Put the Actions back on top in any order and discard the rest.",
@@ -4303,7 +4303,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Warehouse": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Discard 3 cards.",
@@ -4320,7 +4320,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Watchtower": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Draw until you have 6 cards in hand. --When you gain a card, you may reveal this from your hand. If you do, trash that card or put it on top of your deck.",
@@ -4337,7 +4337,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Wharf": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Now and at the start of your next turn: +2 Cards, +1 Buy.",
@@ -4355,7 +4355,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Wine Merchant": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  6,
 		Description:   "",
@@ -4373,7 +4373,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Wishing Well": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Name a card. Reveal the top card of your deck. If it's the named card, put it into your hand.",
@@ -4390,7 +4390,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Witch": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  5,
 		Description:   "Each other player gains a Curse card.",
@@ -4407,7 +4407,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Woodcutter": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "",
@@ -4424,7 +4424,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Worker's Village": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "",
@@ -4441,7 +4441,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Workshop": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  3,
 		Description:   "Gain a card costing up to 4 Coins.",
@@ -4458,7 +4458,7 @@ var cards = map[string]Card{
 		Treasure:      0,
 		VictoryPoints: 0,
 	},
-	"Young Witch": Card{
+	Card{
 		CostPotions:   0,
 		CostTreasure:  4,
 		Description:   "Discard 2 cards. Each other player may reveal a Bane card from his hand. If he doesn't, he gains a Curse. Setup: Add an extra Kingdom card pile costing 2 or 3 to the Supply. Cards from that pile are Bane cards.",
