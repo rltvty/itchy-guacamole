@@ -1,13 +1,32 @@
 package deck
 
 import (
+	crand "crypto/rand"
+	"encoding/binary"
+	"fmt"
 	"math/rand"
-	"time"
+	"os"
 )
 
 var (
-	rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
+	rnd *rand.Rand
 )
+
+func init() {
+	// NOTE: All this may not be necessary, but Heroku was generating strangely
+	// not-random output and I wanted to make sure the problem wasn't a clock
+	// issue.  Might be worth trying the simpler version:
+	// var rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
+	seedBytes := make([]byte, 8)
+	_, err := crand.Read(seedBytes)
+	if err != nil {
+		fmt.Printf("Unable to read random bytes: %s", err)
+		os.Exit(1)
+	}
+	seed := binary.LittleEndian.Uint64(seedBytes)
+
+	rnd = rand.New(rand.NewSource(int64(seed)))
+}
 
 // NewRandomDeck returns a randomly selected deck
 func NewRandomDeck(expansions map[Expansion]bool) Deck {
@@ -20,7 +39,9 @@ func NewRandomDeck(expansions map[Expansion]bool) Deck {
 		prosperityCards = 0
 	)
 
-	for _, card := range cards {
+	for _, i := range rnd.Perm(len(cards)) {
+		card := cards[i]
+
 		if !expansions[card.Expansion] {
 			continue
 		}
