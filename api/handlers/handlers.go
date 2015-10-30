@@ -14,6 +14,7 @@ import (
 
 	"github.com/dom-bot/itchy-guacamole/deck"
 	"github.com/dom-bot/itchy-guacamole/score"
+	"github.com/dom-bot/itchy-guacamole/veto"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -23,8 +24,9 @@ var (
 )
 
 type makeDeckRequest struct {
-	Sets    []deck.Set    `json:"sets"`
-	Weights score.Weights `json:"weights"`
+	Sets            []deck.Set       `json:"sets"`
+	Weights         score.Weights    `json:"weights"`
+	VetoProbability veto.Probability `json:"veto_probability"`
 }
 
 type deckHardware struct {
@@ -137,16 +139,33 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	d = deck.NewRandomDeck(sets)
-	maxScore = score.Evaluate(req.Weights, d)
+	count := 0
+GenerateDeck:
+	candidateDeck := deck.NewRandomDeck(sets)
+	if veto.TooExpensive(req.VetoProbability, candidateDeck) {
+		goto GenerateDeck
+	}
+	if veto.NoTrashing(req.VetoProbability, candidateDeck) {
+		goto GenerateDeck
+	}
+	if veto.NoChaining(req.VetoProbability, candidateDeck) {
+		goto GenerateDeck
+	}
+	if veto.TooManySets(req.VetoProbability, candidateDeck) {
+		goto GenerateDeck
+	}
+	if veto.TooManyMechanics(req.VetoProbability, candidateDeck) {
+		goto GenerateDeck
+	}
+	count++
 
-	for i := 0; i < 100; i++ {
-		candidateDeck := deck.NewRandomDeck(sets)
-		candidateScore := score.Evaluate(req.Weights, candidateDeck)
-		if candidateScore > maxScore {
-			d = candidateDeck
-			maxScore = candidateScore
-		}
+	candidateScore := score.Evaluate(req.Weights, candidateDeck)
+	if candidateScore > maxScore {
+		d = candidateDeck
+		maxScore = candidateScore
+	}
+	if count < 100 {
+		goto GenerateDeck
 	}
 
 	resp := deckResponse{
