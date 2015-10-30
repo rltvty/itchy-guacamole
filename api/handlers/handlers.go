@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -8,6 +9,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"net/http/httptest"
 	"os"
 	"strings"
 	"time"
@@ -190,6 +192,43 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	_ = enc.Encode(resp)
 
 	w.Header().Set("Content-Type", "application/json")
+}
+
+func makeSlackDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	sets := strings.Split(r.FormValue("text"), ",")
+	dS := make([]deck.Set, 0, len(sets))
+	for _, val := range sets {
+		dS = append(dS, deck.Set(val))
+	}
+
+	mDR := makeDeckRequest{
+		Sets: dS,
+	}
+	js, err := json.Marshal(mDR)
+	if err != nil {
+		log.Println(err)
+	}
+
+	req, err := http.NewRequest("POST", "/deck", bytes.NewReader(js))
+	if err != nil {
+		log.Println(err)
+	}
+	writer := httptest.NewRecorder()
+
+	makeDeck(writer, req, nil)
+
+	var dR deckResponse
+	err = json.Unmarshal(writer.Body.Bytes(), &dR)
+	if err != nil {
+		log.Println(err)
+	}
+	//do some formatting stuff
+	postJson, err := json.Marshal(dR)
+	if err != nil {
+		log.Println(err)
+	}
+
+	http.Post("https://hooks.slack.com/services/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", "application/json", bytes.NewReader(postJson))
 }
 
 func indexRoute(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
