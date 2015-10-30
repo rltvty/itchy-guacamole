@@ -76,10 +76,7 @@ Create a deck
 ```
 POST /deck
 {
-  "sets": {
-    "seaside": false, // Sets are included by default
-    "governor": false,
-  },
+  "sets": ["seaside", "governor"], // defaults to SETS from the environment
   "weights": {
     "trashing": 0,
     "random": 2,
