@@ -9,7 +9,10 @@ module.exports = React.createClass({
   displayName: 'Creator',
 
   componentDidMount: function() {
-    this.suggestDeck();
+    $('#build-deck').click(function() {
+      this.buildDeck();
+    }.bind(this));
+    this.buildDeck();
   },
 
   getInitialState: function() {
@@ -20,7 +23,7 @@ module.exports = React.createClass({
      };
   },
 
-  suggestDeck: function() {
+  buildDeck: function() {
     this.setState({loading: true});
     $.post('/deck', "{}", function(data) {
       data = JSON.parse(data);

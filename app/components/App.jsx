@@ -12,13 +12,13 @@ var createBrowserHistory = require('history/lib/createBrowserHistory');
 
 /* Components to link to */
 var Creator = require('./creator/Creator');
-var History = require('./history/History');
 
 /* Styles */
 var styles = require('../styles/base.scss');
 
 // Visual Nav
 var App = React.createClass({
+
   render() {
     return (
       <div>
@@ -26,13 +26,10 @@ var App = React.createClass({
           <div id='nav-inner'>
             <img src='/static/images/shield.png' alt='Dom Bot Shield' title='Dom Bot Shield'></img>
             <h1>Dom Bot</h1>
-            <ul id='menu'>
-              <li><Link to="/" title='Creator'>Creator</Link></li>
-              <li><Link to="/history" title='History'>History</Link></li>
-            </ul>
+            <button id='build-deck' className='btn btn-lg btn-primary'>Build Deck</button>
           </div>
         </div>
-        {this.props.children}
+        <Creator />
       </div>
     );
   }
@@ -43,7 +40,6 @@ ReactDOM.render((
   <Router history={createBrowserHistory()}>
     <Route path="/" component={App}>
       <IndexRoute component={Creator} />
-      <Route path="history" component={History} />
     </Route>
   </Router>
 ), document.getElementById('content'));
