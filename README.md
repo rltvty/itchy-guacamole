@@ -8,7 +8,7 @@ of Dominion expansions to use when generating decks.  See `deck/cards.go` for
 valid values.  Example:
 
 ```
-EXPANSIONS=Dominion,DardAges,Adventures go run main.go
+EXPANSIONS=Dominion,DarkAges,Adventures go run main.go
 ```
 
 You can also specify a `PORT` value to control the port on which the API is
