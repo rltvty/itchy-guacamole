@@ -6,8 +6,9 @@ module.exports = React.createClass({
   getSetNames: function() {
     var result = [];
     $.each(this.props.deck.cards, function(i, e) {
-      if ($.inArray(e.set, result) == -1){
-        result.push(e.set);
+      var setName = e.set.split("_").join(" ");
+      if ($.inArray(setName, result) == -1){
+        result.push(setName);
       }
     });
     return result.sort();
