@@ -53,3 +53,10 @@ Dom Bot App :tada:
 #### Game End
 * 5 piles gone (or Provinces or Colonies) 
 * Equal turns and phantom Provinces (and Colonies in a Prosperity game)
+
+## API
+
+```
+curl -u user:password -X POST -d '{"trashing": 10, "random": 9, "chaining": 8, "cost_spread": 7, "set_count": 6, "mechanic_count": 5}' 'localhost:8000/deck'
+curl -u user:password 'localhost:8000/deck/ABEAPQBiAHgAFgBMAIoAGAA0ADYA'
+```
