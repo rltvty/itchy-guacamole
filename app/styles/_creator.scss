@@ -22,13 +22,39 @@
     margin-bottom: 0;
   }
 
-  .card {
-    width: 18%;
-    margin: 10px 1%;
-    display: inline-block;
+  #cards {
+    max-width: 1300px;
+    margin: 0 auto;
 
-    img {
-      max-width: 100%;
+    .card {
+      display: inline-block;
+      border: none;
+      max-width: 225px;
+      margin: 10px;
+
+      @media(max-width: 900px){
+        max-width: 175px;
+      }
+
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+
+#form {
+  #labels {
+    text-align: center;
+
+    label {
+      text-transform: capitalize;
+      margin: 5px 10px;
+
+      input {
+        margin-right: 5px;
+      }
     }
   }
 }

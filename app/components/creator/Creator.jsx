@@ -1,4 +1,5 @@
 'use strict'
+var Form = require('./Form');
 var Deck = require('./Deck');
 var Loading = require('../Loading');
 var Error = require('../Error');
@@ -13,22 +14,20 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       deck: { cards: [] },
-      params: {
-        trashing: 0,
-        random: 1,
-        chaining: 1,
-        cost_spread: 2,
-        set_count: 1,
-        mechanic_count: 1,
-      },
       loading: false,
       error: false
      };
   },
 
+  getParams: function() {
+    return { sets: this.refs.form.state.selectedSets };
+  },
+
   buildDeck: function() {
     this.setState({loading: true});
-    $.post('/deck', JSON.stringify(this.state.params), function(data) {
+    console.log(this.getParams())
+    var selectedSets = JSON.stringify(this.getParams());
+    $.post('/deck', selectedSets, function(data) {
       data = JSON.parse(data);
       this.setState({
         deck: data,
@@ -47,10 +46,10 @@ module.exports = React.createClass({
   },
 
   render: function() {
-
     return(
       <div>
-        { this.state.loading ? <Loading /> : <Deck deck={this.state.deck}/> }
+        <Form ref="form"/>
+        { this.state.loading ? <Loading /> :<Deck deck={this.state.deck} />}
         { this.state.error ? <Error /> : null }
       </div>
     );

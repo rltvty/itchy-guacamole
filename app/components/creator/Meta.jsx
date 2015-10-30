@@ -3,11 +3,11 @@
 module.exports = React.createClass({
   displayName: 'Meta',
 
-  getExpansionNames: function() {
+  getSetNames: function() {
     var result = [];
     $.each(this.props.deck.cards, function(i, e) {
-      if ($.inArray(e.expansion, result) == -1){
-        result.push(e.expansion);
+      if ($.inArray(e.set, result) == -1){
+        result.push(e.set);
       }
     });
     return result.sort();
@@ -36,10 +36,10 @@ module.exports = React.createClass({
 
   render: function() {
 
-    var expansions = this.getExpansionNames().map(function(expansion, index) {
+    var sets = this.getSetNames().map(function(set, index) {
       return (
         <li key={index}>
-          {expansion}
+          {set}
         </li>
       );
     });
@@ -63,10 +63,10 @@ module.exports = React.createClass({
     return(
       <div id='meta'>
 
-        <div id='expansions'>
+        <div id='getSetNames'>
           <h3>Sets Needed</h3>
           <ul>
-            {expansions}
+            {sets}
           </ul>
         </div>
 
