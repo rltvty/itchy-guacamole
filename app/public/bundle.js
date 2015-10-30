@@ -49,7 +49,7 @@
 
 	/** @jsx React.DOM */'use strict'
 	var Creator = __webpack_require__(/*! ./creator/Creator */ 1);
-	var styles = __webpack_require__(/*! ../styles/base.scss */ 9);
+	var styles = __webpack_require__(/*! ../styles/base.scss */ 8);
 	
 	var App = React.createClass({displayName: "App",
 	
@@ -85,9 +85,9 @@
 
 	/** @jsx React.DOM */'use strict'
 	var Form = __webpack_require__(/*! ./Form */ 2);
-	var Deck = __webpack_require__(/*! ./Deck */ 4);
-	var Loading = __webpack_require__(/*! ../Loading */ 7);
-	var Error = __webpack_require__(/*! ../Error */ 8);
+	var Deck = __webpack_require__(/*! ./Deck */ 3);
+	var Loading = __webpack_require__(/*! ../Loading */ 6);
+	var Error = __webpack_require__(/*! ../Error */ 7);
 	
 	module.exports = React.createClass({
 	  displayName: 'Creator',
@@ -150,13 +150,22 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */'use strict'
-	var CheckboxGroup = __webpack_require__(/*! ./CheckboxGroup */ 3);
+	var CheckboxGroup = __webpack_require__(/*! ./CheckboxGroup */ 12);
 	
 	module.exports = React.createClass({
 	  displayName: 'Form',
 	
+	  componentDidMount: function() {
+	    $.get('/sets', function(data) {
+	      data = JSON.parse(data);
+	      this.setState({ availableSets: data });
+	    }.bind(this)).fail(function(err) {
+	      console.error(err);
+	    });
+	  },
+	
 	  getInitialState: function() {
-	    return {selectedSets: ['dominion']};
+	    return {selectedSets: [], availableSets: []};
 	  },
 	
 	  handleChange: function() {
@@ -164,50 +173,24 @@
 	    this.setState({selectedSets: selectedSets});
 	  },
 	
+	  getSets: function() {
+	    return this.state.availableSets.map(function(set, index) {
+	      return (
+	        React.createElement("label", null, 
+	          React.createElement("input", {type: "checkbox", value: set}), set.split('_').join(' ')
+	        )
+	      );
+	    });
+	  },
+	
 	  render: function() {
+	    var sets = this.getSets();
+	
 	    return(
 	      React.createElement("div", {id: "form"}, 
 	        React.createElement(CheckboxGroup, {name: "sets", value: this.state.selectedSets, ref: "setsGroup", onChange: this.handleChange}, 
 	        React.createElement("div", {id: "labels"}, 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "dominion"}), "dominion"
-	          ), 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "intrigue"}), "intrigue"
-	          ), 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "seaside"}), "seaside"
-	          ), 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "alchemy"}), "alchemy"
-	          ), 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "prosperity"}), "prosperity"
-	          ), 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "cornucopia"}), "cornucopia"
-	          ), 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "hinterlands"}), "hinterlands"
-	          ), 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "dark_ages"}), "dark ages"
-	          ), 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "guilds"}), "guilds"
-	          ), 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "adventures"}), "adventures"
-	          ), 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "governor"}), "governor"
-	          ), 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "prince"}), "prince"
-	          ), 
-	          React.createElement("label", null, 
-	            React.createElement("input", {type: "checkbox", value: "summon"}), "summon"
-	          )
+	          sets
 	        )
 	      )
 	      )
@@ -218,101 +201,14 @@
 
 /***/ },
 /* 3 */
-/*!**********************************************!*\
-  !*** ./components/creator/CheckboxGroup.jsx ***!
-  \**********************************************/
-/***/ function(module, exports) {
-
-	/** @jsx React.DOM *//**
-	* @jsx React.DOM
-	*/
-	'use strict'
-	module.exports = React.createClass({
-	  displayName: 'CheckboxGroup',
-	  getInitialState: function() {
-	    return {defaultValue: this.props.defaultValue || []};
-	  },
-	
-	  componentDidMount: function() {
-	    this.setCheckboxNames();
-	    this.setCheckedBoxes();
-	  },
-	
-	  componentDidUpdate: function() {
-	    this.setCheckboxNames();
-	    this.setCheckedBoxes();
-	  },
-	
-	  render: function() {
-	    let $__0=     this.props,name=$__0.name,value=$__0.value,defaultValue=$__0.defaultValue,otherProps=(function(source, exclusion) {var rest = {};var hasOwn = Object.prototype.hasOwnProperty;if (source == null) {throw new TypeError();}for (var key in source) {if (hasOwn.call(source, key) && !hasOwn.call(exclusion, key)) {rest[key] = source[key];}}return rest;})($__0,{name:1,value:1,defaultValue:1});
-	    return (
-	      React.createElement("div", React.__spread({},  otherProps), 
-	        this.props.children
-	      )
-	    );
-	  },
-	
-	  setCheckboxNames: function() {
-	    // stay DRY and don't put the same `name` on all checkboxes manually. Put it on
-	    // the tag and it'll be done here
-	    let $checkboxes = this.getCheckboxes();
-	    for (let i = 0, length = $checkboxes.length; i < length; i++) {
-	      $checkboxes[i].setAttribute('name', this.props.name);
-	    }
-	  },
-	
-	  getCheckboxes: function() {
-	    return ReactDOM.findDOMNode(this).querySelectorAll('input[type="checkbox"]');
-	  },
-	
-	  setCheckedBoxes: function() {
-	    let $checkboxes = this.getCheckboxes();
-	    // if `value` is passed from parent, always use that value. This is similar
-	    // to React's controlled component. If `defaultValue` is used instead,
-	    // subsequent updates to defaultValue are ignored. Note: when `defaultValue`
-	    // and `value` are both passed, the latter takes precedence, just like in
-	    // a controlled component
-	    let destinationValue = this.props.value != null
-	      ? this.props.value
-	      : this.state.defaultValue;
-	
-	    for (let i = 0, length = $checkboxes.length; i < length; i++) {
-	      let $checkbox = $checkboxes[i];
-	
-	      // intentionally use implicit conversion for those who accidentally used,
-	      // say, `valueToChange` of 1 (integer) to compare it with `value` of "1"
-	      // (auto conversion to valid html value from React)
-	      if (destinationValue.indexOf($checkbox.value) >= 0) {
-	        $checkbox.checked = true;
-	      }
-	    }
-	  },
-	
-	  getCheckedValues: function() {
-	    let $checkboxes = this.getCheckboxes();
-	
-	    let checked = [];
-	    for (let i = 0, length = $checkboxes.length; i < length; i++) {
-	      if ($checkboxes[i].checked) {
-	        checked.push($checkboxes[i].value);
-	      }
-	    }
-	
-	    return checked;
-	  }
-	});
-
-
-/***/ },
-/* 4 */
 /*!*************************************!*\
   !*** ./components/creator/Deck.jsx ***!
   \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */'use strict'
-	var Card = __webpack_require__(/*! ./Card */ 5);
-	var Meta = __webpack_require__(/*! ./Meta */ 6);
+	var Card = __webpack_require__(/*! ./Card */ 4);
+	var Meta = __webpack_require__(/*! ./Meta */ 5);
 	
 	module.exports = React.createClass({
 	  displayName: 'Deck',
@@ -360,7 +256,7 @@
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /*!*************************************!*\
   !*** ./components/creator/Card.jsx ***!
   \*************************************/
@@ -384,7 +280,7 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /*!*************************************!*\
   !*** ./components/creator/Meta.jsx ***!
   \*************************************/
@@ -483,7 +379,7 @@
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /*!********************************!*\
   !*** ./components/Loading.jsx ***!
   \********************************/
@@ -505,7 +401,7 @@
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /*!******************************!*\
   !*** ./components/Error.jsx ***!
   \******************************/
@@ -527,7 +423,7 @@
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /*!**************************!*\
   !*** ./styles/base.scss ***!
   \**************************/
@@ -536,10 +432,10 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./../~/sass-loader!./base.scss */ 10);
+	var content = __webpack_require__(/*! !./../~/css-loader!./../~/sass-loader!./base.scss */ 9);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 12)(content, {});
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 11)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -556,24 +452,24 @@
 	}
 
 /***/ },
-/* 10 */
+/* 9 */
 /*!*********************************************************!*\
   !*** ./~/css-loader!./~/sass-loader!./styles/base.scss ***!
   \*********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 11)();
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 10)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "#nav #nav-inner {\n  margin: 10px; }\n  #nav #nav-inner img {\n    height: 55px;\n    display: inline-block; }\n  #nav #nav-inner h1 {\n    display: inline-block;\n    margin-left: 10px;\n    vertical-align: middle;\n    text-transform: uppercase; }\n  #nav #nav-inner button {\n    float: right; }\n\n#suggest {\n  display: block;\n  margin: 25px auto 10px; }\n\n#deck {\n  text-align: center; }\n  #deck #meta {\n    overflow: auto;\n    text-align: center; }\n    #deck #meta div {\n      display: inline-block;\n      vertical-align: top;\n      margin: 10px 50px;\n      text-align: left; }\n  #deck p {\n    margin-bottom: 0; }\n  #deck #cards {\n    max-width: 1300px;\n    margin: 0 auto; }\n    #deck #cards .card {\n      display: inline-block;\n      border: none;\n      max-width: 225px;\n      margin: 10px; }\n      @media (max-width: 900px) {\n        #deck #cards .card {\n          max-width: 175px; } }\n      #deck #cards .card img {\n        max-width: 100%; }\n\n#form #labels {\n  text-align: center; }\n  #form #labels label {\n    text-transform: capitalize;\n    margin: 5px 10px; }\n    #form #labels label input {\n      margin-right: 5px; }\n\nhtml {\n  box-sizing: border-box; }\n\n*, *:before, *:after {\n  box-sizing: inherit; }\n\n#loading {\n  margin: 50px auto 50px;\n  text-align: center; }\n\n#error {\n  margin: 30px 0; }\n\n#content {\n  max-width: 1600px;\n  margin: 0 auto; }\n", ""]);
+	exports.push([module.id, "#nav #nav-inner {\n  margin: 10px; }\n  #nav #nav-inner img {\n    height: 55px;\n    display: inline-block; }\n  #nav #nav-inner h1 {\n    display: inline-block;\n    margin-left: 10px;\n    vertical-align: middle;\n    text-transform: uppercase; }\n  #nav #nav-inner button {\n    float: right; }\n\n#suggest {\n  display: block;\n  margin: 25px auto 10px; }\n\n#deck {\n  text-align: center; }\n  #deck #meta {\n    overflow: auto;\n    text-align: center; }\n    #deck #meta li {\n      text-transform: capitalize; }\n    #deck #meta div {\n      display: inline-block;\n      vertical-align: top;\n      margin: 10px 50px;\n      text-align: left; }\n  #deck p {\n    margin-bottom: 0; }\n  #deck #cards {\n    max-width: 1300px;\n    margin: 0 auto; }\n    #deck #cards .card {\n      display: inline-block;\n      border: none;\n      max-width: 225px;\n      margin: 10px; }\n      @media (max-width: 900px) {\n        #deck #cards .card {\n          max-width: 175px; } }\n      #deck #cards .card img {\n        max-width: 100%; }\n\n#form #labels {\n  text-align: center; }\n  #form #labels label {\n    text-transform: capitalize;\n    margin: 5px 10px; }\n    #form #labels label input {\n      margin-right: 5px; }\n\nhtml {\n  box-sizing: border-box; }\n\n*, *:before, *:after {\n  box-sizing: inherit; }\n\n#loading {\n  margin: 50px auto 50px;\n  text-align: center; }\n\n#error {\n  margin: 30px 0; }\n\n#content {\n  max-width: 1600px;\n  margin: 0 auto; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 11 */
+/* 10 */
 /*!**************************************!*\
   !*** ./~/css-loader/lib/css-base.js ***!
   \**************************************/
@@ -632,7 +528,7 @@
 
 
 /***/ },
-/* 12 */
+/* 11 */
 /*!*************************************!*\
   !*** ./~/style-loader/addStyles.js ***!
   \*************************************/
@@ -857,6 +753,93 @@
 		if(oldSrc)
 			URL.revokeObjectURL(oldSrc);
 	}
+
+
+/***/ },
+/* 12 */
+/*!**********************************************!*\
+  !*** ./components/creator/CheckboxGroup.jsx ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	/** @jsx React.DOM *//**
+	* @jsx React.DOM
+	*/
+	'use strict'
+	module.exports = React.createClass({
+	  displayName: 'CheckboxGroup',
+	  getInitialState: function() {
+	    return {defaultValue: this.props.defaultValue || []};
+	  },
+	
+	  componentDidMount: function() {
+	    this.setCheckboxNames();
+	    this.setCheckedBoxes();
+	  },
+	
+	  componentDidUpdate: function() {
+	    this.setCheckboxNames();
+	    this.setCheckedBoxes();
+	  },
+	
+	  render: function() {
+	    let $__0=     this.props,name=$__0.name,value=$__0.value,defaultValue=$__0.defaultValue,otherProps=(function(source, exclusion) {var rest = {};var hasOwn = Object.prototype.hasOwnProperty;if (source == null) {throw new TypeError();}for (var key in source) {if (hasOwn.call(source, key) && !hasOwn.call(exclusion, key)) {rest[key] = source[key];}}return rest;})($__0,{name:1,value:1,defaultValue:1});
+	    return (
+	      React.createElement("div", React.__spread({},  otherProps), 
+	        this.props.children
+	      )
+	    );
+	  },
+	
+	  setCheckboxNames: function() {
+	    // stay DRY and don't put the same `name` on all checkboxes manually. Put it on
+	    // the tag and it'll be done here
+	    let $checkboxes = this.getCheckboxes();
+	    for (let i = 0, length = $checkboxes.length; i < length; i++) {
+	      $checkboxes[i].setAttribute('name', this.props.name);
+	    }
+	  },
+	
+	  getCheckboxes: function() {
+	    return ReactDOM.findDOMNode(this).querySelectorAll('input[type="checkbox"]');
+	  },
+	
+	  setCheckedBoxes: function() {
+	    let $checkboxes = this.getCheckboxes();
+	    // if `value` is passed from parent, always use that value. This is similar
+	    // to React's controlled component. If `defaultValue` is used instead,
+	    // subsequent updates to defaultValue are ignored. Note: when `defaultValue`
+	    // and `value` are both passed, the latter takes precedence, just like in
+	    // a controlled component
+	    let destinationValue = this.props.value != null
+	      ? this.props.value
+	      : this.state.defaultValue;
+	
+	    for (let i = 0, length = $checkboxes.length; i < length; i++) {
+	      let $checkbox = $checkboxes[i];
+	
+	      // intentionally use implicit conversion for those who accidentally used,
+	      // say, `valueToChange` of 1 (integer) to compare it with `value` of "1"
+	      // (auto conversion to valid html value from React)
+	      if (destinationValue.indexOf($checkbox.value) >= 0) {
+	        $checkbox.checked = true;
+	      }
+	    }
+	  },
+	
+	  getCheckedValues: function() {
+	    let $checkboxes = this.getCheckboxes();
+	
+	    let checked = [];
+	    for (let i = 0, length = $checkboxes.length; i < length; i++) {
+	      if ($checkboxes[i].checked) {
+	        checked.push($checkboxes[i].value);
+	      }
+	    }
+	
+	    return checked;
+	  }
+	});
 
 
 /***/ }
