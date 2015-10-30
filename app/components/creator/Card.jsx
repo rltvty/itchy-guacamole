@@ -2,12 +2,14 @@
 
 module.exports = React.createClass({
   displayName: 'Card',
-  
+
   render: function() {
-    var name = this.props.children.name.split(" ").join("_");
-    var cardImg = "/static/images/dominion-cards/" + name + ".jpg";
+    var setName = this.props.children.set.split("_").join(" ");
+    var cardImg = "/static/images/dominion-cards/" + this.props.children.name.split(" ").join("_") + ".jpg";
+
     return(
       <div className='card'>
+        <p>{setName}</p>
         <img src={cardImg}></img>
       </div>
     );

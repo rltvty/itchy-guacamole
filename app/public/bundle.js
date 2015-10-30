@@ -110,7 +110,6 @@
 	
 	  buildDeck: function() {
 	    this.setState({loading: true});
-	    console.log(this.getParams())
 	    var selectedSets = JSON.stringify(this.getParams());
 	    $.post('/deck', selectedSets, function(data) {
 	      data = JSON.parse(data);
@@ -266,12 +265,14 @@
 	
 	module.exports = React.createClass({
 	  displayName: 'Card',
-	  
+	
 	  render: function() {
-	    var name = this.props.children.name.split(" ").join("_");
-	    var cardImg = "/static/images/dominion-cards/" + name + ".jpg";
+	    var setName = this.props.children.set.split("_").join(" ");
+	    var cardImg = "/static/images/dominion-cards/" + this.props.children.name.split(" ").join("_") + ".jpg";
+	
 	    return(
 	      React.createElement("div", {className: "card"}, 
+	        React.createElement("p", null, setName), 
 	        React.createElement("img", {src: cardImg})
 	      )
 	    );
@@ -294,8 +295,9 @@
 	  getSetNames: function() {
 	    var result = [];
 	    $.each(this.props.deck.cards, function(i, e) {
-	      if ($.inArray(e.set, result) == -1){
-	        result.push(e.set);
+	      var setName = e.set.split("_").join(" ");
+	      if ($.inArray(setName, result) == -1){
+	        result.push(setName);
 	      }
 	    });
 	    return result.sort();
@@ -463,7 +465,7 @@
 	
 	
 	// module
-	exports.push([module.id, "#nav #nav-inner {\n  margin: 10px; }\n  #nav #nav-inner img {\n    height: 55px;\n    display: inline-block; }\n  #nav #nav-inner h1 {\n    display: inline-block;\n    margin-left: 10px;\n    vertical-align: middle;\n    text-transform: uppercase; }\n  #nav #nav-inner button {\n    float: right; }\n\n#suggest {\n  display: block;\n  margin: 25px auto 10px; }\n\n#deck {\n  text-align: center; }\n  #deck #meta {\n    overflow: auto;\n    text-align: center; }\n    #deck #meta li {\n      text-transform: capitalize; }\n    #deck #meta div {\n      display: inline-block;\n      vertical-align: top;\n      margin: 10px 50px;\n      text-align: left; }\n  #deck p {\n    margin-bottom: 0; }\n  #deck #cards {\n    max-width: 1300px;\n    margin: 0 auto; }\n    #deck #cards .card {\n      display: inline-block;\n      border: none;\n      max-width: 225px;\n      margin: 10px; }\n      @media (max-width: 900px) {\n        #deck #cards .card {\n          max-width: 175px; } }\n      #deck #cards .card img {\n        max-width: 100%; }\n\n#form #labels {\n  text-align: center; }\n  #form #labels label {\n    text-transform: capitalize;\n    margin: 5px 10px; }\n    #form #labels label input {\n      margin-right: 5px; }\n\nhtml {\n  box-sizing: border-box; }\n\n*, *:before, *:after {\n  box-sizing: inherit; }\n\n#loading {\n  margin: 50px auto 50px;\n  text-align: center; }\n\n#error {\n  margin: 30px 0; }\n\n#content {\n  max-width: 1600px;\n  margin: 0 auto; }\n", ""]);
+	exports.push([module.id, "#nav #nav-inner {\n  margin: 10px; }\n  #nav #nav-inner img {\n    height: 55px;\n    display: inline-block; }\n  #nav #nav-inner h1 {\n    display: inline-block;\n    margin-left: 10px;\n    vertical-align: middle;\n    text-transform: uppercase; }\n  #nav #nav-inner button {\n    float: right; }\n\n#suggest {\n  display: block;\n  margin: 25px auto 10px; }\n\n#deck {\n  text-align: center; }\n  #deck #meta {\n    overflow: auto;\n    text-align: center; }\n    #deck #meta li {\n      text-transform: capitalize; }\n    #deck #meta div {\n      display: inline-block;\n      vertical-align: top;\n      margin: 10px 50px;\n      text-align: left; }\n  #deck p {\n    margin-bottom: 0; }\n  #deck #cards {\n    max-width: 1300px;\n    margin: 0 auto; }\n    #deck #cards .card {\n      display: inline-block;\n      border: none;\n      max-width: 225px;\n      margin: 10px; }\n      @media (max-width: 900px) {\n        #deck #cards .card {\n          max-width: 175px; } }\n      #deck #cards .card p {\n        text-transform: capitalize; }\n      #deck #cards .card img {\n        max-width: 100%; }\n\n#form #labels {\n  text-align: center; }\n  #form #labels label {\n    text-transform: capitalize;\n    margin: 5px 10px; }\n    #form #labels label input {\n      margin-right: 5px; }\n\nhtml {\n  box-sizing: border-box; }\n\n*, *:before, *:after {\n  box-sizing: inherit; }\n\n#loading {\n  margin: 50px auto 50px;\n  text-align: center; }\n\n#error {\n  margin: 30px 0; }\n\n#content {\n  max-width: 1600px;\n  margin: 0 auto; }\n", ""]);
 	
 	// exports
 
