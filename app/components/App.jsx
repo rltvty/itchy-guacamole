@@ -19,8 +19,8 @@ var styles = require('../styles/base.scss');
 // Visual Nav
 var App = React.createClass({
 
-  hanldeBuildClick: function() {
-    this.refs.creator.buildDeck();
+  hanldeNewClick: function() {
+    this.refs.creator.getNewDeck();
   },
 
   render: function() {
@@ -30,7 +30,7 @@ var App = React.createClass({
           <div id='nav-inner'>
             <img src='/static/images/shield.png' alt='Dom Bot Shield' title='Dom Bot Shield'></img>
             <h1>Dom Bot</h1>
-            <button id='build-deck' className='btn btn-lg btn-primary' onClick={this.hanldeBuildClick}>Build Deck</button>
+            <button id='build-deck' className='btn btn-lg btn-primary' onClick={this.hanldeNewClick}>New Deck</button>
           </div>
         </div>
         <Creator ref="creator"/>

@@ -9,10 +9,12 @@ module.exports = React.createClass({
   displayName: 'Creator',
 
   componentDidMount: function() {
-    console.log()
-
     var id = this.getQueryParam("id");
-    this.buildDeck(id);
+    if(id) {
+      this.getDeckByID(id);
+    } else {
+      this.getNewDeck();
+    }
   },
 
   getInitialState: function() {
@@ -43,16 +45,8 @@ module.exports = React.createClass({
     this.setState({error: true, loading: false});
   },
 
-  buildDeck: function(id) {
-    this.setLoading();
-    if(id) {
-      this.getDeckByID(id);
-    } else {
-      this.getNewDeck();
-    }
-  },
-
   getDeckByID: function(id) {
+    this.setLoading();
     $.getJSON('/deck/' + id).success(function(data) {
       this.setState({deck: data, loading: false});
       document.title = "Dom Bot | " + this.state.deck.id;
@@ -63,6 +57,7 @@ module.exports = React.createClass({
   },
 
   getNewDeck: function() {
+    this.setLoading();
     var params = JSON.stringify(this.getParams());
     $.post('/deck', params).success(function(data) {
       data = JSON.parse(data);
