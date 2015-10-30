@@ -24,9 +24,9 @@ var (
 )
 
 type makeDeckRequest struct {
-	Sets            []deck.Set       `json:"sets"`
-	Weights         score.Weights    `json:"weights"`
-	VetoProbability veto.Probability `json:"veto_probability"`
+	Sets            []deck.Set        `json:"sets"`
+	Weights         score.Weights     `json:"weights"`
+	VetoProbability *veto.Probability `json:"veto_probability,omitempty"`
 }
 
 type deckHardware struct {
@@ -114,11 +114,12 @@ func getDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var (
-		sets          = availableSets
-		requestedSets deck.Sets
-		req           makeDeckRequest
-		maxScore      uint
-		d             deck.Deck
+		sets            = availableSets
+		requestedSets   deck.Sets
+		vetoProbability veto.Probability
+		req             makeDeckRequest
+		maxScore        uint
+		d               deck.Deck
 	)
 
 	decoder := json.NewDecoder(r.Body)
@@ -139,25 +140,40 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
+	if req.VetoProbability == nil {
+		fmt.Println("Using default probs")
+		// Defaults
+		vetoProbability = veto.Probability{
+			WhenTooExpensive:     0.9,
+			WhenNoTrashing:       0.9,
+			WhenNoChaining:       0.3,
+			WhenTooManySets:      0.7,
+			WhenTooManyMechanics: 0.8,
+			WhenTooManyAttacks:   0.7,
+		}
+	} else {
+		vetoProbability = *req.VetoProbability
+	}
+
 	count := 0
 GenerateDeck:
 	candidateDeck := deck.NewRandomDeck(sets)
-	if veto.TooExpensive(req.VetoProbability, candidateDeck) {
+	if veto.TooExpensive(vetoProbability, candidateDeck) {
 		goto GenerateDeck
 	}
-	if veto.NoTrashing(req.VetoProbability, candidateDeck) {
+	if veto.NoTrashing(vetoProbability, candidateDeck) {
 		goto GenerateDeck
 	}
-	if veto.NoChaining(req.VetoProbability, candidateDeck) {
+	if veto.NoChaining(vetoProbability, candidateDeck) {
 		goto GenerateDeck
 	}
-	if veto.TooManySets(req.VetoProbability, candidateDeck) {
+	if veto.TooManySets(vetoProbability, candidateDeck) {
 		goto GenerateDeck
 	}
-	if veto.TooManyMechanics(req.VetoProbability, candidateDeck) {
+	if veto.TooManyMechanics(vetoProbability, candidateDeck) {
 		goto GenerateDeck
 	}
-	if veto.TooManyAttacks(req.VetoProbability, candidateDeck) {
+	if veto.TooManyAttacks(vetoProbability, candidateDeck) {
 		goto GenerateDeck
 	}
 	count++
