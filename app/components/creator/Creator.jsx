@@ -77,8 +77,10 @@ module.exports = React.createClass({
 
   updateHistory: function() {
     var windowHistory = History.createHistory()
-    windowHistory.pushState(this.state, '?id=' + this.state.deck.id);
-    document.title = "Dom Bot | " + this.state.deck.id;
+    if(this.state.deck.id) {
+      windowHistory.pushState(this.state, '?id=' + this.state.deck.id);
+      document.title = "Dom Bot | " + this.state.deck.id;
+    }
   },
 
   render: function() {
