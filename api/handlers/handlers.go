@@ -23,7 +23,7 @@ var (
 )
 
 type makeDeckRequest struct {
-	Sets    deck.Sets     `json:"sets"`
+	Sets    []deck.Set    `json:"sets"`
 	Weights score.Weights `json:"weights"`
 }
 
@@ -112,10 +112,11 @@ func getDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var (
-		sets     = availableSets
-		req      makeDeckRequest
-		maxScore uint
-		d        deck.Deck
+		sets          = availableSets
+		requestedSets deck.Sets
+		req           makeDeckRequest
+		maxScore      uint
+		d             deck.Deck
 	)
 
 	decoder := json.NewDecoder(r.Body)
@@ -125,8 +126,11 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	if !req.Sets.Empty() {
-		sets.Intersect(req.Sets)
+	for _, set := range req.Sets {
+		requestedSets.Add(set)
+	}
+	if !requestedSets.Empty() {
+		sets.Intersect(requestedSets)
 	}
 	if sets.Empty() {
 		http.Error(w, "Can't generate a deck from no sets", http.StatusBadRequest)
