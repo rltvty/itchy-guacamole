@@ -8,7 +8,10 @@ module.exports = React.createClass({
   displayName: 'Creator',
 
   componentDidMount: function() {
-    this.buildDeck();
+    console.log()
+
+    var id = this.getQueryParam("id");
+    this.buildDeck(id);
   },
 
   getInitialState: function() {
@@ -23,24 +26,48 @@ module.exports = React.createClass({
     return { sets: this.refs.form.state.selectedSets };
   },
 
-  buildDeck: function() {
-    this.setState({loading: true});
-    var selectedSets = JSON.stringify(this.getParams());
-    $.post('/deck', selectedSets, function(data) {
-      data = JSON.parse(data);
-      this.setState({
-        deck: data,
-        loading: false,
-        error: false
-      });
+  getQueryParam: function(field) {
+    var href = window.location.href;
+    var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+    var string = reg.exec(href);
+    return string ? string[1] : null;
+  },
+
+  setLoading: function() {
+    this.setState({error: false, loading: true});
+  },
+
+  handleError: function(err) {
+    console.error(err);
+    this.setState({error: true, loading: false});
+  },
+
+  buildDeck: function(id) {
+    this.setLoading();
+    if(id) {
+      this.getDeckByID(id);
+    } else {
+      this.getNewDeck();
+    }
+  },
+
+  getDeckByID: function(id) {
+    $.getJSON('/deck/' + id).success(function(data) {
+      this.setState({deck: data, loading: false});
     }.bind(this))
-    .fail(function(err) {
-      console.error(err);
-      this.setState({
-        deck: { cards: [] },
-        loading: false,
-        error: true
-      });
+    .error(function(err) {
+      this.handleError(err);
+    }.bind(this));
+  },
+
+  getNewDeck: function() {
+    var params = JSON.stringify(this.getParams());
+    $.post('/deck', params).success(function(data) {
+      data = JSON.parse(data);
+      this.setState({deck: data, loading: false});
+    }.bind(this))
+    .error(function(err) {
+      this.handleError(err);
     }.bind(this));
   },
 

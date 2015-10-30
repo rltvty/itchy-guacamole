@@ -37,6 +37,7 @@ module.exports = React.createClass({
 
     return(
       <div id='deck'>
+        <a href={"/?id=" + this.props.deck.id} target="_blank">Share this deck</a>
         <Meta deck={this.props.deck}/>
         <div id='cards'>
           {cards}
