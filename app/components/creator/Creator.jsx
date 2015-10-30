@@ -1,6 +1,4 @@
 'use strict'
-var React = require('react');
-var classNames = require('classnames');
 var Deck = require('./Deck');
 var Loading = require('../Loading');
 var Error = require('../Error');
@@ -18,6 +16,14 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       deck: { cards: [] },
+      params: {
+        trashing: 0,
+        random: 1,
+        chaining: 1,
+        cost_spread: 2,
+        set_count: 1,
+        mechanic_count: 1,
+      },
       loading: false,
       error: false
      };
@@ -25,7 +31,7 @@ module.exports = React.createClass({
 
   buildDeck: function() {
     this.setState({loading: true});
-    $.post('/deck', "{}", function(data) {
+    $.post('/deck', JSON.stringify(this.state.params), function(data) {
       data = JSON.parse(data);
       this.setState({
         deck: data,

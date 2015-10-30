@@ -4,14 +4,11 @@
   "description": "Dom-Bot Frontend",
   "main": "server.js",
   "dependencies": {
-    "classnames": "^2.1.5",
     "css-loader": "^0.19.0",
     "json-loader": "^0.5.3",
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0",
-    "react-router": "^1.0.0-rc3",
     "jsx-loader": "^0.13.2",
-    "history": "^1.13.0",
+    "react": "^0.14.1",
+    "react-dom": "^0.14.1",
     "sass-loader": "^3.0.0",
     "style-loader": "^0.12.4",
     "webpack": "^1.12.2"

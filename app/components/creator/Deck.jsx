@@ -1,5 +1,4 @@
 'use strict'
-var React = require('react');
 var Card = require('./Card');
 var Meta = require('./Meta');
 
@@ -35,7 +34,7 @@ module.exports = React.createClass({
 
   render: function() {
     var cards = this.getCards();
-    
+
     return(
       <div id='deck'>
         <Meta deck={this.props.deck}/>

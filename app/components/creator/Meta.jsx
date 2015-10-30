@@ -1,5 +1,4 @@
 'use strict'
-var React = require('react');
 
 module.exports = React.createClass({
   displayName: 'Meta',
@@ -65,7 +64,7 @@ module.exports = React.createClass({
       <div id='meta'>
 
         <div id='expansions'>
-          <h3>Sets</h3>
+          <h3>Sets Needed</h3>
           <ul>
             {expansions}
           </ul>
