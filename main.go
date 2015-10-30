@@ -13,7 +13,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(GetPort(), router))
 }
 
-//for Heroku deploys
+// GetPort is for Heroku deploys
 func GetPort() string {
 	var port = os.Getenv("PORT")
 	// Set a default port if there is nothing in the environment

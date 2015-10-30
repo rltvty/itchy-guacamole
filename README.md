@@ -1,6 +1,21 @@
 # itchy-guacamole
 Dom Bot App :tada:
 
+## Use
+
+The server accepts some ENV variables.  `EXPANSIONS` is a comma-delimited list
+of Dominion expansions to use when generating decks.  See `deck/cards.go` for
+valid values.  Example:
+
+```
+EXPANSIONS=Dominion,DardAges,Adventures go run main.go
+```
+
+You can also specify a `PORT` value to control the port on which the API is
+served.
+
+
+
 ## Starting Victory Cards & House Rules
 
 * All victory card counts below are after each player has thier starter deck.
