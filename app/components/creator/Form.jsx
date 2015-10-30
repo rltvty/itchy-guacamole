@@ -1,5 +1,5 @@
 'use strict'
-var CheckboxGroup = require('./CheckboxGroup');
+var CheckboxGroup = require('react-checkbox-group');
 
 module.exports = React.createClass({
   displayName: 'Form',

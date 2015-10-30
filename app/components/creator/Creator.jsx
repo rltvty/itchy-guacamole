@@ -3,6 +3,7 @@ var Form = require('./Form');
 var Deck = require('./Deck');
 var Loading = require('../Loading');
 var Error = require('../Error');
+var History = require('history');
 
 module.exports = React.createClass({
   displayName: 'Creator',
@@ -54,6 +55,7 @@ module.exports = React.createClass({
   getDeckByID: function(id) {
     $.getJSON('/deck/' + id).success(function(data) {
       this.setState({deck: data, loading: false});
+      document.title = "Dom Bot | " + this.state.deck.id;
     }.bind(this))
     .error(function(err) {
       this.handleError(err);
@@ -69,6 +71,14 @@ module.exports = React.createClass({
     .error(function(err) {
       this.handleError(err);
     }.bind(this));
+
+    this.updateHistory();
+  },
+
+  updateHistory: function() {
+    var windowHistory = History.createHistory()
+    windowHistory.pushState(this.state, '?id=' + this.state.deck.id);
+    document.title = "Dom Bot | " + this.state.deck.id;
   },
 
   render: function() {
