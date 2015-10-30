@@ -8,6 +8,8 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"os"
+	"strings"
 	"time"
 
 	"github.com/dom-bot/itchy-guacamole/deck"
@@ -15,7 +17,10 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-var rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
+var (
+	rnd        = rand.New(rand.NewSource(time.Now().UnixNano()))
+	expansions map[deck.Expansion]bool
+)
 
 type deckHardware struct {
 	CoinTokens         bool `json:"coin_tokens"`
@@ -38,6 +43,22 @@ type deckResponse struct {
 	Spoils               bool         `json:"spoils"`
 	Ruins                bool         `json:"ruins"`
 	Hardware             deckHardware `json:"hardware"`
+}
+
+func init() {
+	expansionString := os.Getenv("EXPANSIONS")
+	if expansionString == "" {
+		expansions = map[deck.Expansion]bool{deck.Dominion: true}
+	} else {
+		exps := strings.Split(expansionString, `,`)
+		expansions = make(map[deck.Expansion]bool, len(exps))
+
+		for _, exp := range exps {
+			expansions[deck.Expansion(exp)] = true
+		}
+	}
+
+	fmt.Printf("Using expansions: %v\n", expansions)
 }
 
 func getDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -89,7 +110,7 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var (
 		weights  score.Weights
 		maxScore uint
-		d        = deck.NewRandomDeck()
+		d        = deck.NewRandomDeck(expansions)
 	)
 
 	decoder := json.NewDecoder(r.Body)
@@ -102,7 +123,7 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	maxScore = score.Evaluate(weights, d)
 
 	for i := 0; i < 100; i++ {
-		candidateDeck := deck.NewRandomDeck()
+		candidateDeck := deck.NewRandomDeck(expansions)
 		candidateScore := score.Evaluate(weights, candidateDeck)
 		if candidateScore > maxScore {
 			d = candidateDeck

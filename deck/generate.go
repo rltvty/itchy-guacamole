@@ -10,7 +10,7 @@ var (
 )
 
 // NewRandomDeck returns a randomly selected deck
-func NewRandomDeck() Deck {
+func NewRandomDeck(expansions map[Expansion]bool) Deck {
 	var (
 		deckCards       = make([]Card, 0, 10)
 		deckEvents      = make([]Card, 0, 0)
@@ -21,13 +21,16 @@ func NewRandomDeck() Deck {
 	)
 
 	for _, card := range cards {
-		if card.Expansion == "Dark Ages" {
+		if !expansions[card.Expansion] {
+			continue
+		}
+		if card.Expansion == DarkAges {
 			darkAgesCards++
 		}
-		if card.Expansion == "Prosperity" {
+		if card.Expansion == Prosperity {
 			prosperityCards++
 		}
-		if card.Expansion == "Adventure" {
+		if card.Expansion == Adventures {
 			adventureCards++
 		}
 
@@ -44,10 +47,15 @@ func NewRandomDeck() Deck {
 		}
 	}
 
-	return Deck{
+	d := Deck{
 		Cards:                deckCards,
 		Events:               deckEvents,
 		ColoniesAndPlatinums: rnd.Intn(deckSize) < prosperityCards,
 		Shelters:             rnd.Intn(deckSize) < darkAgesCards,
 	}
+	if adventureCards == 0 {
+		d.Events = make([]Card, 0, 0)
+	}
+
+	return d
 }
