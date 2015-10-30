@@ -77,6 +77,13 @@ Create a deck
 POST /deck
 {
   "sets": ["seaside", "governor"], // defaults to SETS from the environment
+  "veto_probability": {
+    "when_to_expensive": 0.9,
+    "when_no_trashing": 0.8,
+    "when_no_chaining": 0.2,
+    "when_too_many_sets": 0.7,
+    "when_too_many_mechanics": 0.9,
+  },
   "weights": {
     "trashing": 0,
     "random": 2,

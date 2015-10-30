@@ -14,6 +14,7 @@ import (
 
 	"github.com/dom-bot/itchy-guacamole/deck"
 	"github.com/dom-bot/itchy-guacamole/score"
+	"github.com/dom-bot/itchy-guacamole/veto"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -23,8 +24,9 @@ var (
 )
 
 type makeDeckRequest struct {
-	Sets    []deck.Set    `json:"sets"`
-	Weights score.Weights `json:"weights"`
+	Sets            []deck.Set        `json:"sets"`
+	Weights         score.Weights     `json:"weights"`
+	VetoProbability *veto.Probability `json:"veto_probability,omitempty"`
 }
 
 type deckHardware struct {
@@ -129,11 +131,12 @@ func getDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var (
-		sets          = availableSets
-		requestedSets deck.Sets
-		req           makeDeckRequest
-		maxScore      uint
-		d             deck.Deck
+		sets            = availableSets
+		requestedSets   deck.Sets
+		vetoProbability veto.Probability
+		req             makeDeckRequest
+		maxScore        uint
+		d               deck.Deck
 	)
 
 	decoder := json.NewDecoder(r.Body)
@@ -154,16 +157,51 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	d = deck.NewRandomDeck(sets)
-	maxScore = score.Evaluate(req.Weights, d)
-
-	for i := 0; i < 100; i++ {
-		candidateDeck := deck.NewRandomDeck(sets)
-		candidateScore := score.Evaluate(req.Weights, candidateDeck)
-		if candidateScore > maxScore {
-			d = candidateDeck
-			maxScore = candidateScore
+	if req.VetoProbability == nil {
+		fmt.Println("Using default probs")
+		// Defaults
+		vetoProbability = veto.Probability{
+			WhenTooExpensive:     0.9,
+			WhenNoTrashing:       0.9,
+			WhenNoChaining:       0.3,
+			WhenTooManySets:      0.7,
+			WhenTooManyMechanics: 0.8,
+			WhenTooManyAttacks:   0.7,
 		}
+	} else {
+		vetoProbability = *req.VetoProbability
+	}
+
+	count := 0
+GenerateDeck:
+	candidateDeck := deck.NewRandomDeck(sets)
+	if veto.TooExpensive(vetoProbability, candidateDeck) {
+		goto GenerateDeck
+	}
+	if veto.NoTrashing(vetoProbability, candidateDeck) {
+		goto GenerateDeck
+	}
+	if veto.NoChaining(vetoProbability, candidateDeck) {
+		goto GenerateDeck
+	}
+	if veto.TooManySets(vetoProbability, candidateDeck) {
+		goto GenerateDeck
+	}
+	if veto.TooManyMechanics(vetoProbability, candidateDeck) {
+		goto GenerateDeck
+	}
+	if veto.TooManyAttacks(vetoProbability, candidateDeck) {
+		goto GenerateDeck
+	}
+	count++
+
+	candidateScore := score.Evaluate(req.Weights, candidateDeck)
+	if candidateScore > maxScore {
+		d = candidateDeck
+		maxScore = candidateScore
+	}
+	if count < 100 {
+		goto GenerateDeck
 	}
 
 	resp := deckResponse{
