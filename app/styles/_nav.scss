@@ -14,8 +14,13 @@
       text-transform: uppercase;
     }
 
-    button {
+    #deck-buttons {
       float: right;
+      margin-top: 10px;
+
+      #deck-settings {
+        margin-right: 15px;
+      }
     }
   }
 }
