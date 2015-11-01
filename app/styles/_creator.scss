@@ -6,6 +6,11 @@
 #deck {
   text-align: center;
 
+  #share-deck {
+    margin: 15px 0 25px 0;
+    display: inline-block;
+  }
+
   #meta {
     overflow: auto;
     text-align: center;
@@ -43,7 +48,7 @@
       p {
         text-transform: capitalize;
       }
-      
+
       img {
         max-width: 100%;
       }

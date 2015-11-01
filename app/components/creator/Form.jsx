@@ -4,32 +4,21 @@ var CheckboxGroup = require('react-checkbox-group');
 module.exports = React.createClass({
   displayName: 'Form',
 
-  componentDidMount: function() {
-    $.get('/sets', function(data) {
-      data = JSON.parse(data);
-      this.setState({ availableSets: data });
-    }.bind(this)).fail(function(err) {
-      console.error(err);
-    });
-  },
-
-  getInitialState: function() {
-    return {selectedSets: [], availableSets: []};
-  },
-
-  handleChange: function() {
+  handleSetChange: function() {
     var selectedSets = this.refs.setsGroup.getCheckedValues();
-    this.setState({selectedSets: selectedSets});
+    this.props.setDeckProperties({selectedSets: selectedSets});
   },
 
   getSets: function() {
-    return this.state.availableSets.map(function(set, index) {
-      return (
-        <label>
-          <input type="checkbox" value={set}/>{set.split('_').join(' ')}
-        </label>
-      );
-    });
+    if(this.props.sets) {
+      return this.props.sets.map(function(set, index) {
+        return (
+          <label>
+            <input type="checkbox" value={set}/> {set.split('_').join(' ')}
+          </label>
+        );
+      });
+    }
   },
 
   render: function() {
@@ -37,11 +26,11 @@ module.exports = React.createClass({
 
     return(
       <div id='form'>
-        <CheckboxGroup name="sets" value={this.state.selectedSets} ref="setsGroup" onChange={this.handleChange}>
-        <div id='labels'>
-          {sets}
-        </div>
-      </CheckboxGroup>
+        <CheckboxGroup name="sets" value={this.props.deckProperties.selectedSets} ref="setsGroup" onChange={this.handleSetChange}>
+          <div id='labels'>
+            {sets}
+          </div>
+        </CheckboxGroup>
       </div>
     );
   }

@@ -18,7 +18,7 @@ served.
 
 ## Starting Victory Cards & House Rules
 
-* All victory card counts below are after each player has thier starter deck.
+* All victory card counts below are after each player has their starter deck.
 
 ### 2 Player Game
 
@@ -30,7 +30,7 @@ served.
 * Any other victory cards in the supply should be reduced to 8
 
 #### Game End
-* 3 piles gone (or Provinces or Colonies) 
+* 3 piles gone (or Provinces or Colonies)
 * No extra turns
 
 ### 3-4 Player Game
@@ -42,7 +42,7 @@ served.
 * Colonies: 12  (only if selected in a Prosperity game)
 
 #### Game End
-* 3 piles gone (or Provinces or Colonies) 
+* 3 piles gone (or Provinces or Colonies)
 * No extra turns
 
 ### 5 Player Game
@@ -54,7 +54,7 @@ served.
 * Colonies: 12  (only if selected in a Prosperity game)
 
 #### Game End
-* 4 piles gone (or Provinces or Colonies) 
+* 4 piles gone (or Provinces or Colonies)
 * Equal turns and phantom Provinces (and Colonies in a Prosperity game)
 
 ### 6 Player Game
@@ -66,7 +66,7 @@ served.
 * Colonies: 12  (only if selected in a Prosperity game)
 
 #### Game End
-* 5 piles gone (or Provinces or Colonies) 
+* 5 piles gone (or Provinces or Colonies)
 * Equal turns and phantom Provinces (and Colonies in a Prosperity game)
 
 ## API

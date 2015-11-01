@@ -23,6 +23,10 @@ var App = React.createClass({
     this.refs.creator.getNewDeck();
   },
 
+  hanldeSettingsClick: function() {
+    this.refs.creator.showSettings();
+  },
+
   render: function() {
     return (
       <div>
@@ -30,7 +34,10 @@ var App = React.createClass({
           <div id='nav-inner'>
             <img src='/static/images/shield.png' alt='Dom Bot Shield' title='Dom Bot Shield'></img>
             <h1>Dom Bot</h1>
-            <button id='build-deck' className='btn btn-lg btn-primary' onClick={this.hanldeNewClick}>New Deck</button>
+            <div id='deck-buttons'>
+              <button id='deck-settings' title='Settings' className='btn btn-info' onClick={this.hanldeSettingsClick}>Settings</button>
+              <button id='deck-new' title='New Deck' className='btn btn-primary' onClick={this.hanldeNewClick}>New Deck</button>
+            </div>
           </div>
         </div>
         <Creator ref="creator"/>
