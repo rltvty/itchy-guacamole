@@ -70,4 +70,18 @@
       }
     }
   }
+
+  #weights {
+    overflow: auto;
+
+    .weight-range {
+      width: 45%;
+      margin: 10px 2.5%;
+      float: left;
+
+      label {
+        text-transform: capitalize;
+      }
+    }
+  }
 }
