@@ -175,7 +175,9 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	}
 
 	count := 0
+	tries := 0
 GenerateDeck:
+	tries++
 	candidateDeck := deck.NewRandomDeck(sets)
 	if veto.TooExpensive(vetoProbability, candidateDeck) {
 		goto GenerateDeck
@@ -202,9 +204,10 @@ GenerateDeck:
 		d = candidateDeck
 		maxScore = candidateScore
 	}
-	if count < 100 {
+	if count < 10 {
 		goto GenerateDeck
 	}
+	log.Printf("Made deck after %d tries", tries)
 
 	resp := deckResponse{
 		ID:                   base64.URLEncoding.EncodeToString(d.ID()),
