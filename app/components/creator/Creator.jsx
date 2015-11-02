@@ -6,13 +6,26 @@ var Error = require('../Error');
 var History = require('history');
 var Modal = require('react-modal');
 
+var modalStyle = {
+  overlay : {
+    backgroundColor: 'rgba(175, 175, 175, 0.75)'
+  },
+  content: {
+    border: 'none',
+    background: 'none',
+    borderRadius: '4px',
+    padding: 'none'
+  }
+};
+
 module.exports = React.createClass({
   displayName: 'Creator',
 
   componentDidMount: function() {
     $.getJSON('/sets', function(data) {
-      this.setState({ availableSets: data });
-      this.getFirstDeck();
+      var deckProperties = this.state.deckProperties;
+      deckProperties.selectedSets = data;
+      this.setState({availableSets: data, deckProperties: deckProperties}, this.getFirstDeck);
     }.bind(this)).fail(function(err) {
       this.handleError(err)
     }.bind(this));
@@ -28,17 +41,14 @@ module.exports = React.createClass({
         cards: []
       },
       deckProperties: {
-        selectedSets: []
-      },
-      modalStyle: {
-        overlay : {
-          backgroundColor: 'rgba(175, 175, 175, 0.75)'
-        },
-        content: {
-          border: 'none',
-          background: 'none',
-          borderRadius: '4px',
-          padding: 'none'
+        selectedSets: [],
+        weights: {
+          trashing: 5,
+          random: 5,
+          chaining: 5,
+          cost_spread: 5,
+          set_count: 5,
+          mechanic_count: 5,
         }
       }
      };
@@ -66,8 +76,11 @@ module.exports = React.createClass({
   },
 
   getJSONParams: function() {
-    var params = { sets: this.state.deckProperties.selectedSets }
-    return JSON.stringify(params);
+    var selectedSets = this.state.deckProperties.selectedSets;
+    if(selectedSets.length == 0) {
+      selectedSets = this.state.availableSets
+    }
+    return JSON.stringify({ sets: selectedSets, weights: this.state.deckProperties.weights });
   },
 
   getQueryParam: function(field) {
@@ -121,11 +134,8 @@ module.exports = React.createClass({
   render: function() {
     return(
       <div>
-        <Modal isOpen={this.state.settingsOpen} onRequestClose={this.hideSettings} style={this.state.modalStyle}>
+        <Modal isOpen={this.state.settingsOpen} onRequestClose={this.hideSettings} style={modalStyle}>
           <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Deck Settings</h5>
-            </div>
             <div className="modal-body">
               <Form sets={this.state.availableSets} deckProperties={this.state.deckProperties} setDeckProperties={this.setDeckProperties}/>
             </div>
