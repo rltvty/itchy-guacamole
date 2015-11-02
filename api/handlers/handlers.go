@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -9,7 +8,6 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
-	"net/http/httptest"
 	"os"
 	"strings"
 	"time"
@@ -147,6 +145,7 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		http.Error(w, fmt.Sprintf("Error decoding JSON body: %s", err), http.StatusBadRequest)
 		return
 	}
+	log.Printf("makeDeck(%+v)\n", req)
 
 	for _, set := range req.Sets {
 		requestedSets.Add(set)
@@ -160,39 +159,55 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	}
 
 	if req.VetoProbability == nil || (req.VetoProbability == &veto.Probability{}) {
-		fmt.Println("Using default probs")
+		log.Println("Using default probs")
 		// Defaults
 		vetoProbability = veto.Probability{
-			WhenTooExpensive:     0.9,
-			WhenNoTrashing:       0.9,
-			WhenNoChaining:       0.3,
+			WhenTooExpensive:     0.5,
+			WhenNoTrashing:       0.5,
+			WhenNoChaining:       0.25,
 			WhenTooManySets:      1.0,
-			WhenTooManyMechanics: 0.8,
-			WhenTooManyAttacks:   0.7,
+			WhenTooManyMechanics: 0.5,
+			WhenTooManyAttacks:   0.5,
 		}
 	} else {
 		vetoProbability = *req.VetoProbability
 	}
 
 	count := 0
+	vetos := map[string]uint{
+		"TooExpensive":     0,
+		"NoTrashing":       0,
+		"NoChaining":       0,
+		"TooManySets":      0,
+		"TooManyMechanics": 0,
+		"TooManyAttacks":   0,
+	}
+	tries := 0
 GenerateDeck:
+	tries++
 	candidateDeck := deck.NewRandomDeck(sets)
 	if veto.TooExpensive(vetoProbability, candidateDeck) {
+		vetos["TooExpensive"]++
 		goto GenerateDeck
 	}
 	if veto.NoTrashing(vetoProbability, candidateDeck) {
+		vetos["NoTrashing"]++
 		goto GenerateDeck
 	}
 	if veto.NoChaining(vetoProbability, candidateDeck) {
+		vetos["NoChaining"]++
 		goto GenerateDeck
 	}
 	if veto.TooManySets(vetoProbability, candidateDeck) {
+		vetos["TooManySets"]++
 		goto GenerateDeck
 	}
 	if veto.TooManyMechanics(vetoProbability, candidateDeck) {
+		vetos["TooManyMechanics"]++
 		goto GenerateDeck
 	}
 	if veto.TooManyAttacks(vetoProbability, candidateDeck) {
+		vetos["TooManyAttacks"]++
 		goto GenerateDeck
 	}
 	count++
@@ -202,9 +217,10 @@ GenerateDeck:
 		d = candidateDeck
 		maxScore = candidateScore
 	}
-	if count < 100 {
+	if count < 10 {
 		goto GenerateDeck
 	}
+	log.Printf("Made deck after %d tries (%+v)", tries, vetos)
 
 	resp := deckResponse{
 		ID:                   base64.URLEncoding.EncodeToString(d.ID()),
@@ -230,43 +246,6 @@ GenerateDeck:
 	_ = enc.Encode(resp)
 
 	w.Header().Set("Content-Type", "application/json")
-}
-
-func makeSlackDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	sets := strings.Split(r.FormValue("text"), ",")
-	dS := make([]deck.Set, 0, len(sets))
-	for _, val := range sets {
-		dS = append(dS, deck.Set(val))
-	}
-
-	mDR := makeDeckRequest{
-		Sets: dS,
-	}
-	js, err := json.Marshal(mDR)
-	if err != nil {
-		log.Println(err)
-	}
-
-	req, err := http.NewRequest("POST", "/deck", bytes.NewReader(js))
-	if err != nil {
-		log.Println(err)
-	}
-	writer := httptest.NewRecorder()
-
-	makeDeck(writer, req, nil)
-
-	var dR deckResponse
-	err = json.Unmarshal(writer.Body.Bytes(), &dR)
-	if err != nil {
-		log.Println(err)
-	}
-	//do some formatting stuff
-	postJson, err := json.Marshal(dR)
-	if err != nil {
-		log.Println(err)
-	}
-
-	http.Post("https://hooks.slack.com/services/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", "application/json", bytes.NewReader(postJson))
 }
 
 func indexRoute(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
