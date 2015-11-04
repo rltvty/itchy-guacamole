@@ -170,7 +170,7 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		// Defaults
 		vetoProbability = veto.Probability{
 			WhenTooExpensive:     0.90,
-			WhenNoTrashing:       0.85,
+			WhenNoTrashing:       0.60,
 			WhenNoChaining:       0.5,
 			WhenTooManyMechanics: 0.75,
 			WhenTooManyAttacks:   0.85,
@@ -219,7 +219,7 @@ GenerateDeck:
 		d = candidateDeck
 		maxScore = candidateScore
 	}
-	if count < 10 {
+	if count < 100 {
 		goto GenerateDeck
 	}
 	log.Printf("Made deck after %d tries (%+v)", tries, vetos)
