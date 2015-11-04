@@ -14,7 +14,6 @@ type Probability struct {
 	WhenTooExpensive     float64 `json:"when_to_expensive"`
 	WhenNoTrashing       float64 `json:"when_no_trashing"`
 	WhenNoChaining       float64 `json:"when_no_chaining"`
-	WhenTooManySets      float64 `json:"when_too_many_sets"`
 	WhenTooManyMechanics float64 `json:"when_too_many_mechanics"`
 	WhenTooManyAttacks   float64 `json:"when_too_many_attacks"`
 }
@@ -49,18 +48,7 @@ func NoChaining(p Probability, d deck.Deck) bool {
 		}
 	}
 
-	return rnd.Float64() < p.WhenNoTrashing
-}
-
-// TooManySets vetos decks with cards drawn from more than 2 sets
-func TooManySets(p Probability, d deck.Deck) bool {
-	sets := make(map[deck.Set]bool, 15)
-
-	for _, card := range d.Cards {
-		sets[card.Set] = true
-	}
-
-	return (len(sets) > 2) && rnd.Float64() < p.WhenTooManySets
+	return rnd.Float64() < p.WhenNoChaining
 }
 
 // TooManyMechanics vetos decks using more than 2 mechanics
@@ -114,5 +102,5 @@ func TooManyAttacks(p Probability, d deck.Deck) bool {
 		}
 	}
 
-	return (count > 3) && rnd.Float64() < p.WhenTooManySets
+	return (count > 3) && rnd.Float64() < p.WhenTooManyAttacks
 }

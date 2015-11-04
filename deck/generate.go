@@ -29,8 +29,9 @@ func init() {
 }
 
 // NewRandomDeck returns a randomly selected deck
-func NewRandomDeck(sets Sets) Deck {
+func NewRandomDeck(maxSets uint, sets Sets) Deck {
 	var (
+		deckSets        = make(map[Set]bool, maxSets)
 		deckCards       = make([]Card, 0, 10)
 		deckEvents      = make([]Card, 0, 0)
 		deckSize        = 10
@@ -45,13 +46,21 @@ func NewRandomDeck(sets Sets) Deck {
 		if !sets.Include(card.Set) {
 			continue
 		}
-		if card.Set == DarkAges {
+		if _, ok := deckSets[card.Set]; !ok && len(deckSets) >= int(maxSets) {
+			continue
+		}
+
+		switch card.Set {
+		case Dominion, Intrigue, Seaside, Alchemy, Cornucopia, Hinterlands, Guilds:
+			deckSets[card.Set] = true
+		case DarkAges:
+			deckSets[card.Set] = true
 			darkAgesCards++
-		}
-		if card.Set == Prosperity {
+		case Prosperity:
+			deckSets[card.Set] = true
 			prosperityCards++
-		}
-		if card.Set == Adventures {
+		case Adventures:
+			deckSets[card.Set] = true
 			adventureCards++
 		}
 
