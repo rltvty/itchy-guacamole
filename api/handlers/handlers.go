@@ -25,6 +25,7 @@ var (
 
 type makeDeckRequest struct {
 	Sets            []deck.Set        `json:"sets"`
+	MaxSetCount     uint              `json:"max_set_count"`
 	Weights         score.Weights     `json:"weights"`
 	VetoProbability *veto.Probability `json:"veto_probability,omitempty"`
 }
@@ -135,6 +136,7 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		requestedSets   deck.Sets
 		vetoProbability veto.Probability
 		req             makeDeckRequest
+		maxSetCount     uint
 		maxScore        uint
 		d               deck.Deck
 	)
@@ -158,16 +160,20 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
+	maxSetCount = req.MaxSetCount
+	if maxSetCount == 0 {
+		maxSetCount = 2
+	}
+
 	if req.VetoProbability == nil || (req.VetoProbability == &veto.Probability{}) {
 		log.Println("Using default probs")
 		// Defaults
 		vetoProbability = veto.Probability{
-			WhenTooExpensive:     0.5,
-			WhenNoTrashing:       0.5,
-			WhenNoChaining:       0.25,
-			WhenTooManySets:      1.0,
-			WhenTooManyMechanics: 0.5,
-			WhenTooManyAttacks:   0.5,
+			WhenTooExpensive:     0.90,
+			WhenNoTrashing:       0.60,
+			WhenNoChaining:       0.5,
+			WhenTooManyMechanics: 0.75,
+			WhenTooManyAttacks:   0.85,
 		}
 	} else {
 		vetoProbability = *req.VetoProbability
@@ -185,7 +191,7 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	tries := 0
 GenerateDeck:
 	tries++
-	candidateDeck := deck.NewRandomDeck(sets)
+	candidateDeck := deck.NewRandomDeck(maxSetCount, sets)
 	if veto.TooExpensive(vetoProbability, candidateDeck) {
 		vetos["TooExpensive"]++
 		goto GenerateDeck
@@ -196,10 +202,6 @@ GenerateDeck:
 	}
 	if veto.NoChaining(vetoProbability, candidateDeck) {
 		vetos["NoChaining"]++
-		goto GenerateDeck
-	}
-	if veto.TooManySets(vetoProbability, candidateDeck) {
-		vetos["TooManySets"]++
 		goto GenerateDeck
 	}
 	if veto.TooManyMechanics(vetoProbability, candidateDeck) {
@@ -217,7 +219,7 @@ GenerateDeck:
 		d = candidateDeck
 		maxScore = candidateScore
 	}
-	if count < 10 {
+	if count < 100 {
 		goto GenerateDeck
 	}
 	log.Printf("Made deck after %d tries (%+v)", tries, vetos)
