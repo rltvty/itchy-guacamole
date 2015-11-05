@@ -171,7 +171,6 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		vetoProbability = veto.Probability{
 			WhenTooExpensive:     0.90,
 			WhenNoTrashing:       0.60,
-			WhenNoChaining:       0.5,
 			WhenTooManyMechanics: 0.75,
 			WhenTooManyAttacks:   0.85,
 		}
@@ -183,7 +182,6 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	vetos := map[string]uint{
 		"TooExpensive":     0,
 		"NoTrashing":       0,
-		"NoChaining":       0,
 		"TooManySets":      0,
 		"TooManyMechanics": 0,
 		"TooManyAttacks":   0,
@@ -198,10 +196,6 @@ GenerateDeck:
 	}
 	if veto.NoTrashing(vetoProbability, candidateDeck) {
 		vetos["NoTrashing"]++
-		goto GenerateDeck
-	}
-	if veto.NoChaining(vetoProbability, candidateDeck) {
-		vetos["NoChaining"]++
 		goto GenerateDeck
 	}
 	if veto.TooManyMechanics(vetoProbability, candidateDeck) {
