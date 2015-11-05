@@ -13,7 +13,6 @@ var rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
 type Probability struct {
 	WhenTooExpensive     float64 `json:"when_to_expensive"`
 	WhenNoTrashing       float64 `json:"when_no_trashing"`
-	WhenNoChaining       float64 `json:"when_no_chaining"`
 	WhenTooManyMechanics float64 `json:"when_too_many_mechanics"`
 	WhenTooManyAttacks   float64 `json:"when_too_many_attacks"`
 }
@@ -38,17 +37,6 @@ func NoTrashing(p Probability, d deck.Deck) bool {
 	}
 
 	return rnd.Float64() < p.WhenNoTrashing
-}
-
-// NoChaining vetos decks with no +Card/+Action cards
-func NoChaining(p Probability, d deck.Deck) bool {
-	for _, card := range d.Cards {
-		if card.PlusActions > 0 && card.PlusCards > 0 {
-			return false
-		}
-	}
-
-	return rnd.Float64() < p.WhenNoChaining
 }
 
 // TooManyMechanics vetos decks using more than 2 mechanics
