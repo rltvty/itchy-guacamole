@@ -178,6 +178,7 @@ func makeDeck(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		vetoProbability = *req.VetoProbability
 	}
 
+	decks := make([]deck.Deck, 0, 1000)
 	count := 0
 GenerateDeck:
 	candidateDeck := deck.NewRandomDeck(maxSetCount, sets)
@@ -195,13 +196,34 @@ GenerateDeck:
 	}
 	count++
 
-	candidateScore := score.Evaluate(req.Weights, candidateDeck)
-	if candidateScore > maxScore {
-		d = candidateDeck
-		maxScore = candidateScore
-	}
-	if count < 10 {
+	decks = append(decks, candidateDeck)
+	if len(decks) < cap(decks) {
 		goto GenerateDeck
+	}
+
+	var totalCards uint
+	cardCounts := make(map[deck.Card]uint, len(deck.Cards))
+	for _, deck := range decks {
+		for _, card := range deck.Cards {
+			cardCounts[card]++
+			totalCards++
+		}
+		for _, card := range deck.Events {
+			cardCounts[card]++
+			totalCards++
+		}
+	}
+	cardProbs := make(map[deck.Card]float64, len(cardCounts))
+	for card, count := range cardCounts {
+		cardProbs[card] = float64(count) / float64(totalCards)
+	}
+
+	for _, candidateDeck := range decks {
+		candidateScore := score.Evaluate(req.Weights, candidateDeck, cardProbs)
+		if candidateScore > maxScore {
+			d = candidateDeck
+			maxScore = candidateScore
+		}
 	}
 
 	resp := deckResponse{

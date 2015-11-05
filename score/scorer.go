@@ -18,17 +18,67 @@ type Weights struct {
 	CostSpread    uint `json:"cost_spread"`
 	SetCount      uint `json:"set_count"`
 	MechanicCount uint `json:"mechanic_count"`
+	Novelty       uint `json:"novelty"`
 }
 
 // Evaluate returns a value describing how awesome a game would be using a deck
-func Evaluate(c Weights, d deck.Deck) (score uint) {
+func Evaluate(c Weights, d deck.Deck, p map[deck.Card]float64) (score uint) {
 	score += (1 + c.Trashing) * evaluateTrashing(d)
 	score += (1 + c.Random) * evaluateRandom(d)
 	score += (1 + c.Chaining) * evaluateChaining(d)
 	score += (1 + c.CostSpread) * evaluateCostSpread(d)
 	score += (1 + c.SetCount) * evaluateSetCount(d)
 	score += (1 + c.MechanicCount) * evaluateMechanicCount(d)
+	score += (1 + c.Novelty) * evaluateNovelty(d, p)
 
+	return score
+}
+
+// Calculates the average "surprisal" of all cards in the deck, scaled to the
+// range 0-100.
+//
+// Surprisal is a measure of how "unusual" a value is, given the probabilities of
+// all values - https://en.wikipedia.org/wiki/Self-information
+// In this case, we're trying to select for cards which don't show up very
+// frequently in the set of generated decks, presumably becasue they tend to
+// cause decks to be vetoed (or tend to not prevent a veto)
+func evaluateNovelty(d deck.Deck, p map[deck.Card]float64) uint {
+	var (
+		cumScore     float64
+		count        uint
+		maxSurprisal float64
+		minSurprisal float64
+	)
+
+	// NOTE: It would be more accurate to take the average of the 10 highest &
+	// lowest probabilities - this approach will be somewhat skewed if there are
+	// less than 10 cards with the max/min probability
+	for _, prob := range p {
+		surprisal := -math.Log2(prob)
+		if surprisal > maxSurprisal {
+			maxSurprisal = surprisal
+		}
+		if surprisal < minSurprisal || minSurprisal == 0 {
+			minSurprisal = surprisal
+		}
+	}
+
+	scale := 100 / (maxSurprisal - minSurprisal)
+
+	for _, card := range d.Cards {
+		count++
+		surprisal := -math.Log2(p[card])
+		// Normalize values to 0-100
+		cumScore += (scale * (surprisal - minSurprisal))
+	}
+	for _, card := range d.Events {
+		count++
+		surprisal := -math.Log2(p[card])
+		// Normalize values to 0-100
+		cumScore += (scale * (surprisal - minSurprisal))
+	}
+
+	score := uint(cumScore) / count
 	return score
 }
 
