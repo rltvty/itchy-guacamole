@@ -38,7 +38,7 @@ func (c Card) String() string {
 }
 
 func cardByID(id uint) (c Card, ok bool) {
-	for _, card := range cards {
+	for _, card := range Cards {
 		if card.ID == id {
 			return card, true
 		}

@@ -1,6 +1,7 @@
 package deck
 
-var cards = []Card{
+// Cards is the set of all cards for all known dominion sets
+var Cards = []Card{
 	Card{
 		CostPotions:   0,
 		CostTreasure:  6,

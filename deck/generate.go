@@ -40,8 +40,8 @@ func NewRandomDeck(maxSets uint, sets Sets) Deck {
 		prosperityCards = 0
 	)
 
-	for _, i := range rnd.Perm(len(cards)) {
-		card := cards[i]
+	for _, i := range rnd.Perm(len(Cards)) {
+		card := Cards[i]
 
 		if !sets.Include(card.Set) {
 			continue
