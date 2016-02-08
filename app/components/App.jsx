@@ -11,7 +11,7 @@ var IndexRoute = ReactRouter.IndexRoute;
 var createBrowserHistory = require('history/lib/createBrowserHistory');
 
 /* Components to link to */
-var Creator = require('./creator/Creator');
+var Creator = require('./creator');
 
 /* Styles */
 var styles = require('../styles/base.scss');
