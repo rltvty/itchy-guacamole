@@ -2334,7 +2334,7 @@ var Cards = []Card{
 	},
 	Card{
 		CostPotions:   0,
-		CostTreasure:  6,
+		CostTreasure:  4,
 		Description:   "",
 		Set:           Adventures,
 		ID:            137,
