@@ -1,12 +1,23 @@
 import { connect } from 'react-redux'
-import { Card } from './Card'
 import { Meta } from './Meta'
 
 const mapStateToProps = (state) => ({
   deck: state.deck
 })
 
-const Deck = ({deck}) => (
+const Card = ({card}) => {
+  let setName = card.set.split('_').join(' ')
+  let cardImg = '/static/images/dominion-cards/' + card.name.split(' ').join('_') + '.jpg'
+
+  return (
+    <div className='card'>
+      <p>{setName}</p>
+      <img src={cardImg}></img>
+    </div>
+  )
+}
+
+const Cards = ({deck}) => (
   <div id='deck'>
     <Meta />
     <div id='cards'>
@@ -18,6 +29,6 @@ const Deck = ({deck}) => (
   </div>
 )
 
-const DeckContainer = connect(mapStateToProps)(Deck)
+const CardsContainer = connect(mapStateToProps)(Cards)
 
-export { DeckContainer, Deck }
+export { CardsContainer, Cards, Cards }

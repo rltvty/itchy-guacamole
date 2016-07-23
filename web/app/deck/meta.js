@@ -36,7 +36,7 @@ const getHardware = (hardware) => {
     if(!hardwareNames.includes(item)) {
       hardwareNames.push(item.split("_").join(" "))
     }
-  }
+  })
 
   return hardwareNames.sort().map((name, index) => (
     <li key={index}>{name}</li>
@@ -68,4 +68,4 @@ const Meta = ({deck}) => (
 
 const MetaContainer = connect(mapStateToProps)(Meta)
 
-exports { MetaContainer, Meta }
+export { MetaContainer, Meta }
