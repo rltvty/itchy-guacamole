@@ -1,22 +1,38 @@
+var webpack = require('webpack')
+
 module.exports = {
-    entry: './components/App.jsx',
-    output: {
-        filename: './public/bundle.js'
-    },
-    module: {
-        loaders: [
-            { test: /\.jsx$/, loader: 'jsx-loader?insertPragma=React.DOM&harmony' },
-            { test: /\.scss$/, loader: "style!css!sass" },
-            { test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$/, loader: "file" },
-        ]
-    },
-    externals: {
-        //don't bundle the 'react' npm package with our bundle.js
-        //but get it from a global 'React' variable
-        'react': 'React',
-        'react-dom': 'ReactDOM'
-    },
-    resolve: {
-        extensions: ['', '.js', '.jsx']
-    }
+  entry: './app/index.js',
+
+  output: {
+    filename: './public/bundle.js'
+  },
+
+  module: {
+    loaders: [
+      { test: /\.js$/, exclude: /(node_modules)/, loader: 'babel', query: { presets: ['react', 'es2015', 'stage-2'] } },
+      { test: /\.scss$/, loaders: ['style', 'css', 'sass'] }
+    ]
+  },
+
+  externals: {
+    // don't bundle 'react' or 'react-dom as they are linked in index.html
+    'react': 'React',
+    'react-dom': 'ReactDOM'
+  },
+
+  resolve: {
+    extensions: ['', '.js']
+  },
+
+  ecmaFeatures: {
+    modules: true
+  },
+
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: `"${process.env.NODE_ENV}"` || '"production"',
+      }
+    })
+  ]
 }
