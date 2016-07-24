@@ -27,4 +27,4 @@ const Reducers = combineReducers({
   loading: LoadingReducer
 })
 
-export { Reducers, LoadingReducer }
+export { Reducers, ErrorReducer, LoadingReducer }

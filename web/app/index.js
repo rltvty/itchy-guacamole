@@ -5,8 +5,8 @@ import { Router, Route, browserHistory } from 'react-router'
 import { createStore, applyMiddleware } from 'redux'
 
 import { Reducers } from './reducers'
-import NavContainer from './nav'
-import DeckContainer from './deck'
+import { NavContainer } from './nav'
+import { DeckContainer } from './deck'
 import '../styles/base.scss'
 
 const Layout = () => (

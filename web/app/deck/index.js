@@ -1,7 +1,12 @@
 import { connect } from 'react-redux'
 import { Cards } from './cards'
 
-const DeckReducer = (state = [], action) => {
+const defaultDeck = {
+  cards: [],
+  hardware: {}
+}
+
+const DeckReducer = (state = defaultDeck, action) => {
   switch (action.type) {
     case 'SET_DECK':
       return action.deck

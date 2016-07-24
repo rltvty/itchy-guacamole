@@ -7,7 +7,7 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-const Nav = () => (
+const Nav = ({newDeck}) => (
   <div id='nav'>
     <div id='nav-inner'>
       <img src='/static/images/shield.png' alt='Dom Bot Shield' title='Dom Bot Shield'></img>

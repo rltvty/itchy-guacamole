@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { Meta } from './Meta'
+import { MetaContainer } from './Meta'
 
 const mapStateToProps = (state) => ({
   deck: state.deck
@@ -19,7 +19,7 @@ const Card = ({card}) => {
 
 const Cards = ({deck}) => (
   <div id='deck'>
-    <Meta />
+    <MetaContainer />
     <div id='cards'>
       {deck.cards.map((card, index) => (
         <Card key={index} card={card} />

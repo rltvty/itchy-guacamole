@@ -278,7 +278,7 @@ GenerateDeck:
 }
 
 func indexRoute(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	contents, err := ioutil.ReadFile("/web/public/index.html")
+	contents, err := ioutil.ReadFile("web/public/index.html")
 	if err != nil {
 		log.Println(err)
 	}

@@ -32,11 +32,11 @@ const getResources = (deck) => {
 const getHardware = (hardware) => {
   let hardwareNames = []
 
-  hardware.forEach(item => {
-    if(!hardwareNames.includes(item)) {
-      hardwareNames.push(item.split("_").join(" "))
+  for (var key of Object.keys(hardware)) {
+    if(hardware[key]) {
+      hardwareNames.push(key.split("_").join(" "))
     }
-  })
+  }
 
   return hardwareNames.sort().map((name, index) => (
     <li key={index}>{name}</li>

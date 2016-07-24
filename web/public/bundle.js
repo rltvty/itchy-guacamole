@@ -62,11 +62,7 @@
 
 	var _nav = __webpack_require__(84);
 
-	var _nav2 = _interopRequireDefault(_nav);
-
 	var _deck = __webpack_require__(81);
-
-	var _deck2 = _interopRequireDefault(_deck);
 
 	__webpack_require__(86);
 
@@ -76,8 +72,8 @@
 	  return React.createElement(
 	    'div',
 	    null,
-	    React.createElement(_nav2.default, null),
-	    React.createElement(_deck2.default, null)
+	    React.createElement(_nav.NavContainer, null),
+	    React.createElement(_deck.DeckContainer, null)
 	  );
 	};
 
@@ -6446,7 +6442,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.LoadingReducer = exports.Reducers = undefined;
+	exports.LoadingReducer = exports.ErrorReducer = exports.Reducers = undefined;
 
 	var _redux = __webpack_require__(11);
 
@@ -6485,6 +6481,7 @@
 	});
 
 	exports.Reducers = Reducers;
+	exports.ErrorReducer = ErrorReducer;
 	exports.LoadingReducer = LoadingReducer;
 
 /***/ },
@@ -6502,8 +6499,13 @@
 
 	var _cards = __webpack_require__(82);
 
+	var defaultDeck = {
+	  cards: [],
+	  hardware: {}
+	};
+
 	var DeckReducer = function DeckReducer() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? defaultDeck : arguments[0];
 	  var action = arguments[1];
 
 	  switch (action.type) {
@@ -6611,7 +6613,7 @@
 	  return React.createElement(
 	    'div',
 	    { id: 'deck' },
-	    React.createElement(_Meta.Meta, null),
+	    React.createElement(_Meta.MetaContainer, null),
 	    React.createElement(
 	      'div',
 	      { id: 'cards' },
@@ -6696,11 +6698,32 @@
 	var getHardware = function getHardware(hardware) {
 	  var hardwareNames = [];
 
-	  hardware.forEach(function (item) {
-	    if (!hardwareNames.includes(item)) {
-	      hardwareNames.push(item.split("_").join(" "));
+	  var _iteratorNormalCompletion = true;
+	  var _didIteratorError = false;
+	  var _iteratorError = undefined;
+
+	  try {
+	    for (var _iterator = Object.keys(hardware)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	      var key = _step.value;
+
+	      if (hardware[key]) {
+	        hardwareNames.push(key.split("_").join(" "));
+	      }
 	    }
-	  });
+	  } catch (err) {
+	    _didIteratorError = true;
+	    _iteratorError = err;
+	  } finally {
+	    try {
+	      if (!_iteratorNormalCompletion && _iterator.return) {
+	        _iterator.return();
+	      }
+	    } finally {
+	      if (_didIteratorError) {
+	        throw _iteratorError;
+	      }
+	    }
+	  }
 
 	  return hardwareNames.sort().map(function (name, index) {
 	    return React.createElement(
@@ -6795,7 +6818,8 @@
 	  };
 	};
 
-	var Nav = function Nav() {
+	var Nav = function Nav(_ref) {
+	  var newDeck = _ref.newDeck;
 	  return React.createElement(
 	    'div',
 	    { id: 'nav' },
