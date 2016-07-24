@@ -6938,6 +6938,8 @@
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
+	var _reactRouter = __webpack_require__(26);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// s00per s33cret
@@ -6947,6 +6949,13 @@
 	  'Accept': 'application/json'
 	};
 
+	var updateBrowser = function updateBrowser(deck) {
+	  _reactRouter.browserHistory.push('?id=' + deck.id);
+	  document.title = 'Dom Bot | ' + deck.id;
+	  return deck;
+	};
+
+	// New deck from properties
 	var fetchDeck = function fetchDeck(deckProperties, successHandler) {
 	  var options = {
 	    method: 'POST',
@@ -6956,9 +6965,10 @@
 
 	  (0, _isomorphicFetch2.default)('deck', options).then(function (res) {
 	    return res.json();
-	  }).then(successHandler);
+	  }).then(updateBrowser).then(successHandler);
 	};
 
+	// Existing deck by ID
 	var fetchDeckByID = function fetchDeckByID(id, successHandler) {
 	  var options = {
 	    method: 'GET',
@@ -6967,7 +6977,7 @@
 
 	  (0, _isomorphicFetch2.default)('deck/' + id, options).then(function (res) {
 	    return res.json();
-	  }).then(successHandler);
+	  }).then(updateBrowser).then(successHandler);
 	};
 
 	exports.fetchDeck = fetchDeck;

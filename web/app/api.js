@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch'
+import { browserHistory } from 'react-router'
 
 // s00per s33cret
 const headers = {
@@ -7,6 +8,13 @@ const headers = {
   'Accept': 'application/json'
 }
 
+const updateBrowser = (deck) => {
+  browserHistory.push(`?id=${deck.id}`)
+  document.title = `Dom Bot | ${deck.id}`
+  return deck
+}
+
+// New deck from properties
 const fetchDeck = (deckProperties, successHandler) => {
   let options = {
     method: 'POST',
@@ -16,9 +24,11 @@ const fetchDeck = (deckProperties, successHandler) => {
 
   fetch('deck', options)
     .then(res => res.json())
+    .then(updateBrowser)
     .then(successHandler)
 }
 
+// Existing deck by ID
 const fetchDeckByID = (id, successHandler) => {
   let options = {
     method: 'GET',
@@ -27,6 +37,7 @@ const fetchDeckByID = (id, successHandler) => {
 
   fetch(`deck/${id}`, options)
     .then(res => res.json())
+    .then(updateBrowser)
     .then(successHandler)
 }
 

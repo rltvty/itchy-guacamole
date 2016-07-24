@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+
 import { SetLoading, SetDeck } from './actions'
 import { fetchDeck } from './api'
 
@@ -9,12 +10,12 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   newDeck(deckProperties) {
     dispatch(SetLoading(true))
-    
+
     fetchDeck(deckProperties, (deck) => {
       dispatch(SetDeck(deck))
       dispatch(SetLoading(false))
     })
-  },
+  }
 })
 
 const Nav = ({newDeck, deckProperties}) => (
