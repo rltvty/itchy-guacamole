@@ -54,8 +54,6 @@ const mapDispatchToProps = (dispatch) => ({
       mechanic_count: parseInt(elements.mechanic_count.value)
     }
 
-    console.log(settings)
-
     dispatch(SetSettings(settings))
     dispatch(SetModalState(false))
   }

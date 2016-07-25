@@ -28,7 +28,6 @@ const fetchSets = (successHandler) => {
 
 // New deck from properties
 const fetchDeck = (settings, successHandler) => {
-  console.log(settings)
   let options = {
     method: 'POST',
     body: JSON.stringify(settings),
