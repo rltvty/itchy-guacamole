@@ -14,11 +14,24 @@ const updateBrowser = (deck) => {
   return deck
 }
 
+// Get allowed sets
+const fetchSets = (successHandler) => {
+  let options = {
+    method: 'GET',
+    headers: headers
+  }
+
+  fetch('sets', options)
+    .then(res => res.json())
+    .then(successHandler)
+}
+
 // New deck from properties
-const fetchDeck = (deckProperties, successHandler) => {
+const fetchDeck = (settings, successHandler) => {
+  console.log(settings)
   let options = {
     method: 'POST',
-    body: JSON.stringify(deckProperties),
+    body: JSON.stringify(settings),
     headers: headers
   }
 
@@ -41,4 +54,4 @@ const fetchDeckByID = (id, successHandler) => {
     .then(successHandler)
 }
 
-export { fetchDeck, fetchDeckByID }
+export { fetchSets, fetchDeck, fetchDeckByID }

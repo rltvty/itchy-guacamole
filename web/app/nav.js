@@ -1,30 +1,35 @@
 import { connect } from 'react-redux'
 
-import { SetLoading, SetDeck } from './actions'
-import { fetchDeck } from './api'
+import { SetLoading, SetDeck, SetModalState } from './utils/actions'
+import { fetchDeck } from './utils/api'
 
 const mapStateToProps = (state) => ({
-  deckProperties: state.deckProperties
+  settings: state.settings
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  newDeck(deckProperties) {
+  newDeck(settings) {
     dispatch(SetLoading(true))
 
-    fetchDeck(deckProperties, (deck) => {
+    fetchDeck(settings, (deck) => {
       dispatch(SetDeck(deck))
       dispatch(SetLoading(false))
     })
+  },
+
+  showSettings() {
+    dispatch(SetModalState(true))
   }
 })
 
-const Nav = ({newDeck, deckProperties}) => (
+const Nav = ({settings, newDeck, showSettings}) => (
   <div id='nav'>
     <div id='nav-inner'>
       <img src='/static/images/shield.png' alt='Dom Bot Shield' title='Dom Bot Shield'></img>
       <h1>Dom Bot</h1>
       <div id='deck-buttons'>
-        <button id='deck-new' title='New Deck' className='btn btn-primary' onClick={() => newDeck(deckProperties)}>New Deck</button>
+        <button id='deck-settings' title='Settings' className='btn btn-info' onClick={showSettings}>Settings</button>
+        <button id='deck-new' title='New Deck' className='btn btn-primary' onClick={() => newDeck(settings)}>New Deck</button>
       </div>
     </div>
   </div>

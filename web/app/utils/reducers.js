@@ -1,5 +1,8 @@
 import { combineReducers } from 'redux'
-import { DeckReducer, DeckPropertiesReducer } from './deck'
+
+import { DeckReducer, SetsReducer } from '../deck'
+import { ModalReducer } from '../modals'
+import { SettingsReducer } from '../modals/settings'
 
 const ErrorReducer = (state = false, action) => {
   switch (action.type) {
@@ -23,9 +26,11 @@ const LoadingReducer = (state = false, action) => {
 
 const Reducers = combineReducers({
   deck: DeckReducer,
-  deckProperties: DeckPropertiesReducer,
   error: ErrorReducer,
-  loading: LoadingReducer
+  loading: LoadingReducer,
+  modal: ModalReducer,
+  sets: SetsReducer,
+  settings: SettingsReducer
 })
 
 export { Reducers, ErrorReducer, LoadingReducer }

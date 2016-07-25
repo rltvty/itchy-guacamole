@@ -58,13 +58,15 @@
 
 	var _redux = __webpack_require__(11);
 
-	var _reducers = __webpack_require__(80);
+	var _reducers = __webpack_require__(98);
 
-	var _nav = __webpack_require__(86);
+	var _nav = __webpack_require__(89);
 
 	var _deck = __webpack_require__(81);
 
-	__webpack_require__(87);
+	var _modals = __webpack_require__(94);
+
+	__webpack_require__(90);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -73,7 +75,8 @@
 	    'div',
 	    null,
 	    React.createElement(_nav.NavContainer, null),
-	    React.createElement(_deck.DeckContainer, null)
+	    React.createElement(_deck.DeckContainer, null),
+	    React.createElement(_modals.ModalWrapperContainer, null)
 	  );
 	};
 
@@ -6434,58 +6437,7 @@
 	};
 
 /***/ },
-/* 80 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.LoadingReducer = exports.ErrorReducer = exports.Reducers = undefined;
-
-	var _redux = __webpack_require__(11);
-
-	var _deck = __webpack_require__(81);
-
-	var ErrorReducer = function ErrorReducer() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case 'SET_ERROR':
-	      return action.error;
-
-	    default:
-	      return state;
-	  }
-	};
-
-	var LoadingReducer = function LoadingReducer() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case 'SET_LOADING':
-	      return action.loading;
-
-	    default:
-	      return state;
-	  }
-	};
-
-	var Reducers = (0, _redux.combineReducers)({
-	  deck: _deck.DeckReducer,
-	  deckProperties: _deck.DeckPropertiesReducer,
-	  error: ErrorReducer,
-	  loading: LoadingReducer
-	});
-
-	exports.Reducers = Reducers;
-	exports.ErrorReducer = ErrorReducer;
-	exports.LoadingReducer = LoadingReducer;
-
-/***/ },
+/* 80 */,
 /* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -6494,11 +6446,13 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.DeckPropertiesReducer = exports.DeckReducer = exports.Deck = exports.DeckContainer = undefined;
+	exports.SetsReducer = exports.DeckReducer = exports.Deck = exports.DeckContainer = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(5);
+
+	var _redux = __webpack_require__(11);
 
 	var _reactRedux = __webpack_require__(3);
 
@@ -6506,9 +6460,9 @@
 
 	var _cards = __webpack_require__(82);
 
-	var _actions = __webpack_require__(84);
+	var _actions = __webpack_require__(96);
 
-	var _api = __webpack_require__(85);
+	var _api = __webpack_require__(97);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -6519,18 +6473,6 @@
 	var defaultDeck = {
 	  cards: [],
 	  hardware: {}
-	};
-
-	var defaultDeckProperties = {
-	  selectedSets: ['dominion'],
-	  weights: {
-	    trashing: 5,
-	    random: 5,
-	    chaining: 5,
-	    cost_spread: 5,
-	    set_count: 5,
-	    mechanic_count: 5
-	  }
 	};
 
 	var DeckReducer = function DeckReducer() {
@@ -6546,13 +6488,15 @@
 	  }
 	};
 
-	var DeckPropertiesReducer = function DeckPropertiesReducer() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? defaultDeckProperties : arguments[0];
+	var defaultSets = ['dominion'];
+
+	var SetsReducer = function SetsReducer() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? defaultSets : arguments[0];
 	  var action = arguments[1];
 
 	  switch (action.type) {
-	    case 'SET_DECK_PROPERTIES':
-	      return action.deckProperties;
+	    case 'SET_SETS':
+	      return action.sets;
 
 	    default:
 	      return state;
@@ -6563,7 +6507,7 @@
 	  var location = _ref.location;
 	  return {
 	    deck: state.deck,
-	    deckProperties: state.deckProperties,
+	    settings: state.settings,
 	    id: location.query.id || '',
 	    error: state.error,
 	    loading: state.loading
@@ -6572,10 +6516,17 @@
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    getDeck: function getDeck(deckProperties) {
+	    getSets: function getSets() {
 	      dispatch((0, _actions.SetLoading)(true));
 
-	      (0, _api.fetchDeck)(deckProperties, function (deck) {
+	      (0, _api.fetchSets)(function (sets) {
+	        dispatch((0, _actions.SetSets)(sets));
+	      });
+	    },
+	    getDeck: function getDeck(settings) {
+	      dispatch((0, _actions.SetLoading)(true));
+
+	      (0, _api.fetchDeck)(settings, function (deck) {
 	        dispatch((0, _actions.SetDeck)(deck));
 	        dispatch((0, _actions.SetLoading)(false));
 	      });
@@ -6605,11 +6556,13 @@
 	    value: function componentDidMount() {
 	      var _props = this.props;
 	      var id = _props.id;
+	      var getSets = _props.getSets;
 	      var getDeck = _props.getDeck;
 	      var getDeckByID = _props.getDeckByID;
-	      var deckProperties = _props.deckProperties;
+	      var settings = _props.settings;
 
-	      id ? getDeckByID(id) : getDeck(deckProperties);
+
+	      (0, _redux.compose)(id ? getDeckByID(id) : getDeck(settings), getSets());
 	    }
 	  }, {
 	    key: 'render',
@@ -6652,7 +6605,7 @@
 	exports.DeckContainer = DeckContainer;
 	exports.Deck = Deck;
 	exports.DeckReducer = DeckReducer;
-	exports.DeckPropertiesReducer = DeckPropertiesReducer;
+	exports.SetsReducer = SetsReducer;
 
 /***/ },
 /* 82 */
@@ -6881,540 +6834,21 @@
 	exports.Meta = Meta;
 
 /***/ },
-/* 84 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var SetLoading = exports.SetLoading = function SetLoading(loading) {
-	  return {
-	    type: 'SET_LOADING',
-	    loading: loading
-	  };
-	};
-
-	var SetError = exports.SetError = function SetError(error) {
-	  return {
-	    type: 'SET_ERROR',
-	    error: error
-	  };
-	};
-
-	var SetDeck = exports.SetDeck = function SetDeck(deck) {
-	  return {
-	    type: 'SET_DECK',
-	    deck: deck
-	  };
-	};
-
-	var SetDeckProperties = exports.SetDeckProperties = function SetDeckProperties(deckProperties) {
-	  return {
-	    type: 'SET_DECK_PROPERTIES',
-	    deckProperties: deckProperties
-	  };
-	};
-
-	var NewDeck = exports.NewDeck = function NewDeck() {
-	  return {
-	    type: 'NEW_DECK'
-	  };
-	};
-
-/***/ },
-/* 85 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.fetchDeckByID = exports.fetchDeck = undefined;
-
-	var _isomorphicFetch = __webpack_require__(91);
-
-	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
-
-	var _reactRouter = __webpack_require__(26);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// s00per s33cret
-	var headers = {
-	  'Authorization': 'Basic ' + btoa('user:password'),
-	  'Content-Type': 'application/json',
-	  'Accept': 'application/json'
-	};
-
-	var updateBrowser = function updateBrowser(deck) {
-	  _reactRouter.browserHistory.push('?id=' + deck.id);
-	  document.title = 'Dom Bot | ' + deck.id;
-	  return deck;
-	};
-
-	// New deck from properties
-	var fetchDeck = function fetchDeck(deckProperties, successHandler) {
-	  var options = {
-	    method: 'POST',
-	    body: JSON.stringify(deckProperties),
-	    headers: headers
-	  };
-
-	  (0, _isomorphicFetch2.default)('deck', options).then(function (res) {
-	    return res.json();
-	  }).then(updateBrowser).then(successHandler);
-	};
-
-	// Existing deck by ID
-	var fetchDeckByID = function fetchDeckByID(id, successHandler) {
-	  var options = {
-	    method: 'GET',
-	    headers: headers
-	  };
-
-	  (0, _isomorphicFetch2.default)('deck/' + id, options).then(function (res) {
-	    return res.json();
-	  }).then(updateBrowser).then(successHandler);
-	};
-
-	exports.fetchDeck = fetchDeck;
-	exports.fetchDeckByID = fetchDeckByID;
-
-/***/ },
+/* 84 */,
+/* 85 */,
 /* 86 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.NavContainer = undefined;
-
-	var _reactRedux = __webpack_require__(3);
-
-	var _actions = __webpack_require__(84);
-
-	var _api = __webpack_require__(85);
-
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    deckProperties: state.deckProperties
-	  };
-	};
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    newDeck: function newDeck(deckProperties) {
-	      dispatch((0, _actions.SetLoading)(true));
-
-	      (0, _api.fetchDeck)(deckProperties, function (deck) {
-	        dispatch((0, _actions.SetDeck)(deck));
-	        dispatch((0, _actions.SetLoading)(false));
-	      });
-	    }
-	  };
-	};
-
-	var Nav = function Nav(_ref) {
-	  var newDeck = _ref.newDeck;
-	  var deckProperties = _ref.deckProperties;
-	  return React.createElement(
-	    'div',
-	    { id: 'nav' },
-	    React.createElement(
-	      'div',
-	      { id: 'nav-inner' },
-	      React.createElement('img', { src: '/static/images/shield.png', alt: 'Dom Bot Shield', title: 'Dom Bot Shield' }),
-	      React.createElement(
-	        'h1',
-	        null,
-	        'Dom Bot'
-	      ),
-	      React.createElement(
-	        'div',
-	        { id: 'deck-buttons' },
-	        React.createElement(
-	          'button',
-	          { id: 'deck-new', title: 'New Deck', className: 'btn btn-primary', onClick: function onClick() {
-	              return newDeck(deckProperties);
-	            } },
-	          'New Deck'
-	        )
-	      )
-	    )
-	  );
-	};
-
-	var NavContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Nav);
-
-	exports.NavContainer = NavContainer;
-
-/***/ },
-/* 87 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(88);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(90)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./base.scss", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./base.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 88 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(89)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "#nav #nav-inner {\n  margin: 10px; }\n  #nav #nav-inner img {\n    height: 55px;\n    display: inline-block; }\n  #nav #nav-inner h1 {\n    display: inline-block;\n    margin-left: 10px;\n    vertical-align: middle;\n    text-transform: uppercase; }\n  #nav #nav-inner #deck-buttons {\n    float: right;\n    margin-top: 10px; }\n    #nav #nav-inner #deck-buttons #deck-settings {\n      margin-right: 15px; }\n\n#suggest {\n  display: block;\n  margin: 25px auto 10px; }\n\n#deck {\n  text-align: center; }\n  #deck #share-deck {\n    margin: 15px 0 25px 0;\n    display: inline-block; }\n  #deck #meta {\n    overflow: auto;\n    text-align: center; }\n    #deck #meta li {\n      text-transform: capitalize; }\n    #deck #meta div {\n      display: inline-block;\n      vertical-align: top;\n      margin: 10px 50px;\n      text-align: left; }\n  #deck p {\n    margin-bottom: 0; }\n  #deck #cards {\n    max-width: 1300px;\n    margin: 0 auto; }\n    #deck #cards .card {\n      display: inline-block;\n      border: none;\n      max-width: 225px;\n      margin: 10px; }\n      @media (max-width: 900px) {\n        #deck #cards .card {\n          max-width: 175px; } }\n      #deck #cards .card p {\n        text-transform: capitalize; }\n      #deck #cards .card img {\n        max-width: 100%; }\n\n#form #labels {\n  text-align: center; }\n  #form #labels label {\n    text-transform: capitalize;\n    margin: 5px 10px; }\n    #form #labels label input {\n      margin-right: 5px; }\n\n#form #weights {\n  overflow: auto; }\n  #form #weights .weight-range {\n    width: 45%;\n    margin: 10px 2.5%;\n    float: left; }\n    #form #weights .weight-range label {\n      text-transform: capitalize; }\n\nhtml {\n  box-sizing: border-box; }\n\n*, *:before, *:after {\n  box-sizing: inherit; }\n\n#loading {\n  margin: 50px auto 50px;\n  text-align: center; }\n\n#error {\n  margin: 30px 0; }\n\n#content {\n  max-width: 1600px;\n  margin: 0 auto; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 89 */
-/***/ function(module, exports) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
-
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
-
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
-
-
-/***/ },
-/* 90 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	var stylesInDom = {},
-		memoize = function(fn) {
-			var memo;
-			return function () {
-				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-				return memo;
-			};
-		},
-		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
-		}),
-		getHeadElement = memoize(function () {
-			return document.head || document.getElementsByTagName("head")[0];
-		}),
-		singletonElement = null,
-		singletonCounter = 0,
-		styleElementsInsertedAtTop = [];
-
-	module.exports = function(list, options) {
-		if(false) {
-			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-		}
-
-		options = options || {};
-		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-		// tags it will allow on a page
-		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-
-		// By default, add <style> tags to the bottom of <head>.
-		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
-
-		var styles = listToStyles(list);
-		addStylesToDom(styles, options);
-
-		return function update(newList) {
-			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
-				var item = styles[i];
-				var domStyle = stylesInDom[item.id];
-				domStyle.refs--;
-				mayRemove.push(domStyle);
-			}
-			if(newList) {
-				var newStyles = listToStyles(newList);
-				addStylesToDom(newStyles, options);
-			}
-			for(var i = 0; i < mayRemove.length; i++) {
-				var domStyle = mayRemove[i];
-				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
-						domStyle.parts[j]();
-					delete stylesInDom[domStyle.id];
-				}
-			}
-		};
-	}
-
-	function addStylesToDom(styles, options) {
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-			if(domStyle) {
-				domStyle.refs++;
-				for(var j = 0; j < domStyle.parts.length; j++) {
-					domStyle.parts[j](item.parts[j]);
-				}
-				for(; j < item.parts.length; j++) {
-					domStyle.parts.push(addStyle(item.parts[j], options));
-				}
-			} else {
-				var parts = [];
-				for(var j = 0; j < item.parts.length; j++) {
-					parts.push(addStyle(item.parts[j], options));
-				}
-				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-			}
-		}
-	}
-
-	function listToStyles(list) {
-		var styles = [];
-		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
-			var item = list[i];
-			var id = item[0];
-			var css = item[1];
-			var media = item[2];
-			var sourceMap = item[3];
-			var part = {css: css, media: media, sourceMap: sourceMap};
-			if(!newStyles[id])
-				styles.push(newStyles[id] = {id: id, parts: [part]});
-			else
-				newStyles[id].parts.push(part);
-		}
-		return styles;
-	}
-
-	function insertStyleElement(options, styleElement) {
-		var head = getHeadElement();
-		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
-		if (options.insertAt === "top") {
-			if(!lastStyleElementInsertedAtTop) {
-				head.insertBefore(styleElement, head.firstChild);
-			} else if(lastStyleElementInsertedAtTop.nextSibling) {
-				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
-			} else {
-				head.appendChild(styleElement);
-			}
-			styleElementsInsertedAtTop.push(styleElement);
-		} else if (options.insertAt === "bottom") {
-			head.appendChild(styleElement);
-		} else {
-			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-		}
-	}
-
-	function removeStyleElement(styleElement) {
-		styleElement.parentNode.removeChild(styleElement);
-		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
-		if(idx >= 0) {
-			styleElementsInsertedAtTop.splice(idx, 1);
-		}
-	}
-
-	function createStyleElement(options) {
-		var styleElement = document.createElement("style");
-		styleElement.type = "text/css";
-		insertStyleElement(options, styleElement);
-		return styleElement;
-	}
-
-	function createLinkElement(options) {
-		var linkElement = document.createElement("link");
-		linkElement.rel = "stylesheet";
-		insertStyleElement(options, linkElement);
-		return linkElement;
-	}
-
-	function addStyle(obj, options) {
-		var styleElement, update, remove;
-
-		if (options.singleton) {
-			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement(options));
-			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-		} else if(obj.sourceMap &&
-			typeof URL === "function" &&
-			typeof URL.createObjectURL === "function" &&
-			typeof URL.revokeObjectURL === "function" &&
-			typeof Blob === "function" &&
-			typeof btoa === "function") {
-			styleElement = createLinkElement(options);
-			update = updateLink.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-				if(styleElement.href)
-					URL.revokeObjectURL(styleElement.href);
-			};
-		} else {
-			styleElement = createStyleElement(options);
-			update = applyToTag.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-			};
-		}
-
-		update(obj);
-
-		return function updateStyle(newObj) {
-			if(newObj) {
-				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
-					return;
-				update(obj = newObj);
-			} else {
-				remove();
-			}
-		};
-	}
-
-	var replaceText = (function () {
-		var textStore = [];
-
-		return function (index, replacement) {
-			textStore[index] = replacement;
-			return textStore.filter(Boolean).join('\n');
-		};
-	})();
-
-	function applyToSingletonTag(styleElement, index, remove, obj) {
-		var css = remove ? "" : obj.css;
-
-		if (styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = replaceText(index, css);
-		} else {
-			var cssNode = document.createTextNode(css);
-			var childNodes = styleElement.childNodes;
-			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-			if (childNodes.length) {
-				styleElement.insertBefore(cssNode, childNodes[index]);
-			} else {
-				styleElement.appendChild(cssNode);
-			}
-		}
-	}
-
-	function applyToTag(styleElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-
-		if(media) {
-			styleElement.setAttribute("media", media)
-		}
-
-		if(styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = css;
-		} else {
-			while(styleElement.firstChild) {
-				styleElement.removeChild(styleElement.firstChild);
-			}
-			styleElement.appendChild(document.createTextNode(css));
-		}
-	}
-
-	function updateLink(linkElement, obj) {
-		var css = obj.css;
-		var sourceMap = obj.sourceMap;
-
-		if(sourceMap) {
-			// http://stackoverflow.com/a/26603875
-			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-		}
-
-		var blob = new Blob([css], { type: "text/css" });
-
-		var oldSrc = linkElement.href;
-
-		linkElement.href = URL.createObjectURL(blob);
-
-		if(oldSrc)
-			URL.revokeObjectURL(oldSrc);
-	}
-
-
-/***/ },
-/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// the whatwg-fetch polyfill installs the fetch() function
 	// on the global object (window or self)
 	//
 	// Return that as the export for use in Webpack, Browserify etc.
-	__webpack_require__(92);
+	__webpack_require__(87);
 	module.exports = self.fetch.bind(self);
 
 
 /***/ },
-/* 92 */
+/* 87 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -7851,6 +7285,835 @@
 	  self.fetch.polyfill = true
 	})(typeof self !== 'undefined' ? self : this);
 
+
+/***/ },
+/* 88 */,
+/* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NavContainer = undefined;
+
+	var _reactRedux = __webpack_require__(3);
+
+	var _actions = __webpack_require__(96);
+
+	var _api = __webpack_require__(97);
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    settings: state.settings
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    newDeck: function newDeck(settings) {
+	      dispatch((0, _actions.SetLoading)(true));
+
+	      (0, _api.fetchDeck)(settings, function (deck) {
+	        dispatch((0, _actions.SetDeck)(deck));
+	        dispatch((0, _actions.SetLoading)(false));
+	      });
+	    },
+	    showSettings: function showSettings() {
+	      dispatch((0, _actions.SetModalState)(true));
+	    }
+	  };
+	};
+
+	var Nav = function Nav(_ref) {
+	  var settings = _ref.settings;
+	  var newDeck = _ref.newDeck;
+	  var showSettings = _ref.showSettings;
+	  return React.createElement(
+	    'div',
+	    { id: 'nav' },
+	    React.createElement(
+	      'div',
+	      { id: 'nav-inner' },
+	      React.createElement('img', { src: '/static/images/shield.png', alt: 'Dom Bot Shield', title: 'Dom Bot Shield' }),
+	      React.createElement(
+	        'h1',
+	        null,
+	        'Dom Bot'
+	      ),
+	      React.createElement(
+	        'div',
+	        { id: 'deck-buttons' },
+	        React.createElement(
+	          'button',
+	          { id: 'deck-settings', title: 'Settings', className: 'btn btn-info', onClick: showSettings },
+	          'Settings'
+	        ),
+	        React.createElement(
+	          'button',
+	          { id: 'deck-new', title: 'New Deck', className: 'btn btn-primary', onClick: function onClick() {
+	              return newDeck(settings);
+	            } },
+	          'New Deck'
+	        )
+	      )
+	    )
+	  );
+	};
+
+	var NavContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Nav);
+
+	exports.NavContainer = NavContainer;
+
+/***/ },
+/* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(91);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(93)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./base.scss", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./base.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 91 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(92)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "#nav #nav-inner {\n  margin: 10px; }\n  #nav #nav-inner img {\n    height: 55px;\n    display: inline-block; }\n  #nav #nav-inner h1 {\n    display: inline-block;\n    margin-left: 10px;\n    vertical-align: middle;\n    text-transform: uppercase; }\n  #nav #nav-inner #deck-buttons {\n    float: right;\n    margin-top: 10px; }\n    #nav #nav-inner #deck-buttons #deck-settings {\n      margin-right: 15px; }\n\n#suggest {\n  display: block;\n  margin: 25px auto 10px; }\n\n#deck {\n  text-align: center; }\n  #deck #share-deck {\n    margin: 15px 0 25px 0;\n    display: inline-block; }\n  #deck #meta {\n    overflow: auto;\n    text-align: center; }\n    #deck #meta li {\n      text-transform: capitalize; }\n    #deck #meta div {\n      display: inline-block;\n      vertical-align: top;\n      margin: 10px 50px;\n      text-align: left; }\n  #deck p {\n    margin-bottom: 0; }\n  #deck #cards {\n    max-width: 1300px;\n    margin: 0 auto; }\n    #deck #cards .card {\n      display: inline-block;\n      border: none;\n      max-width: 225px;\n      margin: 10px; }\n      @media (max-width: 900px) {\n        #deck #cards .card {\n          max-width: 175px; } }\n      #deck #cards .card p {\n        text-transform: capitalize; }\n      #deck #cards .card img {\n        max-width: 100%; }\n\n.modal-wrapper {\n  display: flex;\n  justify-content: center;\n  position: absolute;\n  top: 0;\n  width: 100%; }\n  .modal-wrapper .modal-content {\n    margin-top: 25px;\n    outline: 0;\n    overflow: hidden;\n    -webkit-overflow-scrolling: touch;\n    border-radius: 2px;\n    box-shadow: none;\n    padding: 15px;\n    z-index: 1050;\n    width: 500px;\n    max-width: 85%; }\n    .modal-wrapper .modal-content .modal-header {\n      border-bottom-width: 2px;\n      margin: 0;\n      padding: 0 0 15px; }\n    .modal-wrapper .modal-content .modal-body {\n      padding: 20px 0; }\n    .modal-wrapper .modal-content .modal-footer {\n      padding: 15px 0 0; }\n  .modal-wrapper #settings-modal #sets {\n    display: flex;\n    flex-wrap: wrap;\n    text-transform: capitalize; }\n    .modal-wrapper #settings-modal #sets div {\n      margin: 5px 15px; }\n      .modal-wrapper #settings-modal #sets div label {\n        margin-bottom: 0; }\n      .modal-wrapper #settings-modal #sets div input {\n        margin-right: 5px; }\n\nhtml {\n  box-sizing: border-box; }\n\n*, *:before, *:after {\n  box-sizing: inherit; }\n\n#loading {\n  margin: 50px auto 50px;\n  text-align: center; }\n\n#error {\n  margin: 30px 0; }\n\n#content {\n  max-width: 1600px;\n  margin: 0 auto; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 92 */
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 93 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+
+		update(obj);
+
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+
+	var replaceText = (function () {
+		var textStore = [];
+
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+
+		var blob = new Blob([css], { type: "text/css" });
+
+		var oldSrc = linkElement.href;
+
+		linkElement.href = URL.createObjectURL(blob);
+
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
+
+/***/ },
+/* 94 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.ModalReducer = exports.ModalWrapper = exports.ModalWrapperContainer = undefined;
+
+	var _isomorphicFetch = __webpack_require__(86);
+
+	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+	var _reactRedux = __webpack_require__(3);
+
+	var _actions = __webpack_require__(96);
+
+	var _settings = __webpack_require__(95);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ModalReducer = function ModalReducer() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'SET_MODAL_STATE':
+	      return action.visible;
+
+	    default:
+	      return state;
+	  }
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    visible: state.modal
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    closeModal: function closeModal() {
+	      dispatch((0, _actions.SetModalState)(false));
+	    }
+	  };
+	};
+
+	var ModalWrapper = function ModalWrapper(props) {
+	  if (!props.visible) {
+	    return null;
+	  }
+
+	  return React.createElement(
+	    'div',
+	    { className: 'modal-wrapper' },
+	    React.createElement('div', { className: 'modal-backdrop in', onClick: props.closeModal }),
+	    React.createElement(
+	      'div',
+	      { className: 'modal-content in' },
+	      React.createElement(_settings.SettingsContainer, props)
+	    )
+	  );
+	};
+
+	var ModalWrapperContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ModalWrapper);
+
+	exports.ModalWrapperContainer = ModalWrapperContainer;
+	exports.ModalWrapper = ModalWrapper;
+	exports.ModalReducer = ModalReducer;
+
+/***/ },
+/* 95 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.SettingsReducer = exports.Settings = exports.SettingsContainer = undefined;
+
+	var _reactRedux = __webpack_require__(3);
+
+	var _actions = __webpack_require__(96);
+
+	var defaultSettings = {
+	  sets: ['dominion'],
+	  weights: {
+	    trashing: 5,
+	    random: 5,
+	    chaining: 5,
+	    cost_spread: 5,
+	    set_count: 5,
+	    mechanic_count: 5
+	  }
+	};
+
+	var SettingsReducer = function SettingsReducer() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? defaultSettings : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'SET_SETTINGS':
+	      return action.settings;
+
+	    default:
+	      return state;
+	  }
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    sets: state.sets,
+	    settings: state.settings
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    closeModal: function closeModal() {
+	      dispatch((0, _actions.SetModalState)(false));
+	    },
+	    handleSubmit: function handleSubmit(e, settings, sets) {
+	      e.preventDefault();
+	      settings.sets = [];
+
+	      sets.forEach(function (set) {
+	        if (e.target.elements[set].checked) {
+	          settings.sets.push(set);
+	        }
+	      });
+
+	      dispatch((0, _actions.SetSettings)(settings));
+	      dispatch((0, _actions.SetModalState)(false));
+	    }
+	  };
+	};
+
+	var setCheckboxes = function setCheckboxes(sets, settings) {
+	  return sets.map(function (set, index) {
+	    return React.createElement(
+	      'div',
+	      { key: index },
+	      React.createElement('input', { type: 'checkbox', id: set, name: set, defaultChecked: settings.sets.indexOf(set) >= 0 }),
+	      React.createElement(
+	        'label',
+	        { htmlFor: set },
+	        set.split('_').join(' ')
+	      )
+	    );
+	  });
+	};
+
+	var Settings = function Settings(_ref) {
+	  var sets = _ref.sets;
+	  var settings = _ref.settings;
+	  var closeModal = _ref.closeModal;
+	  var handleSubmit = _ref.handleSubmit;
+	  return React.createElement(
+	    'form',
+	    { id: 'settings-modal', onSubmit: function onSubmit(e) {
+	        return handleSubmit(e, settings, sets);
+	      } },
+	    React.createElement(
+	      'div',
+	      { className: 'modal-header' },
+	      React.createElement(
+	        'button',
+	        { type: 'button', className: 'close', onClick: closeModal },
+	        '×'
+	      ),
+	      React.createElement(
+	        'h4',
+	        { className: 'modal-title' },
+	        'Deck Settings'
+	      )
+	    ),
+	    React.createElement(
+	      'div',
+	      { className: 'modal-body text-center' },
+	      React.createElement(
+	        'div',
+	        { id: 'sets' },
+	        setCheckboxes(sets, settings)
+	      )
+	    ),
+	    React.createElement(
+	      'div',
+	      { className: 'modal-footer' },
+	      React.createElement(
+	        'button',
+	        { type: 'button', className: 'btn btn-primary pull-left', onClick: closeModal },
+	        'Never Mind'
+	      ),
+	      React.createElement(
+	        'button',
+	        { type: 'submit', className: 'btn btn-success pull-right' },
+	        'Save Settings'
+	      )
+	    )
+	  );
+	};
+
+	var SettingsContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Settings);
+
+	exports.SettingsContainer = SettingsContainer;
+	exports.Settings = Settings;
+	exports.SettingsReducer = SettingsReducer;
+
+/***/ },
+/* 96 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var SetLoading = exports.SetLoading = function SetLoading(loading) {
+	  return {
+	    type: 'SET_LOADING',
+	    loading: loading
+	  };
+	};
+
+	var SetError = exports.SetError = function SetError(error) {
+	  return {
+	    type: 'SET_ERROR',
+	    error: error
+	  };
+	};
+
+	var SetModalState = exports.SetModalState = function SetModalState(visible) {
+	  return {
+	    type: 'SET_MODAL_STATE',
+	    visible: visible
+	  };
+	};
+
+	var SetSets = exports.SetSets = function SetSets(sets) {
+	  return {
+	    type: 'SET_SETS',
+	    sets: sets
+	  };
+	};
+
+	var NewDeck = exports.NewDeck = function NewDeck() {
+	  return {
+	    type: 'NEW_DECK'
+	  };
+	};
+
+	var SetDeck = exports.SetDeck = function SetDeck(deck) {
+	  return {
+	    type: 'SET_DECK',
+	    deck: deck
+	  };
+	};
+
+	var SetSettings = exports.SetSettings = function SetSettings(settings) {
+	  return {
+	    type: 'SET_SETTINGS',
+	    settings: settings
+	  };
+	};
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.fetchDeckByID = exports.fetchDeck = exports.fetchSets = undefined;
+
+	var _isomorphicFetch = __webpack_require__(86);
+
+	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+	var _reactRouter = __webpack_require__(26);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// s00per s33cret
+	var headers = {
+	  'Authorization': 'Basic ' + btoa('user:password'),
+	  'Content-Type': 'application/json',
+	  'Accept': 'application/json'
+	};
+
+	var updateBrowser = function updateBrowser(deck) {
+	  _reactRouter.browserHistory.push('?id=' + deck.id);
+	  document.title = 'Dom Bot | ' + deck.id;
+	  return deck;
+	};
+
+	// Get allowed sets
+	var fetchSets = function fetchSets(successHandler) {
+	  var options = {
+	    method: 'GET',
+	    headers: headers
+	  };
+
+	  (0, _isomorphicFetch2.default)('sets', options).then(function (res) {
+	    return res.json();
+	  }).then(successHandler);
+	};
+
+	// New deck from properties
+	var fetchDeck = function fetchDeck(settings, successHandler) {
+	  console.log(settings);
+	  var options = {
+	    method: 'POST',
+	    body: JSON.stringify(settings),
+	    headers: headers
+	  };
+
+	  (0, _isomorphicFetch2.default)('deck', options).then(function (res) {
+	    return res.json();
+	  }).then(updateBrowser).then(successHandler);
+	};
+
+	// Existing deck by ID
+	var fetchDeckByID = function fetchDeckByID(id, successHandler) {
+	  var options = {
+	    method: 'GET',
+	    headers: headers
+	  };
+
+	  (0, _isomorphicFetch2.default)('deck/' + id, options).then(function (res) {
+	    return res.json();
+	  }).then(updateBrowser).then(successHandler);
+	};
+
+	exports.fetchSets = fetchSets;
+	exports.fetchDeck = fetchDeck;
+	exports.fetchDeckByID = fetchDeckByID;
+
+/***/ },
+/* 98 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.LoadingReducer = exports.ErrorReducer = exports.Reducers = undefined;
+
+	var _redux = __webpack_require__(11);
+
+	var _deck = __webpack_require__(81);
+
+	var _modals = __webpack_require__(94);
+
+	var _settings = __webpack_require__(95);
+
+	var ErrorReducer = function ErrorReducer() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'SET_ERROR':
+	      return action.error;
+
+	    default:
+	      return state;
+	  }
+	};
+
+	var LoadingReducer = function LoadingReducer() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'SET_LOADING':
+	      return action.loading;
+
+	    default:
+	      return state;
+	  }
+	};
+
+	var Reducers = (0, _redux.combineReducers)({
+	  deck: _deck.DeckReducer,
+	  error: ErrorReducer,
+	  loading: LoadingReducer,
+	  modal: _modals.ModalReducer,
+	  sets: _deck.SetsReducer,
+	  settings: _settings.SettingsReducer
+	});
+
+	exports.Reducers = Reducers;
+	exports.ErrorReducer = ErrorReducer;
+	exports.LoadingReducer = LoadingReducer;
 
 /***/ }
 /******/ ]);
