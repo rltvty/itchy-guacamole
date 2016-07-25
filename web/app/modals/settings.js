@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { SetModalState, SetSettings } from '../utils/actions'
 
 const defaultSettings = {
-  sets: ['dominion'],
+  sets: [],
   weights: {
     trashing: 5,
     random: 5,
@@ -36,13 +36,25 @@ const mapDispatchToProps = (dispatch) => ({
 
   handleSubmit(e, settings, sets) {
     e.preventDefault()
+    let elements = e.target.elements
     settings.sets = []
 
     sets.forEach(set => {
-      if (e.target.elements[set].checked) {
+      if (elements[set].checked) {
         settings.sets.push(set)
       }
     })
+
+    settings.weights = {
+      trashing: parseInt(elements.trashing.value),
+      random: parseInt(elements.random.value),
+      chaining: parseInt(elements.chaining.value),
+      cost_spread: parseInt(elements.cost_spread.value),
+      set_count: parseInt(elements.set_count.value),
+      mechanic_count: parseInt(elements.mechanic_count.value)
+    }
+
+    console.log(settings)
 
     dispatch(SetSettings(settings))
     dispatch(SetModalState(false))
@@ -58,6 +70,15 @@ const setCheckboxes = (sets, settings) => {
   ))
 }
 
+const setWeights = (settings) => {
+  return Object.keys(settings.weights).map((item, index) => (
+    <div key={index}>
+      <label htmlFor={item}>{item.split('_').join(' ')}</label>
+      <input type='range' id={item} name={item} defaultValue={settings.weights[item]} min='0' max='10'/>
+    </div>
+  ))
+}
+
 const Settings = ({sets, settings, closeModal, handleSubmit}) => (
   <form id='settings-modal' onSubmit={(e) => handleSubmit(e, settings, sets)}>
     <div className='modal-header'>
@@ -68,6 +89,10 @@ const Settings = ({sets, settings, closeModal, handleSubmit}) => (
     <div className='modal-body text-center'>
       <div id='sets'>
         {setCheckboxes(sets, settings)}
+      </div>
+
+      <div id='weights'>
+        {setWeights(settings)}
       </div>
     </div>
 

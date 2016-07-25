@@ -36,17 +36,42 @@
     #sets {
       display: flex;
       flex-wrap: wrap;
-      text-transform: capitalize;
+      justify-content: space-between;
+      margin-bottom: 20px;
 
       div {
-        margin: 5px 15px;
+        margin: 5px 0;
+        width: 33%;
+        text-align: left;
 
         label {
+          text-transform: capitalize;
           margin-bottom: 0;
         }
 
         input {
           margin-right: 5px;
+        }
+      }
+    }
+
+    #weights {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      div {
+        margin: 5px 0;
+        width: 45%;
+
+        label {
+          width: 100%;
+          text-transform: capitalize;
+          text-align: left;
+        }
+
+        input {
+          width: 100%;
         }
       }
     }

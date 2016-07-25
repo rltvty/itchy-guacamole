@@ -1,8 +1,7 @@
 import { render } from 'react-dom'
-import thunkMiddleware from 'redux-thunk'
 import { Provider, connect } from 'react-redux'
 import { Router, Route, browserHistory } from 'react-router'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore } from 'redux'
 
 import { Reducers } from './utils/reducers'
 import { NavContainer } from './nav'
@@ -19,7 +18,7 @@ const Layout = () => (
 )
 
 const App = () => (
-  <Provider store={createStore(Reducers, applyMiddleware(thunkMiddleware))}>
+  <Provider store={createStore(Reducers)}>
     <Router history={browserHistory}>
       <Route path="/(:id)" component={Layout} />
     </Router>

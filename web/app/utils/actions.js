@@ -18,10 +18,6 @@ export const SetSets = (sets) => ({
   sets: sets
 })
 
-export const NewDeck = () => ({
-  type: 'NEW_DECK'
-})
-
 export const SetDeck = (deck) => ({
   type: 'SET_DECK',
   deck: deck
