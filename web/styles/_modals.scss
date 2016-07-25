@@ -1,0 +1,79 @@
+.modal-wrapper {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  .modal-content {
+    margin-top: 25px;
+    outline: 0;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 2px;
+    box-shadow: none;
+    padding: 15px;
+    z-index: 1050;
+    width: 500px;
+    max-width: 85%;
+
+    .modal-header {
+      border-bottom-width: 2px;
+      margin: 0;
+      padding: 0 0 15px;
+    }
+
+    .modal-body {
+      padding: 20px 0;
+    }
+
+    .modal-footer {
+      padding: 15px 0 0;
+    }
+  }
+
+  #settings-modal {
+    #sets {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 20px;
+
+      div {
+        margin: 5px 0;
+        width: 33%;
+        text-align: left;
+
+        label {
+          text-transform: capitalize;
+          margin-bottom: 0;
+        }
+
+        input {
+          margin-right: 5px;
+        }
+      }
+    }
+
+    #weights {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      div {
+        margin: 5px 0;
+        width: 45%;
+
+        label {
+          width: 100%;
+          text-transform: capitalize;
+          text-align: left;
+        }
+
+        input {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -55,33 +55,3 @@
     }
   }
 }
-
-
-#form {
-  #labels {
-    text-align: center;
-
-    label {
-      text-transform: capitalize;
-      margin: 5px 10px;
-
-      input {
-        margin-right: 5px;
-      }
-    }
-  }
-
-  #weights {
-    overflow: auto;
-
-    .weight-range {
-      width: 45%;
-      margin: 10px 2.5%;
-      float: left;
-
-      label {
-        text-transform: capitalize;
-      }
-    }
-  }
-}

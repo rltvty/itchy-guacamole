@@ -20,7 +20,7 @@ func SetRoutes() *httprouter.Router {
 
 	dir, _ := os.Getwd()
 
-	router.ServeFiles("/static/*filepath", http.Dir(dir+"/app/public"))
+	router.ServeFiles("/static/*filepath", http.Dir(dir+"/web/public"))
 	router.GET("/", basicAuth(indexRoute, user, pass))
 	return router
 }
